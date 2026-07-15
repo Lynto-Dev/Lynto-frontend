@@ -1,0 +1,25 @@
+{
+  "name": "lynto-frontend",
+  "version": "1.0.0",
+  "description": "Frontend estático para la preventa de suplementos de Lynto",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "format": "prettier --write \"**/*.{html,js,css}\"",
+    "lint": "eslint **/*.js"
+  },
+  "devDependencies": {
+    "vite": "^5.2.11",
+    "prettier": "^3.2.5",
+    "eslint": "^8.57.0"
+  },
+  "keywords": [
+    "lynto",
+    "preventa",
+    "frontend",
+    "tailwind",
+    "vanilla-js"
+  ],
+  "author": "Lynto Dev Team",
+  "license": "ISC"
+}

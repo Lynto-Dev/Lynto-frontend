@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lynto | Preventa Exclusiva Suplemento Funcional</title>
+    <meta
+      name="description"
+      content="Únete a la preventa oficial del suplemento Lynto. Energía limpia, foco mental y nutrición premium diseñada por científicas y emprendedoras."
+    />
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Outfit", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              dark: {
+                DEFAULT: "#07090e",
+                card: "rgba(13, 18, 30, 0.45)",
+                border: "rgba(255, 255, 255, 0.06)",
+              },
+              lynto: {
+                indigo: "#6366f1",
+                emerald: "#10b981",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-[#07090e] text-gray-200 min-h-screen relative selection:bg-indigo-500 selection:text-white"
+  >
+    <!-- Background Decorative Glowing Blobs -->
+    <div
+      class="absolute top-0 left-1/4 w-[500px] height-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none pulse-glow"
+    ></div>
+    <div
+      class="absolute top-[30%] right-1/4 w-[400px] height-[400px] bg-emerald-950/10 rounded-full blur-[100px] pointer-events-none pulse-glow"
+      style="animation-delay: -3s"
+    ></div>
+    <div
+      class="absolute bottom-[20%] left-10 w-[600px] height-[600px] bg-indigo-950/5 rounded-full blur-[150px] pointer-events-none"
+    ></div>
+
+    <!-- Header / Navigation -->
+    <header
+      class="sticky top-0 z-40 w-full backdrop-blur-md border-b border-white/5 bg-[#07090e]/75"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between"
+      >
+        <a href="#" class="flex items-center gap-3">
+          <!-- Premium Abstract Logo -->
+          <div
+            class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/25"
+          >
+            L
+          </div>
+          <span
+            class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent"
+            >lynto</span
+          >
+        </a>
+
+        <nav
+          class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400"
+        >
+          <a href="#producto" class="hover:text-white transition-colors"
+            >El Suplemento</a
+          >
+          <a href="#nutricion" class="hover:text-white transition-colors"
+            >Tabla Nutricional</a
+          >
+          <a href="#nosotras" class="hover:text-white transition-colors"
+            >Nosotras</a
+          >
+          <a href="#faq" class="hover:text-white transition-colors"
+            >Preguntas</a
+          >
+        </nav>
+
+        <div>
+          <a
+            href="#comprar"
+            class="px-6 py-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-semibold text-sm shadow-lg shadow-indigo-600/15 hover:shadow-indigo-500/25 hover:-translate-y-0.5 transition-all"
+          >
+            Reservar Preventa
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-6 py-12 md:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Hero Left (Texts) -->
+        <div class="lg:col-span-7 space-y-8 animate-fade-in-up">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/40 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"
+            ></span>
+            Preventa Oficial Limitada
+          </div>
+
+          <h1
+            class="text-4xl md:text-6xl font-serif font-semibold tracking-tight text-white leading-tight"
+          >
+            La evolución de tu <br />
+            <span
+              class="bg-gradient-to-r from-indigo-400 via-purple-300 to-emerald-400 bg-clip-text text-transparent font-sans font-bold"
+              >bienestar diario</span
+            >
+          </h1>
+
+          <p
+            class="text-lg md:text-xl text-gray-400 font-light max-w-xl leading-relaxed"
+          >
+            Diseñado por científicas, formulado con ingredientes activos premium
+            de alta biodisponibilidad y adaptógenos naturales. Energía limpia
+            sin colapsos.
+          </p>
+
+          <!-- Dynamic Micro-features -->
+          <div
+            class="grid grid-cols-3 gap-6 pt-4 border-t border-white/5 max-w-xl"
+          >
+            <div>
+              <div class="text-2xl font-bold text-white">100%</div>
+              <div class="text-xs text-gray-500 mt-1">Vegano y Natural</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-white">0%</div>
+              <div class="text-xs text-gray-500 mt-1">Azúcares Añadidos</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-emerald-400">100 / 100</div>
+              <div class="text-xs text-gray-500 mt-1">
+                Stock Inicial Preventa
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <a
+              href="#comprar"
+              class="px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-center shadow-xl shadow-indigo-600/20 hover:shadow-indigo-500/30 hover:-translate-y-0.5 transition-all"
+            >
+              Comprar Ahora — $29.990 CLP
+            </a>
+            <a
+              href="#producto"
+              class="px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 text-center font-bold transition-all"
+            >
+              Saber Más
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Right (Visual Supplement Placeholder) -->
+        <div
+          class="lg:col-span-5 flex justify-center animate-fade-in-up"
+          style="animation-delay: 0.2s"
+        >
+          <div
+            class="relative w-80 h-[420px] rounded-3xl bg-gradient-to-b from-indigo-950/20 to-dark/5 border border-white/10 p-8 flex flex-col justify-between shadow-2xl overflow-hidden glass-card group"
+          >
+            <!-- Ambient card background glow -->
+            <div
+              class="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-emerald-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+            ></div>
+
+            <!-- Product Tag -->
+            <div class="flex justify-between items-center z-10">
+              <span
+                class="text-xs text-indigo-400 font-bold tracking-widest uppercase"
+                >Lynto Lab®</span
+              >
+              <span
+                class="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20"
+                >Preventa</span
+              >
+            </div>
+
+            <!-- Central bottle illustration (Pure CSS aesthetic mockup) -->
+            <div class="relative py-12 flex justify-center items-center z-10">
+              <!-- Glowing background -->
+              <div
+                class="absolute w-44 h-44 bg-indigo-500/20 rounded-full blur-[40px] group-hover:scale-110 transition-transform duration-500"
+              ></div>
+              <!-- Supplement Mockup (Elegant glass container look) -->
+              <div
+                class="w-28 h-48 bg-gradient-to-b from-gray-800 to-gray-950 rounded-2xl border-t border-x border-white/20 shadow-xl flex flex-col justify-between p-4 relative"
+              >
+                <div
+                  class="w-16 h-4 bg-gray-700/80 rounded-full mx-auto -mt-6 border-b border-white/10"
+                ></div>
+                <!-- cap -->
+                <div
+                  class="flex-1 flex flex-col justify-center items-center mt-4"
+                >
+                  <div
+                    class="text-xl font-black tracking-widest text-indigo-400"
+                  >
+                    LYNTO
+                  </div>
+                  <div
+                    class="text-[9px] uppercase tracking-wider text-emerald-400 font-bold mt-1"
+                  >
+                    Daily Balance
+                  </div>
+                  <div class="w-10 h-0.5 bg-gray-600 my-2"></div>
+                  <div
+                    class="text-[7px] text-gray-500 text-center uppercase tracking-widest"
+                  >
+                    30 cápsulas / Suplemento
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product meta -->
+            <div class="space-y-2 z-10">
+              <h3 class="text-lg font-bold text-white">
+                Daily Balance & Focus
+              </h3>
+              <p class="text-xs text-gray-400">
+                Suministro para 30 días de balance cognitivo y energía celular.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Product Features Section -->
+    <section
+      id="producto"
+      class="max-w-7xl mx-auto px-6 py-20 border-t border-white/5"
+    >
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">
+          Formulación Inteligente
+        </h2>
+        <p class="text-gray-400">
+          Combinamos ciencia de vanguardia y botánica ancestral para entregar
+          resultados que puedes sentir en tu productividad diaria.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="p-8 rounded-2xl glass-card space-y-4">
+          <div
+            class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/25 flex items-center justify-center text-indigo-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
+              />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white">Foco Mental Sostenido</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Gracias a los nootrópicos naturales incorporados, mejora tu
+            capacidad de concentración e inhibe el cansancio cognitivo sin el
+            nerviosismo de la cafeína tradicional.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-8 rounded-2xl glass-card space-y-4">
+          <div
+            class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white">Nutrición Adaptógena</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Nuestra fórmula ayuda a tu cuerpo a regular y adaptarse al estrés
+            oxidativo cotidiano, promoviendo el balance celular a largo plazo.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-8 rounded-2xl glass-card space-y-4">
+          <div
+            class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/25 flex items-center justify-center text-indigo-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+              />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white">Pureza Garantizada</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Sin preservantes artificiales, libre de gluten y fabricado en
+            laboratorios certificados bajo los más altos estándares sanitarios
+            de inocuidad alimentaria.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nutrition Details & Nutritional Table -->
+    <section
+      id="nutricion"
+      class="max-w-7xl mx-auto px-6 py-20 border-t border-white/5 bg-gradient-to-b from-indigo-950/5 to-transparent"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 space-y-6">
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">
+            Ingredientes Honestos
+          </h2>
+          <p class="text-gray-400 leading-relaxed">
+            En Lynto creemos en la transparencia total. No ocultamos nuestros
+            ingredientes bajo "mezclas patentadas" confusas. Cada porción
+            contiene dosis científicamente validadas para garantizar la eficacia
+            del producto.
+          </p>
+          <div class="space-y-4">
+            <div class="flex gap-4 items-start">
+              <span
+                class="w-6 h-6 rounded-full bg-indigo-500/10 flex items-center justify-center text-xs text-indigo-400 font-bold shrink-0 mt-0.5"
+                >1</span
+              >
+              <div>
+                <h4 class="font-bold text-white">L-Teanina + Magnesio</h4>
+                <p class="text-sm text-gray-500">
+                  Promueve una respuesta de calma alerta, mejorando la
+                  concentración.
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span
+                class="w-6 h-6 rounded-full bg-indigo-500/10 flex items-center justify-center text-xs text-indigo-400 font-bold shrink-0 mt-0.5"
+                >2</span
+              >
+              <div>
+                <h4 class="font-bold text-white">Extracto de Melena de León</h4>
+                <p class="text-sm text-gray-500">
+                  Un hongo adaptógeno reconocido por sus propiedades de soporte
+                  neuronal.
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span
+                class="w-6 h-6 rounded-full bg-indigo-500/10 flex items-center justify-center text-xs text-indigo-400 font-bold shrink-0 mt-0.5"
+                >3</span
+              >
+              <div>
+                <h4 class="font-bold text-white">Vitamina B12 y Zinc</h4>
+                <p class="text-sm text-gray-500">
+                  Apoya el metabolismo energético celular normal y el sistema
+                  inmune.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive / Styled Nutritional Facts Table -->
+        <div class="lg:col-span-7">
+          <div
+            class="border border-white/10 rounded-2xl p-8 bg-dark-card shadow-2xl relative overflow-hidden"
+          >
+            <h3
+              class="text-xl font-bold text-white border-b border-white/10 pb-4 mb-4"
+            >
+              Información Nutricional
+            </h3>
+            <p class="text-xs text-gray-500 mb-6">
+              Porción: 1 cápsula al día | Porciones por envase: 30
+            </p>
+
+            <div class="space-y-3">
+              <div
+                class="flex justify-between border-b border-white/5 pb-2 text-sm"
+              >
+                <span class="text-gray-400">Energía (kcal)</span>
+                <span class="font-semibold text-white">0.0</span>
+              </div>
+              <div
+                class="flex justify-between border-b border-white/5 pb-2 text-sm"
+              >
+                <span class="text-gray-400">Proteínas (g)</span>
+                <span class="font-semibold text-white">0.0</span>
+              </div>
+              <div
+                class="flex justify-between border-b border-white/5 pb-2 text-sm"
+              >
+                <span class="text-gray-400">Grasas Totales (g)</span>
+                <span class="font-semibold text-white">0.0</span>
+              </div>
+              <div
+                class="flex justify-between border-b border-white/5 pb-2 text-sm"
+              >
+                <span class="text-gray-400">Carbohidratos Disponibles (g)</span>
+                <span class="font-semibold text-white">0.0</span>
+              </div>
+              <div
+                class="flex justify-between border-b border-white/5 pb-2 text-sm"
+              >
+                <span class="text-gray-400">Magnesio Citrato (mg)</span>
+                <span class="font-semibold text-white">150 mg</span>
+              </div>
+              <div
+                class="flex justify-between border-b border-white/5 pb-2 text-sm"
+              >
+                <span class="text-gray-400">Extracto Melena de León (mg)</span>
+                <span class="font-semibold text-white">200 mg</span>
+              </div>
+              <div
+                class="flex justify-between border-b border-white/5 pb-2 text-sm"
+              >
+                <span class="text-gray-400">Vitamina B12 (mcg)</span>
+                <span class="font-semibold text-emerald-400"
+                  >12 mcg (500% DDR)</span
+                >
+              </div>
+            </div>
+
+            <div
+              class="mt-6 text-[10px] text-gray-500 italic leading-relaxed border-t border-white/10 pt-4"
+            >
+              * DDR: Dosis Diaria Recomendada para adultos en Chile. No
+              sustituye una alimentación equilibrada. Conservar en lugar fresco
+              y seco.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section
+      id="nosotras"
+      class="max-w-7xl mx-auto px-6 py-20 border-t border-white/5"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">
+            El Origen Detrás de Lynto
+          </h2>
+          <p class="text-gray-400 leading-relaxed">
+            Lynto nace de la necesidad de sus fundadoras por encontrar un
+            suplemento limpio y de calidad científica que acompañara las
+            demandantes jornadas de la vida moderna.
+          </p>
+          <p class="text-gray-400 leading-relaxed">
+            Fundada por un equipo de mujeres expertas en biotecnología y
+            nutrición, nuestro compromiso es erradicar las fórmulas con
+            ingredientes de relleno inútiles. Creemos que la salud debe ser
+            transparente, efectiva y con respaldo.
+          </p>
+          <div class="flex items-center gap-4 pt-4">
+            <div
+              class="w-12 h-12 rounded-full bg-indigo-500/20 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold font-serif"
+            >
+              L
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">
+                Cofundadoras de Lynto
+              </h4>
+              <p class="text-xs text-gray-500">Ciencia & Emprendimiento</p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-2xl border border-white/5 p-8 bg-indigo-950/10 flex flex-col justify-center items-center text-center space-y-4"
+        >
+          <span class="text-indigo-400 text-5xl font-serif">“</span>
+          <blockquote
+            class="text-lg text-white font-light italic max-w-md leading-relaxed"
+          >
+            Nuestra meta no es vender millones de productos vacíos, sino
+            entregar una herramienta científica real que impacte positivamente
+            tu energía y foco cognitivo diario.
+          </blockquote>
+          <span
+            class="text-xs font-semibold text-gray-500 uppercase tracking-widest"
+            >— Equipo Científico Lynto</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkout Section (Zero-Trust Checkout) -->
+    <section
+      id="comprar"
+      class="max-w-7xl mx-auto px-6 py-20 border-t border-white/5"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <!-- Checkout Info -->
+        <div class="lg:col-span-5 space-y-6">
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">
+            Reservar Preventa
+          </h2>
+          <p class="text-gray-400 leading-relaxed">
+            Completa el formulario para reservar tu unidad. La preventa tiene un
+            stock sumamente acotado y se procesa estrictamente en orden de
+            confirmación de pago.
+          </p>
+
+          <div
+            class="space-y-4 bg-indigo-950/25 border border-indigo-500/20 p-6 rounded-2xl"
+          >
+            <h4 class="font-bold text-indigo-300">
+              🚚 Información de Despacho
+            </h4>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              Los despachos de esta preventa comenzarán a realizarse a partir
+              del **20 de agosto de 2026** a través de Starken y Chilexpress (a
+              todo Chile). El cobro del despacho se realiza por pagar o a tarifa
+              fija según la dirección indicada.
+            </p>
+          </div>
+
+          <div class="text-xs text-gray-500 italic">
+            🔒 Seguridad: Tus datos están protegidos. El proceso de pago se
+            realiza de manera 100% segura mediante encriptación SSL y la
+            pasarela autorizada **Flow.cl**.
+          </div>
+        </div>
+
+        <!-- Checkout Form Card -->
+        <div class="lg:col-span-7">
+          <div
+            class="p-8 rounded-2xl glass-card relative overflow-hidden"
+            id="form-container"
+          >
+            <h3 class="text-2xl font-bold text-white mb-6">
+              Detalle del Pedido
+            </h3>
+
+            <!-- Product card summary -->
+            <div
+              class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 mb-8"
+            >
+              <div>
+                <h4 class="font-bold text-white">
+                  Suplemento Lynto: Daily Balance
+                </h4>
+                <p class="text-xs text-gray-400">
+                  Preventa Unidad de 30 Cápsulas
+                </p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-gray-500 line-through block"
+                  >$34.990 CLP</span
+                >
+                <span class="font-bold text-emerald-400">$29.990 CLP</span>
+              </div>
+            </div>
+
+            <!-- Form Fields -->
+            <form id="checkout-form" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Nombre -->
+                <div>
+                  <label
+                    for="nombre"
+                    class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2"
+                    >Nombre Completo *</label
+                  >
+                  <input
+                    type="text"
+                    id="nombre"
+                    required
+                    placeholder="Ej: Ana María Rojas"
+                    class="form-input w-full px-4 py-3 text-sm"
+                  />
+                </div>
+
+                <!-- RUT -->
+                <div>
+                  <label
+                    for="rut"
+                    class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2"
+                    >RUT (RUT Chileno) *</label
+                  >
+                  <input
+                    type="text"
+                    id="rut"
+                    required
+                    placeholder="Ej: 12.345.678-9"
+                    class="form-input w-full px-4 py-3 text-sm"
+                  />
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label
+                  for="email"
+                  class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2"
+                  >Correo Electrónico *</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  placeholder="Ej: ana@lynto.cl"
+                  class="form-input w-full px-4 py-3 text-sm"
+                />
+              </div>
+
+              <!-- Dirección -->
+              <div>
+                <label
+                  for="direccion"
+                  class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2"
+                  >Dirección de Despacho (Calle, Número, Depto, Comuna) *</label
+                >
+                <input
+                  type="text"
+                  id="direccion"
+                  required
+                  placeholder="Ej: Av. Providencia 1234, Depto 402, Providencia"
+                  class="form-input w-full px-4 py-3 text-sm"
+                />
+              </div>
+
+              <!-- Cantidad & Price calculator summary -->
+              <div
+                class="flex flex-col sm:flex-row items-center justify-between p-4 bg-white/5 border border-white/5 rounded-xl gap-4"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="text-sm text-gray-400">Cantidad:</span>
+                  <div class="flex items-center">
+                    <button
+                      type="button"
+                      id="btn-restar"
+                      class="w-8 h-8 rounded-l-lg bg-white/10 hover:bg-white/15 text-white font-bold flex items-center justify-center transition-colors"
+                    >
+                      —
+                    </button>
+                    <input
+                      type="number"
+                      id="cantidad"
+                      name="cantidad"
+                      value="1"
+                      min="1"
+                      max="10"
+                      readonly
+                      class="hidden"
+                    />
+                    <div
+                      id="display-cantidad"
+                      class="w-12 h-8 bg-white/5 flex items-center justify-center font-bold text-white text-sm"
+                    >
+                      1
+                    </div>
+                    <button
+                      type="button"
+                      id="btn-sumar"
+                      class="w-8 h-8 rounded-r-lg bg-white/10 hover:bg-white/15 text-white font-bold flex items-center justify-center transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs text-gray-500 block"
+                    >Total Estimado</span
+                  >
+                  <span
+                    id="display-total"
+                    class="text-xl font-bold text-emerald-400"
+                    >$29.990 CLP</span
+                  >
+                </div>
+              </div>
+
+              <!-- Alert Messages -->
+              <div
+                id="error-alert"
+                class="hidden p-4 bg-red-950/40 border border-red-500/20 text-red-300 text-xs rounded-xl flex gap-3 items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 shrink-0 text-red-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"
+                  />
+                </svg>
+                <span id="error-text">Ocurrió un error.</span>
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                id="btn-submit"
+                class="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold text-sm tracking-wider uppercase shadow-lg shadow-emerald-500/10 hover:shadow-emerald-400/25 transition-all"
+              >
+                Proceder al Pago
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section
+      id="faq"
+      class="max-w-4xl mx-auto px-6 py-20 border-t border-white/5 space-y-12"
+    >
+      <h2 class="text-3xl font-serif font-bold text-center text-white">
+        Preguntas Frecuentes
+      </h2>
+
+      <div class="space-y-6">
+        <div class="p-6 rounded-xl border border-white/5 bg-white/5 space-y-2">
+          <h4 class="font-bold text-white">¿Cuándo recibiré mi pedido?</h4>
+          <p class="text-sm text-gray-400">
+            Por tratarse de una fase exclusiva de preventa inicial, el lote se
+            encuentra en producción final. Todos los despachos comenzarán a
+            distribuirse a partir del 20 de agosto de 2026.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl border border-white/5 bg-white/5 space-y-2">
+          <h4 class="font-bold text-white">
+            ¿Cuál es el valor del envío y cobertura?
+          </h4>
+          <p class="text-sm text-gray-400">
+            Realizamos despachos a todo el territorio chileno continental. La
+            tarifa se calcula de forma estándar según la comuna de destino y se
+            despacha bajo la modalidad 'Por Pagar' o costo fijo.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl border border-white/5 bg-white/5 space-y-2">
+          <h4 class="font-bold text-white">¿Tienen garantía de reembolso?</h4>
+          <p class="text-sm text-gray-400">
+            Sí, puedes desistir de tu compra de preventa en cualquier momento
+            previo al despacho. Consulta nuestras políticas legales al pie de
+            página para más detalles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-[#05060a]">
+      <div
+        class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-white text-xs"
+          >
+            L
+          </div>
+          <span class="text-lg font-bold tracking-tight text-white">lynto</span>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-6 text-xs text-gray-500">
+          <a
+            href="./terminos.html"
+            class="hover:text-gray-300 transition-colors"
+            >Términos de Compra</a
+          >
+          <a
+            href="./privacidad.html"
+            class="hover:text-gray-300 transition-colors"
+            >Política de Privacidad</a
+          >
+          <span class="text-gray-700">|</span>
+          <span>Lynto Lab® 2026. Todos los derechos reservados.</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Loading Screen Overlay (Cargando) -->
+    <div
+      id="loading-overlay"
+      class="hidden fixed inset-0 z-50 bg-[#07090e]/95 backdrop-blur-md flex-col items-center justify-center transition-all duration-300"
+    >
+      <div
+        class="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"
+      ></div>
+      <h3 class="mt-6 text-lg font-semibold text-white">
+        Creando tu Intención de Compra...
+      </h3>
+      <p class="text-xs text-gray-500 mt-2">
+        Conectando con la pasarela segura de Flow
+      </p>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="./assets/js/app.js"></script>
+  </body>
+</html>
