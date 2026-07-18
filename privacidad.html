@@ -5,109 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lynto | Política de Privacidad</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Outfit", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
   </head>
-  <body class="bg-[#07090e] text-gray-300 min-h-screen py-12 px-6">
+  <body>
     <div
-      class="max-w-3xl mx-auto glass-card rounded-3xl p-8 md:p-12 space-y-8 relative overflow-hidden"
+      class="container"
+      style="
+        max-width: 760px;
+        background: white;
+        border: 1px solid #ddd;
+        padding: 2rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      "
     >
       <div
-        class="flex items-center justify-between border-b border-white/10 pb-6"
+        class="flex justify-between items-center"
+        style="
+          border-b: 1px solid #eee;
+          padding-bottom: 1rem;
+          margin-bottom: 1.5rem;
+        "
       >
-        <div>
-          <h1 class="text-3xl font-bold text-white tracking-tight">
-            Política de Privacidad
-          </h1>
-          <p class="text-xs text-gray-500 mt-1">
-            Última actualización: 15 de Julio de 2026
-          </p>
-        </div>
+        <h1 style="margin: 0">Política de Privacidad</h1>
         <a
           href="./index.html"
-          class="px-4 py-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl text-xs font-semibold transition-all"
+          class="btn btn-secondary"
+          style="padding: 0.5rem 1rem; font-size: 0.85rem"
+          >Volver</a
         >
-          Volver
-        </a>
       </div>
 
-      <div class="space-y-6 text-sm leading-relaxed text-gray-400">
-        <section class="space-y-2">
-          <h2 class="text-lg font-bold text-white">
-            1. Recolección de Información
-          </h2>
+      <div style="font-size: 0.95rem; color: #555">
+        <section style="margin-bottom: 1.5rem">
+          <h2>1. Recolección de Información</h2>
+          <p>[Escribir qué datos personales se recolectan en el checkout]</p>
+        </section>
+
+        <section style="margin-bottom: 1.5rem">
+          <h2>2. Uso de los Datos</h2>
+          <p>[Escribir finalidad del almacenamiento de datos personales]</p>
+        </section>
+
+        <section style="margin-bottom: 1.5rem">
+          <h2>3. Almacenamiento Seguro</h2>
           <p>
-            Lynto recopila los siguientes datos personales proporcionados por
-            usted al momento de realizar la compra: nombre completo, RUT,
-            dirección de correo electrónico y dirección física de envío. Estos
-            datos son estrictamente necesarios para procesar su orden y
-            coordinar el despacho.
+            [Escribir sobre la seguridad física/lógica y uso de Google Sheets]
           </p>
         </section>
 
-        <section class="space-y-2">
-          <h2 class="text-lg font-bold text-white">2. Uso de los Datos</h2>
-          <p>Sus datos se utilizarán única y exclusivamente para:</p>
-          <ul class="list-disc list-inside space-y-1 pl-4">
-            <li>Procesar su pago mediante Flow.cl.</li>
-            <li>
-              Registrar la orden en nuestra base de datos interna (Google
-              Sheets).
-            </li>
-            <li>Gestionar y etiquetar el paquete de despacho físico.</li>
-            <li>
-              Enviar correos electrónicos informativos sobre el estado de su
-              preventa y el número de seguimiento.
-            </li>
-          </ul>
+        <section style="margin-bottom: 1.5rem">
+          <h2>4. Terceros</h2>
+          <p>[Escribir si se comparten datos con couriers de despacho]</p>
         </section>
 
-        <section class="space-y-2">
-          <h2 class="text-lg font-bold text-white">3. Almacenamiento Seguro</h2>
+        <section style="margin-bottom: 1.5rem">
+          <h2>5. Derechos ARCO</h2>
           <p>
-            Los datos transaccionales se almacenan en una base de datos
-            centralizada hospedada de manera privada en **Google Sheets** bajo
-            la cuenta de la empresa de las fundadoras de Lynto. El acceso está
-            restringido únicamente al equipo operativo indispensable de Lynto.
+            [Escribir cómo el usuario puede solicitar acceso, rectificación,
+            cancelación u oposición]
           </p>
         </section>
-
-        <section class="space-y-2">
-          <h2 class="text-lg font-bold text-white">4. Terceros</h2>
-          <p>
-            Sus datos de despacho (nombre, dirección y rut) serán compartidos
-            únicamente con las empresas logísticas nacionales (como Starken o
-            Chilexpress) encargadas del transporte del producto a su hogar. No
-            vendemos ni arrendamos bases de datos a terceros con fines
-            publicitarios.
-          </p>
-        </section>
-
-        <section class="space-y-2">
-          <h2 class="text-lg font-bold text-white">5. Derechos ARCO</h2>
-          <p>
-            Usted tiene derecho a revocar su consentimiento y solicitar el
-            acceso, rectificación, cancelación u oposición al tratamiento de sus
-            datos personales. Para ejercer este derecho, contáctenos en
-            soporte@lynto.cl.
-          </p>
-        </section>
-      </div>
-
-      <div
-        class="border-t border-white/10 pt-6 text-center text-xs text-gray-500"
-      >
-        Lynto Lab® - Santiago, Chile.
       </div>
     </div>
   </body>

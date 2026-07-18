@@ -1,110 +1,158 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap");
-
-:root {
-  --font-sans: "Outfit", sans-serif;
-  --font-serif: "Playfair Display", serif;
-
-  /* Color Palette - Elegant Dark Premium */
-  --bg-dark: #07090e;
-  --bg-card: rgba(13, 18, 30, 0.45);
-  --border-glow: rgba(255, 255, 255, 0.06);
-  --primary-glow: rgba(99, 102, 241, 0.15); /* Indigo glow */
-
-  --primary: #6366f1; /* Indigo */
-  --primary-hover: #4f46e5;
-  --accent: #10b981; /* Emerald */
-  --accent-hover: #059669;
-}
-
+/* Estilos CSS Básicos para Lynto - Para maquetar a mano */
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-dark);
-  color: #f3f4f6;
-  overflow-x: hidden;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
 }
 
-.font-serif {
-  font-family: var(--font-serif);
+header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem;
 }
 
-/* Custom Glassmorphism Card */
-.glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glow);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
-.glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.25);
-  box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.1);
-  transform: translateY(-2px);
+.nav-links a {
+  margin-left: 1.5rem;
+  color: #555;
+  text-decoration: none;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.nav-links a:hover {
+  text-decoration: underline;
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.section {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
 }
 
-@keyframes pulse-soft {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.35;
-    transform: scale(1.05);
-  }
+/* Formulario */
+.form-group {
+  margin-bottom: 1.5rem;
 }
 
-.pulse-glow {
-  animation: pulse-soft 8s ease-in-out infinite;
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
-/* Custom Input Styling */
-.form-input {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  color: #ffffff;
-  transition: all 0.2s ease;
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.form-input:focus {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+.form-control:focus {
+  border-color: #0066cc;
   outline: none;
 }
 
-/* Styled Scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
+.btn {
+  display: inline-block;
+  background-color: #0066cc;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
   border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+.btn:hover {
+  background-color: #0052a3;
+}
+
+.btn-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #d0d0d0;
+}
+
+/* Tabla Nutricional */
+.nutrition-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.nutrition-table th,
+.nutrition-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Alertas y Modales */
+.alert {
+  padding: 1rem;
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: white;
+  font-size: 1.5rem;
+}
+
+/* Flexbox utilities básicos */
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
 }

@@ -3,103 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lynto | ¡Compra Exitosa!</title>
+    <title>Lynto | Compra Exitosa</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Outfit", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
   </head>
   <body
-    class="bg-[#07090e] text-gray-200 min-h-screen flex items-center justify-center relative px-6"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    "
   >
-    <!-- Glows -->
     <div
-      class="absolute top-0 left-1/4 w-[400px] h-[400px] bg-emerald-950/10 rounded-full blur-[100px] pointer-events-none"
-    ></div>
-
-    <div
-      class="max-w-md w-full glass-card rounded-3xl p-8 md:p-10 text-center space-y-6 relative overflow-hidden animate-fade-in-up"
+      style="
+        max-width: 450px;
+        background: white;
+        border: 1px solid #ddd;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+      "
     >
-      <!-- Success Icon -->
-      <div
-        class="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 mx-auto"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="w-8 h-8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.5 12.75l6 6 9-13.5"
-          />
-        </svg>
-      </div>
+      <h1 style="color: #2e7d32">¡Compra Exitosa!</h1>
+      <p>[Insertar mensaje de agradecimiento y confirmación de la preventa]</p>
 
-      <!-- Message -->
-      <div class="space-y-2">
-        <h1 class="text-2xl font-bold text-white tracking-tight">
-          ¡Reserva de Preventa Confirmada!
-        </h1>
-        <p class="text-sm text-gray-400">
-          Hemos registrado tu pago exitosamente mediante la pasarela de Flow.cl.
-          ¡Gracias por confiar en Lynto!
+      <div
+        style="
+          background: #f1f8e9;
+          border: 1px solid #dcedc8;
+          padding: 1rem;
+          border-radius: 4px;
+          text-align: left;
+          margin: 1.5rem 0;
+        "
+      >
+        <h3 style="margin-top: 0; font-size: 0.9rem; color: #33691e">
+          ¿Qué sucede ahora?
+        </h3>
+        <p style="font-size: 0.85rem; margin-bottom: 0">
+          [Explicación de los pasos siguientes, plazos de envío y contacto de
+          soporte]
         </p>
       </div>
 
-      <!-- Info detail -->
-      <div
-        class="p-5 bg-white/5 border border-white/5 rounded-2xl text-left space-y-3"
+      <a href="./index.html" class="btn" style="display: block"
+        >Volver al Inicio</a
       >
-        <h3
-          class="text-xs font-bold text-emerald-400 uppercase tracking-widest"
-        >
-          ¿Qué sucede ahora?
-        </h3>
-        <ul class="text-xs text-gray-400 space-y-2 list-disc list-inside">
-          <li>
-            Recibirás un correo electrónico de confirmación con los detalles de
-            tu transacción.
-          </li>
-          <li>
-            Tu pedido ingresará a nuestra cola de despachos prioritaria de
-            preventa.
-          </li>
-          <li>
-            Los despachos oficiales se iniciarán el **20 de agosto de 2026**. Te
-            notificaremos con el número de seguimiento de Starken o Chilexpress
-            una vez enviado.
-          </li>
-        </ul>
-      </div>
-
-      <!-- Action -->
-      <div class="pt-2">
-        <a
-          href="./index.html"
-          class="block w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-sm tracking-wide transition-all shadow-lg shadow-indigo-600/10 hover:shadow-indigo-500/20"
-        >
-          Volver a la Página Principal
-        </a>
-      </div>
-
-      <div class="text-[10px] text-gray-600">
-        Si tienes alguna duda con tu pago, por favor contáctanos a
-        soporte@lynto.cl indicando tu RUT de compra.
-      </div>
     </div>
   </body>
 </html>
