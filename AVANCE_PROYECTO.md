@@ -1,86 +1,120 @@
-# 📊 INFORME DE AVANCE DE PROYECTO: FRONTEND (DÍA 4)
+# 📊 INFORME DE AVANCE DE PROYECTO: FRONTEND Y BACKEND
 
 **Proyecto:** Landing Page Preventa Suplemento "Lynto"  
-**Estado General:** 🟢 **Lienzo HTML/CSS Básico y Lógica de Integración Listos**  
-**Tecnologías:** HTML5 Semántico, Vanilla JavaScript (ES6+), Vanilla CSS (CSS3) para maquetación a mano.  
-**Arquitectura:** Zero-Trust (Frontend tonto, lógica y cálculos en backend).  
+**Estado General:** 🟢 **Lógica Core Lista | Acceso a Sheets y Flow Desbloqueados**  
+**Plazo:** Estricto de 8 días (Lanzamiento programado para Agosto de 2026)  
+**Última Actualización:** 19 de Julio de 2026. Tenemos hasta el 25
 
 ---
 
 ## 🔍 Resumen Ejecutivo
 
-Hemos reestructurado el frontend para dejar un **esqueleto limpio y simplificado**. Se eliminó la maquetación predefinida con Tailwind CSS para permitir al equipo diseñar y armar la interfaz visual completamente **a mano**. 
+El proyecto ha avanzado a la fase de **Integración Real**. Los accesos a la planilla corporativa de Google Sheets y las llaves API de Flow.cl están en proceso de recepción/configuración. 
 
-Todas las secciones críticas cuentan con marcadores de posición (`[Historia de la marca]`, `[Respuesta]`, `[Rellenar info de despacho]`) listos para ser editados. Se mantiene el **100% de la lógica core y de seguridad en Vanilla JavaScript** conectada al simulador del backend.
+El foco técnico se centra en:
+1.  **Tech Lead:** Estructurar la hoja maestra de autogestión en Google Sheets (Sheets `"Inventario"`, `"Pedidos"`, `"Configuracion"` y `"Nutricion"`).
+2.  **Backend:** Finalizar la API `get_config` para servir los datos dinámicos al front.
+3.  **Frontend:** Diseñar la maquetación CSS a mano e implementar la inyección dinámica de contenidos desde Sheets.
 
----
-
-## 🟢 1. Hitos Completados (100% Listos)
-
-Las siguientes tareas de cimentación y lógica están terminadas y fusionadas en la rama `main`:
-
-*   **Esqueleto HTML5 y Rutas Simplificadas:**
-    *   `index.html`: Estructura semántica básica libre de frameworks CSS, con marcadores para Hero, suplemento, tabla nutricional y checkout.
-    *   `exito.html`: Pantalla básica de redirección pospago con marcadores de contacto y logística.
-    *   `terminos.html` y `privacidad.html`: Estructura para términos legales y de privacidad con desgloses listos para rellenar.
-*   **Lógica de Negocio y Seguridad (`assets/js/app.js`):**
-    *   **Política Zero-Trust:** El JS envía únicamente datos del cliente y cantidad. Cero lógica de cálculo de precio final local.
-    *   **Formateador y Validador de RUT:** Lógica en Vanilla JS que limpia caracteres inválidos, formatea el RUT (ej. `12.345.678-K`) en tiempo real y valida el dígito verificador.
-    *   **Validaciones Locales:** Validación de formato de correo y obligatoriedad de campos.
-    *   **Overlay de Carga:** Capa bloqueante de pantalla (`#loading-overlay`) para evitar reenvíos múltiples de peticiones.
-*   **Entorno de Desarrollo y QA:**
-    *   Configuración local con **Vite** para recarga instantánea.
-    *   Linter y Formateadores (**ESLint** y **Prettier**) instalados y funcionando para uniformar el código.
-    *   **localStorage Overrides:** Habilitado para cambiar la URL del Apps Script desde la consola del navegador.
+Los únicos bloqueos pendientes por parte de las clientas corresponden a **decisiones de negocio de checkout**, **activos de marca** y **credenciales de dominio**.
 
 ---
 
-## 🟡 2. Tareas en Desarrollo Activo (Foco del Equipo Frontend)
+## ⚙️ Especificación Técnica: Personalización Dinámica desde Google Sheets
 
-Dado el cambio hacia maquetación manual, el equipo frontend tiene como tareas prioritarias:
-
-*   **Maquetación y Diseño CSS:** Escribir las hojas de estilo personalizadas en `assets/css/style.css` a partir del esqueleto actual.
-*   **Reemplazo de Placeholders:** Llenar las secciones una vez que las clientas entreguen los copys oficiales.
-*   **Definición Visual de Carga:** Diseñar la animación del spinner en la pantalla de carga (`#loading-overlay`) según el estilo gráfico elegido.
-
----
-
-## 🔴 3. Bloqueos y Cuellos de Botella (Dependencias del Cliente)
-
-El avance final del proyecto está condicionado a la entrega de la información del Checklist de Inicio:
-
-### 🎨 A. Identidad Visual y Diseño
-*   [ ] **Logotipos:** Archivos en PNG transparente o SVG.
-*   [ ] **Paleta de Colores y Tipografías:** Códigos hexadecimales y archivos/enlaces de fuentes tipográficas para incorporar en el CSS.
-*   [ ] **Imágenes del Suplemento:** Fotografías en alta resolución y lifestyle.
-
-### ✍️ B. Copys y Contenido Escrito
-*   [ ] **Contenido de la Landing:** Textos oficiales del Hero, beneficios y la historia de fundación ("Acerca de Nosotras").
-*   [ ] **Ficha Técnica:** Listado de ingredientes oficiales y valores finales para la tabla nutricional.
-*   [ ] **FAQs:** Respuestas definitivas para las preguntas frecuentes de preventa.
-
-### ⚙️ C. Reglas y Logística
-*   [ ] **Estructura de Envío:** Definir costos de despacho por comunas o si se mantendrá bajo modalidad "Por Pagar" (para reflejarlo en el checkout).
-*   [ ] **Límites de Venta:** Confirmar límite máximo de unidades de preventa por cliente.
-
-### ⚖️ D. Legal y Credenciales
-*   [ ] **Textos Legales:** Políticas de reembolso y términos legales finales.
-*   [ ] **Acceso a Dominio y Pasarela:** Datos de NIC Chile para DNS y credenciales Flow.cl.
-
----
-
-## 🗺️ Mapa de Ruta hacia el Lanzamiento (Sprint Restante)
+Las clientas modificarán la página web directamente desde su Google Sheet corporativo sin tocar código (textos, precios, tabla nutricional, disclaimer y fotos). El flujo transaccional se compone de dos fases:
 
 ```mermaid
-graph TD
-    A[Recibir Contenido y Fotos] --> B[Reemplazar Textos y Assets en index.html]
-    B --> C[Definir Tarifas de Envío si aplica]
-    C --> D[Pruebas de Integración con Apps Script Real]
-    D --> E[Configurar Dominio Personalizado en DNS]
-    E --> F[Habilitar GitHub Pages con SSL]
-    F --> G[Lanzamiento Oficial 🚀]
+sequenceDiagram
+    rect rgb(13, 18, 30)
+        note right of Frontend: Fase 1: Carga Dinámica desde Google Sheets
+        Frontend->>Backend: GET /exec?action=get_config (Carga de Página)
+        Backend->>Google Sheets: Lee pestañas "Configuracion" y "Nutricion"
+        Google Sheets-->>Backend: Retorna valores de celdas
+        Backend-->>Frontend: Retorna JSON (textos, fotos, límites y tabla)
+        Frontend->>Frontend: Inyecta en el DOM (reemplaza placeholders)
+    end
+    
+    rect rgb(7, 9, 14)
+        note right of Frontend: Fase 2: Checkout Transaccional
+        Frontend->>Backend: POST /exec (Intención de compra - Zero Trust)
+        Backend->>Backend: Valida RUT, Email, Cantidad, Cupón y Tarifa Envío en BD
+        Backend->>Backend: Firma petición (HMAC-SHA256) y llama a Flow API Real
+        Backend-->>Frontend: Retorna URL de redirección a Flow.cl
+        Frontend->>Flow: Redirige al cliente a pagar (Webpay/Mach)
+        Flow-->>Backend: Webhook S2S (Confirmación de Pago)
+        Backend->>Backend: Bloquea BD (LockService), cambia estado a PAGADO y reduce stock
+    end
 ```
 
 ---
 
-*Nota: Este documento debe ser actualizado a medida que las clientas entreguen los recursos de diseño y contenido listados en la sección 3.*
+## 🧑‍💻 Desglose de Tareas por Rol y Desarrollador
+
+### 1. Backend 1: Tech Lead (DevOps, QA, BD y API Flow) 
+**Misión:** Infraestructura, control de calidad, base de datos maestra y pasarela de pagos.
+
+*   **🟢 Completado:**
+    *   Configuración inicial de repositorios desacoplados (`Lynto-frontend` y `Lynto-backend`).
+    *   Arquitectura Zero-Trust y seguridad criptográfica HMAC-SHA256 para Flow.
+    *   Esqueleto HTML/CSS básico y validadores en frontend.
+*   **🟡 En Progreso:**
+    *   **Configuración Flow Producción:** Reemplazar llaves de Sandbox por llaves de producción (`FLOW_API_KEY`, `FLOW_SECRET_KEY`) en Script Properties.
+*   **🔴 Pendiente (Bloqueado por Cliente):**
+    *   **Vincular Dominio:** Configurar los registros DNS en **NIC Chile** hacia GitHub Pages y habilitar el certificado SSL. *Bloqueado por credenciales de NIC Chile.*
+    *   **Documentación Técnica Fase 2:** Redactar manuales de uso del Sheets y arquitectura de traspaso.
+    *   **QA & Code Review:** Aprobar los PRs asegurando `LockService` y confirmación S2S.
+
+---
+
+### 2. Backend 2: (Lógica Core y Concurrencia)
+**Misión:** Motor transaccional, API de configuración y gestión de estado.
+
+*   **🟢 Completado:**
+    *   Endpoints `doPost` y `doGet` simulados con respuesta JSON.
+    *   Protección contra sobreventas mediante `LockService.getScriptLock()`.
+    *   Validaciones de servidor de RUT, Email y Stock.
+*  **🔴 Desarrollar (Lógica Pendiente):** 
+    *   **Creación de Hoja Maestra:** Diseñar la estructura de las pestañas en el Google Sheet oficial:
+        * `"Inventario"` (SKU, Nombre, Precio, Stock).
+        *   `"Pedidos"` (ID, Fecha, Nombre, RUT, Email, Dirección, Cantidad, Monto, Estado, FlowOrder ID).
+        *   `"Configuracion"` (Pares Clave/Valor para textos del Home, fotos, límites de compra, disclaimer legal).
+        *   `"Nutricion"` (Componente, Cantidad por porción, % DDR).
+        *   `"TarifasEnvio"` / `"Cupones"` (Si las clientas deciden activarlos).
+    *   **API `get_config`:** Implementar en `doGet.js` la lectura de las pestañas `"Configuracion"` y `"Nutricion"` y retornar el JSON estructurado para el front.
+    *   **Lógica de Envíos y Cupones (Si se aprueban):** Si las clientas eligen selector de envío o cupones de descuento, sumar costo de envío y aplicar porcentaje de descuento al `montoTotal` en `procesarIntencionCompra`.
+
+---
+
+### 3. Especialista Frontend
+**Misión:** Maquetación CSS manual, renderizado dinámico e interfaz de conversión.
+
+*   **🟢 Completado:**
+    *   Esqueleto HTML5 semántico (`index.html`, `exito.html`, `terminos.html`, `privacidad.html`).
+    *   Validación y formateador de RUT chileno en vivo (Módulo 11) y correo.
+    *   Controlador de cantidad e inhabilitador de doble clic (`#loading-overlay`).
+*   **🔴 Desarrollar (Lógica Pendiente):**
+    *   **Inyección Dinámica:** Implementar el `fetch` GET a `API_URL?action=get_config` al cargar la página para inyectar los textos, fotos, disclaimer y filas de la tabla nutricional.
+    *   **Casilla de Cupones / Selector de Envíos:** Si se aprueban, agregar el input de código promocional o el desplegable de regiones en el formulario de checkout.
+    *   **Maquetación CSS a Mano:** Escribir los estilos visuales finales en `assets/css/style.css`.
+
+---
+
+## 🔴 4. Decisiones y Bloqueos Pendientes del Cliente
+
+Tomando como base el informe oficial entregado a las clientas, los elementos pendientes por su parte son:
+
+### ⚙️ 1. Reglas de Negocio (Checkout y Pagos)
+*   [ ] **Estructura de Despacho:** Definir si se agregará un selector de regiones con tarifa fija (ej. RM $3.500 / Regiones $5.000) o si se mantendrá bajo la modalidad **"Por Pagar"** al recibir.
+*   [ ] **Cupones de Descuento:** Definir si se realizarán campañas con códigos promocionales (ej. `"PREVENTA20"`) para programar la casilla de descuento en el carrito.
+
+### 🎨 2. Activos de Diseño y Multimedia
+*   [ ] **Identidad Visual:** Logotipos en alta calidad (PNG sin fondo o SVG), paleta de colores corporativa y tipografías oficiales.
+*   [ ] **Fotografías del Producto:** Imágenes en alta resolución (fondo transparente y uso real/lifestyle).
+
+### 🌐 3. Dominio Oficial (Despliegue)
+*   [ ] **Credenciales de NIC Chile:** Usuario y contraseña para la vinculación del dominio oficial y la generación del certificado de seguridad HTTPS (SSL).
+
+---
+
+*Nota: Este documento debe ser actualizado a medida que las clientas entreguen los accesos a NIC Chile y definan las reglas de envío/cupones.*
