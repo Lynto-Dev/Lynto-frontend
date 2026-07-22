@@ -1,0 +1,55 @@
+DOCUMENTO DE DISEÑO INTERNO (BLUEPRINT)
+
+Arquitectura y Reglas de Ingenierı́a
+Proyecto: Preventa E-commerce Suplementos - Lynto
+
+1. Stack Tecnológico (The Core)
+Frontend (La Vitrina): HTML5, Vanilla JavaScript y Tailwind CSS (vı́a CDN). Cero empaquetadores.
+Alojamiento estático global y de alto rendimiento en GitHub Pages con dominio personalizado.
+Backend (El Motor): Google Apps Script (GAS) configurado como Web App (endpoint doPost).
+Arquitectura Serverless sin costos fijos.
+Base de Datos (La Bodega): Google Sheets. Dos hojas principales: Ïnventario”(control de stock
+maestro) y ”Pedidos”(registro transaccional).
+Pasarela de Pagos: API Oficial de Flow.cl (Webpay, Mach, Transferencias).
+
+2. Reglas de Seguridad (Inquebrantables)
+Polı́tica Zero-Trust (Frontend Tonto): La interfaz solo recolecta datos. NUNCA calcula
+precios finales para evitar manipulación en el cliente. El backend es la única fuente de la verdad
+para el costo.
+Concurrencia Estricta: Uso obligatorio de LockService.getScriptLock() en GAS antes de
+leer o escribir en la hoja de Inventario para prevenir sobreventas durante colisiones de tráfico.
+Seguridad Transaccional: Generación de firmas criptográficas (HMAC-SHA256) en el backend
+para validar toda comunicación saliente hacia la API de Flow.
+Verificación S2S (Server-to-Server): La reducción final de stock solo se ejecuta tras la confirmación de pago originada por el Webhook de Flow.
+
+1
+
+3. Flujo Transaccional en Dos Fases
+Fase A: Intención de Compra
+1. Usuario completa formulario. Frontend envı́a POST a GAS.
+2. GAS recibe datos, consulta precio en BD, calcula total y registra fila en estado ”PENDIENTE”.
+3. GAS firma la petición y llama a Flow para crear la orden. Devuelve URL al Frontend.
+4. Frontend redirige al cliente al portal de pago.
+Fase B: Confirmación (Webhook)
+1. Flow recibe el pago y envı́a un POST (Webhook) a nuestro endpoint de GAS.
+2. GAS valida token contra API de Flow para evitar spoofing.
+3. Actualiza la BD: Estado cambia a ”PAGADO se descuenta definitivamente el stock.
+2
+
+4. DevOps
+Separación de Entornos: Repositorios independientes
+preventa-backend) para evitar despliegues cruzados.
+
+(preventa-frontend
+
+y
+
+Control de Versiones Local: Uso de CLI clasp (Command Line Apps Script Projects) para
+sincronizar el código del backend entre Google Cloud y los entornos locales.
+GitFlow y Code Review: Desarrollo en ramas secundarias (feature/nombre). La rama main
+es sagrada y solo recibe código funcional vı́a Pull Requests aprobados mediante control de
+calidad (QA).
+
+2
+
+

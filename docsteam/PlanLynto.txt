@@ -1,0 +1,99 @@
+Plan de Trabajo y Arquitectura de Repositorios
+Proyecto Preventa Suplemento - Lynto
+Equipo de Desarrollo
+15 de julio de 2026
+
+1.
+
+Distribución del Equipo y Tareas
+
+El proyecto operará con un escuadrón de tres desarrolladores trabajando en paralelo bajo una
+arquitectura Serverless (GitHub Pages + Google Apps Script + Google Sheets). La distribución
+de responsabilidades se define a continuación:
+
+1.1.
+
+Especialista Frontend (El Activo)
+
+Misión: Construir la interfaz de conversión One-Page bajo el enfoque Zero-Trust.
+Maquetación con HTML5 y Tailwind CSS (vı́a CDN).
+Diseño responsive, mobile-first y optimización extrema de velocidad.
+Lógica en Vanilla JavaScript para recolectar datos del formulario de checkout (Nombre,
+RUT, Email, Dirección, Cantidad).
+Consumo del endpoint del servidor (Fase A) y redirección final del cliente a la URL de
+pago de Flow.
+
+1.2.
+
+Backend 1: Tech Lead (DevOps, QA, BD y API Flow)
+
+Misión: Infraestructura, calidad, persistencia y pasarela de pagos.
+DevOps & Entorno: Configurar los repositorios iniciales, implementar flujos automatizados con GitHub Actions para integración continua, y gestionar la sincronización de GAS
+localmente con la CLI clasp.
+Base de Datos: Creación, formateo y estructuración de las hojas de Google Sheets (Inventario y Pedidos).
+Pasarela de Pagos: Construir la función que realiza el POST hacia la API de Flow (generación de firma criptográfica HMAC-SHA256 y estructuración del payload para crear la
+orden de pago).
+QA y Code Review: Revisar y aprobar todos los Pull Requests asegurando los estándares
+de seguridad antes de fusionar a la rama de producción.
+
+1.3.
+
+Backend 2: (Lógica Core y Concurrencia)
+
+Misión: Motor transaccional seguro y gestión de estado.
+Concurrencia: Implementación obligatoria de LockService.getScriptLock() en todas las funciones de escritura para prevenir sobreventas durante colisiones de tráfico simultáneo.
+1
+
+Validaciones: Lógica estricta de validación de datos en el servidor (sanitización de payloads, validación de formato de RUT, cruce de stock disponible vs. solicitado).
+Gestión de Fetchs y Routing: Recepción y enrutamiento de las peticiones HTTP del
+frontend (doPost), y ejecución de las rutinas de lectura/escritura en la base de datos
+(Sheets) basándose en las validaciones previas.
+
+2.
+
+Estrategia de Repositorios y GitFlow Adaptado
+
+Dado que Google Apps Script reside en la nube y el frontend es un sitio estático, la gestión
+del código exige dos repositorios separados para evitar despliegues cruzados y proteger la lógica
+del servidor.
+
+2.1.
+
+Estructura de Repositorios
+preventa-frontend: Contiene index.html, reglas CSS, assets y app.js. Despliegue continuo directo vı́a GitHub Pages.
+preventa-backend: Contiene los archivos .gs y la configuración de permisos en appsscript.json.
+Este código se sincroniza con Google de manera local usando clasp.
+
+2.2.
+
+Flujo de Trabajo (GitFlow Simplificado)
+
+Aunque el volumen total de código del backend sea menor al de un servidor Node.js tradicional, versionar localmente asegura un historial limpio, facilita el rollback y permite un QA
+riguroso. El ciclo de vida de una nueva feature sigue estos pasos:
+1. Clonación y Configuración Inicial: El equipo clona sus respectivos repositorios. Para
+trabajar en el backend, es indispensable autenticarse en Google:
+npm install -g @google/clasp
+clasp login
+clasp clone "ID_DEL_SCRIPT_DE_PRODUCCION"
+
+2. Creación de Ramas de Trabajo: La rama main es sagrada. Todo desarrollo inicia
+aislando el código en una rama hija:
+git checkout -b feature/lock-service-inventario
+
+3. Desarrollo y Sincronización Local (Exclusivo Backend): Al modificar un archivo .gs en el editor (ej. VS Code), se debe subir al entorno de Google para probar su
+funcionamiento real:
+clasp push
+
+4. Commit y Push: Una vez la funcionalidad pasa las pruebas locales:
+git add .
+git commit -m "Implementa LockService en doPost para evitar sobreventa"
+git push origin feature/lock-service-inventario
+
+2
+
+5. Pull Request y QA: Se abre un PR en GitHub. El responsable de QA revisa la lógica,
+aprueba los cambios y realiza el merge hacia main.
+
+3
+
+

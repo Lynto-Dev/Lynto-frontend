@@ -1,0 +1,56 @@
+Alcance de Proyecto y Nivel de Servicio
+Proyecto: Landing Page E-commerce para la preventa de suplementos
+Fecha: 10 de julio de 2026
+
+1. Alcance del Desarrollo (Diseño y Estructura)
+Se desarrollará un sitio web ultraligero y personalizado a su marca, orientado 100 % a la promoción y
+venta de un producto único.
+Estructura de la Plataforma:
+Diseño Responsive: Optimización total para visualización en dispositivos móviles (celulares) y computadores de escritorio.
+Landing Page Principal a la medida:
+• Información de su empresa, historia y equipo fundador a personalizar.
+• Presentación del producto en preventa (Beneficios, tabla nutricional, modo de uso).
+• Botón de Pago directo integrado en la misma vista vı́a Flow.
+Páginas Legales y Normativas:
+• Términos y condiciones de compra.
+• Polı́tica de Privacidad.
+• Disclaimer legal obligatorio del producto (Suplemento alimenticio).
+
+2. Infraestructura Tecnológica y Propiedad
+A diferencia de arrendar servicios de terceros, la arquitectura seleccionada garantiza la propiedad absoluta para ustedes.
+Propiedad del Código: El código fuente completo y el repositorio serán 100 % propiedad de Lynto.
+Independencia de Cuentas: Todas las cuentas necesarias (Flow, GitHub, Google) serán creadas y
+administradas directamente por ustedes.
+Hosting Gratuito de Alto Rendimiento: Despliegue en GitHub Pages utilizando su dominio propio,
+eliminando costos mensuales de servidores.
+Seguridad y Pagos: Configuración de certificado SSL (HTTPS) e integración completa con API de
+Flow para confirmación automática de pagos.
+Gestión Ágil (Backend): Control de inventario y pedidos centralizado mediante Google Sheets, directamente editable por ambas.
+
+1
+
+3. Garantı́as, Soporte y Capacitación
+Mi compromiso trasciende la entrega del código, asegurando estabilidad durante el evento crı́tico de la
+preventa.
+Documentación Integral: Entrega de un manual detallado de uso del código, gestión del Google
+Sheets y proceso de despliegue.
+Documentación Técnica Fase 2: Archivo de arquitectura técnica preparado para facilitar la futura
+transición a un e-commerce escalable.
+Soporte: Asistencia técnica dedicada durante toda la preventa y post-entrega.
+Respuestas: Tiempo de respuesta garantizado a incidencias menor a 24 horas.
+Garantı́a de Código y Correcciones: Corrección de cualquier error o bug de desarrollo sin costo
+durante el perı́odo de soporte.
+Seguro de Edición: Ustedes tendrán la libertad de editar el contenido visual desde Google Sheets. Si
+una modificación altera o rompe la estructura del sitio, basta con llamarme, corregiré como parte del
+soporte.
+
+4. Resoluciones y Acuerdos Financieros
+Inversión Total Acordada: $149.990 CLP.
+Plazo entrega: En base a la urgencia: 1 semana aprox.
+Escalabilidad Asegurada: Al concluir la preventa, les garantizo un precio preferencial exclusivo
+para la “Fase 2”: migración a e-commerce completo multiproducto o panel WebApp. (WebNinja no
+les ofrece esto juju).
+
+2
+
+

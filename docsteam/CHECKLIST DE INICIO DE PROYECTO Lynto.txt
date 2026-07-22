@@ -1,0 +1,145 @@
+CHECKLIST DE INICIO DE PROYECTO: PREVENTA E-COMMERCE
+Para asegurar que la plataforma de preventa esté operativa y probada en el plazo de 8 días,
+se requiere la entrega de la siguiente información y recursos.
+1. Accesos Técnicos
+Estos datos son críticos para conectar la página web con el mundo real y procesar los
+pagos.
+•
+
+[ ] Acceso al Dominio: Credenciales (usuario y contraseña) del registrador de
+dominio (ej. NIC Chile) para configurar los DNS y habilitar el certificado de
+seguridad SSL.
+
+•
+
+[ ] Credenciales de Pasarela de Pago (Flow): Llaves API de Producción de su
+cuenta de Flow (o en su defecto, acceso temporal a la cuenta para que yo genere las
+llaves).
+
+•
+
+[ ] Correo Corporativo de Contacto: El correo oficial al que llegarán las dudas de
+los clientes y desde donde (dependiendo del plan) se podrían enviar las
+notificaciones.
+
+•
+
+[ ] Cuenta de Google / Gmail de la Empresa (Para Plan A.1): Necesaria para
+alojar la planilla de Google Sheets y el código de servidor (Apps Script), de modo
+que ustedes sean las dueñas absolutas de su información.
+
+2. Catálogo de Productos
+La información exacta que se mostrará y procesará en el carrito de compras.
+•
+
+[ ] Inventario Inicial: Un documento (Excel/Word) con la lista exacta de productos
+que entrarán en la preventa. UN SOLO PRODUCTO PARA ESTE SPRINT
+
+•
+
+[ ] Precios y Stock: Precio de venta final para el cliente y el número de unidades
+máximas disponibles para vender en esta fase. UN SOLO PRODUCTO PARA
+ESTE SPRINT
+
+•
+
+[ ] Fotografías del Producto: Imágenes en alta resolución (idealmente fondo
+blanco o transparente, y fotos de lifestyle). UN SOLO PRODUCTO PARA ESTE
+SPRINT
+
+•
+
+[ ] Información Técnica Obligatoria (Suplementos): Tabla nutricional clara
+(imagen o texto), lista de ingredientes, advertencias de consumo, modo de uso y
+porción recomendada.
+
+3. Identidad Visual y Textos
+El "Look & Feel" para que la página respire la esencia de su marca.
+•
+
+[ ] Logotipos: Archivos del logo de la marca (en formato PNG con fondo
+transparente o SVG, en sus versiones a color y blanco/negro).
+
+•
+
+[ ] Manual de Marca (Opcional pero ideal): Códigos de color hexadecimales y
+tipografías oficiales de la empresa.
+
+•
+
+[ ] Copy (Textos) del "Home": Un párrafo potente de bienvenida ("Gancho"), los 3
+beneficios principales del producto y un llamado a la acción.
+
+•
+
+[ ] Sección "Acerca de Nosotras": Breve historia de las fundadoras, el propósito
+de la startup y la visión detrás de la formulación del suplemento. SOLO SERÁ
+UNA LANDING
+
+4. Reglas de Negocio
+Cómo funcionará la estrategia de venta tras bambalinas.
+•
+
+[ ] Límites de Compra: ¿Existe un límite de unidades por persona para evitar que
+revendedores agoten el stock de preventa?
+
+•
+
+[ ] Promociones/Cupones: ¿Habrá códigos de descuento para familiares o early
+birds? Si es así, definir el nombre del código (ej. "PREVENTA20") y el porcentaje a
+descontar.
+
+•
+
+[ ] Fecha y Hora de Lanzamiento: Momento exacto en el que se debe habilitar el
+botón de pago y liberar el acceso al público.
+
+5. Logística y Envíos
+Cómo y cuándo llegarán los productos a los compradores.
+•
+
+[ ] Métodos de Despacho: Definir con qué couriers se trabajará (ej. Starken,
+Chilexpress, Correos de Chile, entregas presenciales).
+
+•
+
+[ ] Estructura de Costos de Envío: Definir si el envío será "Por Pagar" (el cliente
+paga al recibir), si habrá un costo fijo por zona (ej. $3.500 en Región Metropolitana,
+$5.000 Regiones), o si el envío es gratis.
+
+•
+
+[ ] Fechas Comprometidas: Texto exacto de la promesa de entrega (ej. "Al ser una
+preventa, los despachos comenzarán a realizarse a partir del día XX de Agosto").
+
+6. Aspectos Legales (Protección de la Empresa)
+Cláusulas obligatorias para evitar contratiempos con clientes y autoridades sanitarias.
+ESTO SERA UNA APGINA APARTE
+•
+
+[ ] Disclaimer de Suplemento Alimenticio: Frase legal obligatoria (Ej: "Este
+producto es un suplemento alimenticio y no un medicamento. No suple una
+alimentación equilibrada...").
+
+•
+
+[ ] Políticas de Reembolso/Devolución: Reglas claras en caso de que un cliente se
+arrepienta de la compra o reciba un producto dañado.
+
+•
+
+[ ] Términos y Condiciones / Privacidad: Texto legal sobre el tratamiento de datos
+personales y condiciones de la preventa.
+
+•
+
+[ ] Protocolo de Boletas (SII): Confirmación de cómo emitirán las boletas de las
+ventas diarias (Ej: Manualmente en el portal Mipyme del SII al final de cada día, o
+usando algún software externo que ya posean).
+
+Nota: La tecnología y el código son rápidos, pero el cuello de botella en todo desarrollo
+siempre es la recolección de los textos, fotos y reglas de envío. Si logramos tener el 100%
+de esta carpeta lista a la brevedad, me comprometo a tenerles la plataforma funcional para
+revisión la próxima semana.
+
+

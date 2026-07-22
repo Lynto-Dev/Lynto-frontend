@@ -37,6 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorAlert = document.getElementById("error-alert");
   const errorText = document.getElementById("error-text");
 
+  // Elementos del Newsletter
+  const newsletterForm = document.getElementById("newsletter-form");
+  const newsletterEmail = document.getElementById("newsletter-email");
+  const newsletterMsg = document.getElementById("newsletter-msg");
+
   // --- CONTROL DE CANTIDAD ---
   const actualizarVisualizacionPrecio = () => {
     const cant = parseInt(cantidadInput.value, 10) || 1;
@@ -45,52 +50,54 @@ document.addEventListener("DOMContentLoaded", () => {
     displayTotal.innerText = `$${total.toLocaleString("es-CL")} CLP`;
   };
 
-  btnRestar.addEventListener("click", () => {
-    let current = parseInt(cantidadInput.value, 10) || 1;
-    if (current > 1) {
-      cantidadInput.value = current - 1;
-      actualizarVisualizacionPrecio();
-    }
-  });
+  if (btnRestar && btnSumar) {
+    btnRestar.addEventListener("click", () => {
+      let current = parseInt(cantidadInput.value, 10) || 1;
+      if (current > 1) {
+        cantidadInput.value = current - 1;
+        actualizarVisualizacionPrecio();
+      }
+    });
 
-  btnSumar.addEventListener("click", () => {
-    let current = parseInt(cantidadInput.value, 10) || 1;
-    if (current < 10) {
-      // Límite por transacción recomendado en reglas de negocio
-      cantidadInput.value = current + 1;
-      actualizarVisualizacionPrecio();
-    } else {
-      mostrarError(
-        "Por motivos de seguridad, el límite máximo por compra de preventa es de 10 unidades.",
-      );
-    }
-  });
+    btnSumar.addEventListener("click", () => {
+      let current = parseInt(cantidadInput.value, 10) || 1;
+      if (current < 10) {
+        cantidadInput.value = current + 1;
+        actualizarVisualizacionPrecio();
+      } else {
+        mostrarError(
+          "Por motivos de seguridad, el límite máximo por compra de preventa es de 10 unidades.",
+        );
+      }
+    });
+  }
 
   // --- FORMATEADOR Y VALIDADOR DE RUT CHILENO ---
-  rutInput.addEventListener("input", (e) => {
-    let value = e.target.value.replace(/[^0-9kK]/g, "");
-    if (value.length > 9) {
-      value = value.slice(0, 9);
-    }
-
-    // Formatear dinámicamente como 12.345.678-9
-    if (value.length > 1) {
-      const dv = value.slice(-1).toUpperCase();
-      const numbers = value.slice(0, -1);
-
-      let formatted = "";
-      if (numbers.length > 6) {
-        formatted = `${numbers.slice(0, -6)}.${numbers.slice(-6, -3)}.${numbers.slice(-3)}-${dv}`;
-      } else if (numbers.length > 3) {
-        formatted = `${numbers.slice(0, -3)}.${numbers.slice(-3)}-${dv}`;
-      } else {
-        formatted = `${numbers}-${dv}`;
+  if (rutInput) {
+    rutInput.addEventListener("input", (e) => {
+      let value = e.target.value.replace(/[^0-9kK]/g, "");
+      if (value.length > 9) {
+        value = value.slice(0, 9);
       }
-      e.target.value = formatted;
-    } else {
-      e.target.value = value.toUpperCase();
-    }
-  });
+
+      if (value.length > 1) {
+        const dv = value.slice(-1).toUpperCase();
+        const numbers = value.slice(0, -1);
+
+        let formatted = "";
+        if (numbers.length > 6) {
+          formatted = `${numbers.slice(0, -6)}.${numbers.slice(-6, -3)}.${numbers.slice(-3)}-${dv}`;
+        } else if (numbers.length > 3) {
+          formatted = `${numbers.slice(0, -3)}.${numbers.slice(-3)}-${dv}`;
+        } else {
+          formatted = `${numbers}-${dv}`;
+        }
+        e.target.value = formatted;
+      } else {
+        e.target.value = value.toUpperCase();
+      }
+    });
+  }
 
   const validarRut = (rut) => {
     if (!rut) return false;
@@ -124,92 +131,143 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- MENSAJES DE ERROR EN UI ---
   const mostrarError = (msg) => {
-    errorText.innerText = msg;
-    errorAlert.classList.remove("hidden");
-    // Scroll suave hasta el mensaje de error
-    errorAlert.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (errorText && errorAlert) {
+      errorText.innerText = msg;
+      errorAlert.classList.remove("hidden");
+      errorAlert.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   };
 
   const ocultarError = () => {
-    errorAlert.classList.add("hidden");
+    if (errorAlert) errorAlert.classList.add("hidden");
   };
 
   // --- SUBMIT DEL CHECKOUT ---
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    ocultarError();
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      ocultarError();
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const rut = rutInput.value.trim();
-    const email = emailInput.value.trim();
-    const direccion = document.getElementById("direccion").value.trim();
-    const cantidad = parseInt(cantidadInput.value, 10);
+      const nombre = document.getElementById("nombre").value.trim();
+      const rut = rutInput.value.trim();
+      const email = emailInput.value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+      const cantidad = parseInt(cantidadInput.value, 10);
 
-    // Validaciones locales rápidas
-    if (!nombre) return mostrarError("Por favor, ingresa tu nombre completo.");
-    if (!direccion)
-      return mostrarError("Por favor, ingresa una dirección de despacho.");
+      if (!nombre)
+        return mostrarError("Por favor, ingresa tu nombre completo.");
+      if (!direccion)
+        return mostrarError("Por favor, ingresa una dirección de despacho.");
 
-    if (!validarRut(rut)) {
-      return mostrarError("El RUT ingresado no es válido. Ej: 12.345.678-9");
-    }
-
-    if (!validarEmail(email)) {
-      return mostrarError("El correo electrónico no tiene un formato válido.");
-    }
-
-    if (isNaN(cantidad) || cantidad <= 0) {
-      return mostrarError("Cantidad inválida.");
-    }
-
-    // Activar pantalla de carga
-    loadingOverlay.classList.remove("hidden");
-    loadingOverlay.classList.add("flex");
-
-    const payload = {
-      nombre,
-      rut,
-      email,
-      direccion,
-      cantidad,
-    };
-
-    try {
-      // Como Google Apps Script Web App requiere redirección, fetch maneja esto de fondo.
-      // Es posible que el navegador tire error de CORS si el script no está configurado como público (Anyone).
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8", // Evita gatillar preflight OPTIONS en GAS
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status} al conectar con el servidor.`);
+      if (!validarRut(rut)) {
+        return mostrarError("El RUT ingresado no es válido. Ej: 12.345.678-9");
       }
 
-      const resData = await response.json();
-      console.log("Respuesta del servidor:", resData);
-
-      if (resData.success && resData.data && resData.data.url) {
-        // Redirigir a Flow o al Simulador
-        window.location.href = resData.data.url;
-      } else {
-        throw new Error(
-          resData.message || "Error desconocido al registrar pedido.",
+      if (!validarEmail(email)) {
+        return mostrarError(
+          "El correo electrónico no tiene un formato válido.",
         );
       }
-    } catch (err) {
-      console.error(err);
-      loadingOverlay.classList.add("hidden");
-      loadingOverlay.classList.remove("flex");
-      mostrarError(
-        `No se pudo procesar la compra: ${err.message}. Verifica que la URL del servidor esté activa.`,
-      );
-    }
-  });
 
-  // Inicializar precio al cargar
+      if (isNaN(cantidad) || cantidad <= 0) {
+        return mostrarError("Cantidad inválida.");
+      }
+
+      loadingOverlay.classList.remove("hidden");
+      loadingOverlay.classList.add("flex");
+
+      const payload = {
+        nombre,
+        rut,
+        email,
+        direccion,
+        cantidad,
+      };
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `HTTP ${response.status} al conectar con el servidor.`,
+          );
+        }
+
+        const resData = await response.json();
+
+        if (resData.success && resData.data && resData.data.url) {
+          window.location.href = resData.data.url;
+        } else {
+          throw new Error(
+            resData.message || "Error desconocido al registrar pedido.",
+          );
+        }
+      } catch (err) {
+        console.error(err);
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.classList.remove("flex");
+        mostrarError(
+          `No se pudo procesar la compra: ${err.message}. Verifica que la URL del servidor esté activa.`,
+        );
+      }
+    });
+  }
+
+  // --- SUBMIT DEL NEWSLETTER ---
+  if (newsletterForm) {
+    newsletterForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = newsletterEmail.value.trim();
+
+      if (!validarEmail(email)) {
+        newsletterMsg.innerText = "Por favor, ingresa un correo válido.";
+        newsletterMsg.style.color = "#c62828";
+        newsletterMsg.classList.remove("hidden");
+        return;
+      }
+
+      newsletterMsg.innerText = "Enviando suscripción...";
+      newsletterMsg.style.color = "#555";
+      newsletterMsg.classList.remove("hidden");
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify({
+            action: "subscribe_newsletter",
+            email: email,
+            origen: "Landing Page",
+          }),
+        });
+
+        const resData = await response.json();
+
+        if (resData.success) {
+          newsletterMsg.innerText =
+            resData.message || "¡Gracias por suscribirte!";
+          newsletterMsg.style.color = "#2e7d32";
+          newsletterEmail.value = "";
+        } else {
+          newsletterMsg.innerText =
+            resData.message || "No se pudo realizar la suscripción.";
+          newsletterMsg.style.color = "#c62828";
+        }
+      } catch (err) {
+        console.error(err);
+        newsletterMsg.innerText = "Error de conexión al suscribirse.";
+        newsletterMsg.style.color = "#c62828";
+      }
+    });
+  }
+
   actualizarVisualizacionPrecio();
 });
