@@ -11,7 +11,7 @@ const DEFAULT_API_URL =
 const API_URL = localStorage.getItem("LYNTO_API_URL") || DEFAULT_API_URL;
 
 // Constantes de negocio (para visualización preliminar, la verdad la tiene el Sheets backend)
-const PRODUCT_PRICE = 29990;
+let PRODUCT_PRICE = 29990;
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🚀 Lynto Frontend inicializado.");
@@ -269,5 +269,113 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // --- CARGA DINÁMICA DESDE GOOGLE SHEETS (get_config) ---
+  const cargarConfiguracion = async () => {
+    try {
+      console.log("⏳ Solicitando configuración inicial desde Google Sheets...");
+      const response = await fetch(`${API_URL}?action=get_config`);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} al consultar la configuración.`);
+      }
+
+      const resData = await response.json();
+      if (!resData.success || !resData.data) {
+        console.warn("⚠️ La respuesta de get_config no indicó éxito o vino vacía:", resData);
+        return;
+      }
+
+      const { configuracion = {}, nutricion = [] } = resData.data;
+
+      // Normalizar claves de configuración a minúsculas sin caracteres especiales para mapeo seguro
+      const configMap = {};
+      if (Array.isArray(configuracion)) {
+        configuracion.forEach((item) => {
+          if (item.Clave || item.clave) {
+            const k = String(item.Clave || item.clave).toLowerCase().replace(/[^a-z0-9]/g, "");
+            configMap[k] = item.Valor || item.valor || "";
+          }
+        });
+      } else if (typeof configuracion === "object") {
+        Object.keys(configuracion).forEach((key) => {
+          const k = key.toLowerCase().replace(/[^a-z0-9]/g, "");
+          configMap[k] = configuracion[key];
+        });
+      }
+
+      // 1. Hero Título
+      const heroTituloEl = document.getElementById("hero-titulo");
+      const heroTituloVal = configMap["herotitulo"] || configMap["titulo"] || configMap["herotitle"];
+      if (heroTituloEl && heroTituloVal) {
+        heroTituloEl.innerText = heroTituloVal;
+      }
+
+      // 2. Hero Subtítulo
+      const heroSubtituloEl = document.getElementById("hero-subtitulo");
+      const heroSubtituloVal = configMap["herosubtitulo"] || configMap["subtitulo"] || configMap["herosubtitle"];
+      if (heroSubtituloEl && heroSubtituloVal) {
+        heroSubtituloEl.innerText = heroSubtituloVal;
+      }
+
+      // 3. Descripción del Producto
+      const productoDescEl = document.getElementById("producto-descripcion");
+      const productoDescVal = configMap["productodescripcion"] || configMap["descripcionproducto"] || configMap["producto"];
+      if (productoDescEl && productoDescVal) {
+        productoDescEl.innerText = productoDescVal;
+      }
+
+      // 4. Historia Nosotras
+      const nosotrasDescEl = document.getElementById("nosotras-descripcion");
+      const nosotrasVal = configMap["nosotrashistoria"] || configMap["nosotrasdescripcion"] || configMap["nosotras"];
+      if (nosotrasDescEl && nosotrasVal) {
+        nosotrasDescEl.innerText = nosotrasVal;
+      }
+
+      // 5. Información de Despacho
+      const despachoInfoEl = document.getElementById("despacho-info");
+      const despachoVal = configMap["despachoinfo"] || configMap["envioinfo"] || configMap["despacho"] || configMap["envio"];
+      if (despachoInfoEl && despachoVal) {
+        despachoInfoEl.innerText = despachoVal;
+      }
+
+      // 6. Disclaimer Legal
+      const disclaimerEl = document.getElementById("disclaimer-legal");
+      const disclaimerVal = configMap["disclaimerlegal"] || configMap["disclaimer"] || configMap["avisolegal"];
+      if (disclaimerEl && disclaimerVal) {
+        disclaimerEl.innerText = disclaimerVal;
+      }
+
+      // 7. Precio Actualizado
+      const precioVal = configMap["precioproducto"] || configMap["precio"];
+      if (precioVal && !isNaN(Number(precioVal))) {
+        PRODUCT_PRICE = Number(precioVal);
+        actualizarVisualizacionPrecio();
+      }
+
+      // 8. Tabla Nutricional (#tabla-nutricion-body)
+      const tablaBody = document.getElementById("tabla-nutricion-body");
+      if (tablaBody && Array.isArray(nutricion) && nutricion.length > 0) {
+        tablaBody.innerHTML = ""; // Limpiar placeholders
+        nutricion.forEach((row) => {
+          const comp = row.componente || row.Componente || row[0] || "";
+          const cant = row.cantidad || row.Cantidad || row[1] || "";
+          const ddr = row.ddr || row.DDR || row[2] || "";
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${comp}</td>
+            <td>${cant}</td>
+            <td>${ddr}</td>
+          `;
+          tablaBody.appendChild(tr);
+        });
+      }
+
+      console.log("✅ Configuración dinámica de Sheets cargada con éxito.");
+    } catch (error) {
+      console.warn("⚠️ No se pudo cargar la configuración dinámica desde Sheets (se mantendrán los valores por defecto):", error.message);
+    }
+  };
+
   actualizarVisualizacionPrecio();
+  cargarConfiguracion();
 });
