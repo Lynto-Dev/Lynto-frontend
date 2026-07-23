@@ -7,7 +7,7 @@
 // Cada desarrollador puede configurar su propia URL de Apps Script en localStorage para no subirla al repo:
 // En la consola del navegador: localStorage.setItem('LYNTO_API_URL', 'https://script.google.com/macros/s/.../exec')
 const DEFAULT_API_URL =
-  "https://script.google.com/macros/s/AKfycbx_TU_EJEMPLO_PRODUCCION/exec";
+  "https://script.google.com/macros/s/AKfycbyIxpRuO1UQX8URrn0ApVFAW8uBiHYlz8XCOSJWl9TDWc-pUcYAiAnGFs7MkZ6FMIoA/exec";
 const API_URL = localStorage.getItem("LYNTO_API_URL") || DEFAULT_API_URL;
 
 // Constantes de negocio (para visualización preliminar, la verdad la tiene el Sheets backend)
