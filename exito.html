@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lynto | Compra Exitosa</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <script>
+      if (window.top !== window.self) {
+        try {
+          window.top.location.href = window.location.href;
+        } catch (e) {
+          console.log("Iframe buster:", e);
+        }
+      }
+    </script>
   </head>
   <body
     style="
@@ -46,7 +55,7 @@
         </p>
       </div>
 
-      <a href="./index.html" class="btn" style="display: block"
+      <a href="./index.html" target="_top" class="btn" style="display: block"
         >Volver al Inicio</a
       >
     </div>
