@@ -1,39 +1,39 @@
 /* ==========================================================================
-   LYNTO - OFFICIAL BRAND IDENTITY STYLESHEET (Lynto + Linea Iron Girl)
+   LYNTO - BRAND BASE STYLESHEET (#FEFCE1, #DCA1FF, #FFFFFF)
    ========================================================================== */
 
 :root {
-  /* Códigos Oficiales Bases de Lynto */
+  /* Códigos Bases Oficiales de Lynto */
   --brand-purple: #dca1ff;
-  --brand-purple-dark: #b86eff;
-  --brand-purple-light: #f6e8ff;
+  --brand-purple-hover: #c67cff;
+  --brand-purple-deep: #7a1fb8;
+  --brand-purple-light: #f5e6ff;
+  --brand-purple-soft: #fcf5ff;
+  
   --brand-yellow: #fefce1;
+  --brand-yellow-hover: #fcf7c5;
+  --brand-yellow-border: #f7f1a8;
+  --brand-yellow-text: #594400;
+
   --brand-white: #ffffff;
 
-  /* Códigos Oficiales Línea Iron Girl */
-  --iron-berry: #7c0116;
-  --iron-berry-hover: #5d000f;
-  --iron-rose: #d1969d;
-  --iron-blush: #ffeaed;
-  --iron-blush-soft: #fff5f6;
-
   /* Estructura & Neutrales */
-  --bg-main: #fcf9f6;
+  --bg-main: #fdfbf8;
   --bg-card: #ffffff;
-  --bg-secondary: #ffeaed;
+  --bg-secondary: var(--brand-yellow);
   
-  --text-main: #240d1e;
-  --text-muted: #6b4d63;
-  --text-light: #9e7d95;
+  --text-main: #1f0829;
+  --text-muted: #644a6f;
+  --text-light: #9c80a8;
   
-  --border-color: #f3dce6;
-  --border-focus: #7c0116;
+  --border-color: #eed6ff;
+  --border-focus: #8b2fc9;
   
   /* Sombras y Glassmorphism */
-  --shadow-sm: 0 2px 6px rgba(124, 1, 22, 0.04);
-  --shadow-md: 0 12px 28px -6px rgba(124, 1, 22, 0.08), 0 8px 12px -6px rgba(220, 161, 255, 0.12);
-  --shadow-lg: 0 22px 40px -10px rgba(124, 1, 22, 0.16);
-  --glass-bg: rgba(255, 255, 255, 0.88);
+  --shadow-sm: 0 2px 6px rgba(122, 31, 184, 0.04);
+  --shadow-md: 0 12px 28px -6px rgba(122, 31, 184, 0.09), 0 8px 16px -6px rgba(220, 161, 255, 0.2);
+  --shadow-lg: 0 22px 42px -10px rgba(122, 31, 184, 0.16);
+  --glass-bg: rgba(255, 255, 255, 0.9);
 
   /* Tipografías */
   --font-heading: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -83,13 +83,13 @@ p {
 }
 
 a {
-  color: var(--iron-berry);
+  color: var(--brand-purple-deep);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--iron-berry-hover);
+  color: var(--brand-purple-hover);
 }
 
 /* Layout */
@@ -152,7 +152,7 @@ a:hover {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--iron-berry);
+  background-color: var(--brand-purple-deep);
   transition: width var(--transition-fast);
   border-radius: 2px;
 }
@@ -166,7 +166,7 @@ a:hover {
   font-size: 0.9rem !important;
 }
 
-/* Botones con estilo Iron Girl & Lynto */
+/* Botones Base Lynto */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -185,16 +185,16 @@ a:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--iron-berry) 0%, #5d000f 100%);
+  background: linear-gradient(135deg, #9b30e8 0%, #6e16b5 100%);
   color: #ffffff;
-  box-shadow: 0 4px 16px rgba(124, 1, 22, 0.3);
+  box-shadow: 0 4px 16px rgba(122, 31, 184, 0.35);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #6c0012 0%, #4a000c 100%);
+  background: linear-gradient(135deg, #a842f5 0%, #7d1fc7 100%);
   color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(124, 1, 22, 0.4);
+  box-shadow: 0 8px 22px rgba(122, 31, 184, 0.45);
 }
 
 .btn-primary:active {
@@ -203,13 +203,13 @@ a:hover {
 
 .btn-ghost {
   background-color: var(--brand-white);
-  color: var(--iron-berry);
+  color: var(--brand-purple-deep);
   border: 1.5px solid var(--border-color);
 }
 
 .btn-ghost:hover {
-  border-color: var(--iron-berry);
-  background-color: var(--iron-blush-soft);
+  border-color: var(--brand-purple-deep);
+  background-color: var(--brand-yellow);
 }
 
 .btn-large {
@@ -261,11 +261,11 @@ a:hover {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--iron-berry);
-  background-color: var(--iron-blush);
+  color: var(--brand-purple-deep);
+  background-color: var(--brand-yellow);
   padding: 0.35rem 0.9rem;
   border-radius: 50px;
-  border: 1px solid rgba(209, 150, 157, 0.4);
+  border: 1px solid var(--brand-purple);
 }
 
 .section-lead {
@@ -274,7 +274,7 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* Hero Section Oficial */
+/* Hero Section */
 .hero-section {
   text-align: center;
   padding: 3.5rem 1rem 4rem;
@@ -288,14 +288,14 @@ a:hover {
   align-items: center;
   gap: 0.5rem;
   background: var(--brand-yellow);
-  color: #5c4300;
-  border: 1px solid rgba(220, 161, 255, 0.5);
+  color: var(--brand-yellow-text);
+  border: 1.5px solid var(--brand-purple);
   padding: 0.45rem 1.25rem;
   border-radius: 50px;
   font-size: 0.9rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 12px rgba(220, 161, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(220, 161, 255, 0.25);
 }
 
 .hero-title {
@@ -305,12 +305,6 @@ a:hover {
   color: var(--text-main);
   margin-bottom: 1.25rem;
   line-height: 1.15;
-}
-
-.hero-title-accent {
-  background: linear-gradient(135deg, var(--iron-berry) 0%, var(--brand-purple-dark) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
@@ -338,7 +332,7 @@ a:hover {
 }
 
 .feature-card {
-  background: var(--iron-blush-soft);
+  background: var(--brand-yellow);
   padding: 1.75rem 1.5rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
@@ -360,7 +354,7 @@ a:hover {
 .feature-card h3 {
   font-size: 1.15rem;
   margin-bottom: 0.5rem;
-  color: var(--iron-berry);
+  color: var(--brand-purple-deep);
 }
 
 .feature-card p {
@@ -384,8 +378,8 @@ a:hover {
 }
 
 .nutrition-table th {
-  background-color: var(--iron-blush);
-  color: var(--iron-berry);
+  background-color: var(--brand-purple-light);
+  color: var(--brand-purple-deep);
   font-family: var(--font-heading);
   font-weight: 700;
   padding: 1rem 1.25rem;
@@ -403,11 +397,11 @@ a:hover {
 }
 
 .nutrition-table tbody tr:nth-child(even) {
-  background-color: rgba(255, 234, 237, 0.25);
+  background-color: rgba(254, 252, 225, 0.4);
 }
 
 .nutrition-table tbody tr:hover {
-  background-color: var(--iron-blush);
+  background-color: var(--brand-yellow);
 }
 
 /* Checkout Section Layout */
@@ -443,7 +437,7 @@ a:hover {
 }
 
 .info-card {
-  background-color: var(--iron-blush-soft);
+  background-color: var(--brand-yellow);
   padding: 2rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
@@ -465,7 +459,7 @@ a:hover {
 
 .info-card-header h3 {
   font-size: 1.3rem;
-  color: var(--iron-berry);
+  color: var(--brand-purple-deep);
 }
 
 .despacho-text {
@@ -495,7 +489,7 @@ a:hover {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--iron-berry);
+  background: var(--brand-purple-deep);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -536,13 +530,13 @@ a:hover {
 
 .form-control:focus {
   outline: none;
-  border-color: var(--iron-berry);
-  box-shadow: 0 0 0 4px rgba(124, 1, 22, 0.1);
+  border-color: var(--brand-purple-deep);
+  box-shadow: 0 0 0 4px rgba(220, 161, 255, 0.3);
 }
 
 /* Quantity Box & Stepper */
 .quantity-box {
-  background: var(--iron-blush-soft);
+  background: var(--brand-yellow);
   border: 1.5px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 1.25rem;
@@ -580,8 +574,8 @@ a:hover {
   height: 32px;
   border-radius: 50%;
   border: none;
-  background: var(--iron-blush);
-  color: var(--iron-berry);
+  background: var(--brand-purple-light);
+  color: var(--brand-purple-deep);
   font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
@@ -592,7 +586,7 @@ a:hover {
 }
 
 .btn-step:hover {
-  background: var(--iron-berry);
+  background: var(--brand-purple-deep);
   color: #ffffff;
 }
 
@@ -621,7 +615,7 @@ a:hover {
   font-family: var(--font-heading);
   font-size: 1.45rem;
   font-weight: 800;
-  color: var(--iron-berry);
+  color: var(--brand-purple-deep);
 }
 
 /* FAQ Grid */
@@ -633,7 +627,7 @@ a:hover {
 }
 
 .faq-card {
-  background: var(--iron-blush-soft);
+  background: var(--brand-yellow);
   padding: 1.5rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
@@ -642,22 +636,22 @@ a:hover {
 .faq-card h3 {
   font-size: 1.1rem;
   margin-bottom: 0.6rem;
-  color: var(--iron-berry);
+  color: var(--brand-purple-deep);
 }
 
 .faq-card p {
   font-size: 0.95rem;
 }
 
-/* Newsletter Section con Colores Oficiales */
+/* Newsletter Section con Colores Oficiales Lynto */
 .newsletter-card {
-  background: linear-gradient(135deg, var(--iron-berry) 0%, #4a000c 100%);
+  background: linear-gradient(135deg, #7a1fb8 0%, #4d0d7b 100%);
   color: #ffffff;
   border-radius: var(--radius-lg);
   padding: 3.5rem 2rem;
   text-align: center;
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--brand-purple);
+  border: 2px solid var(--brand-purple);
 }
 
 .newsletter-content {
@@ -678,7 +672,7 @@ a:hover {
 }
 
 .newsletter-card p {
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.05rem;
   margin-bottom: 2rem;
 }
@@ -703,7 +697,7 @@ a:hover {
 
 .newsletter-input:focus {
   background: #ffffff;
-  box-shadow: 0 0 0 4px var(--brand-purple);
+  box-shadow: 0 0 0 4px var(--brand-yellow);
 }
 
 .newsletter-message {
@@ -711,7 +705,7 @@ a:hover {
   font-size: 0.9rem;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
 }
 
@@ -741,7 +735,7 @@ a:hover {
 }
 
 .footer-copy a {
-  color: var(--iron-berry);
+  color: var(--brand-purple-deep);
   font-weight: 500;
 }
 
@@ -767,7 +761,7 @@ a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(36, 13, 30, 0.75);
+  background: rgba(31, 8, 41, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -793,8 +787,8 @@ a:hover {
 .spinner {
   width: 44px;
   height: 44px;
-  border: 4px solid var(--iron-blush);
-  border-top-color: var(--iron-berry);
+  border: 4px solid var(--brand-purple-light);
+  border-top-color: var(--brand-purple-deep);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
