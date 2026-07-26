@@ -3,107 +3,160 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lynto | Preventa Suplemento</title>
+    <title>Lynto | Preventa Suplemento Nutricional Premium</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <!-- Navegación -->
-    <header>
-      <div
-        class="flex justify-between items-center"
-        style="max-width: 960px; margin: 0 auto"
-      >
-        <a
-          href="#"
-          style="
-            font-weight: bold;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: #333;
-          "
-          >Lynto</a
-        >
+    <!-- Navegación Flotante Glassmorphic -->
+    <header class="header">
+      <div class="header-container">
+        <a href="#" class="brand-logo">
+          <span class="logo-text">Lynto</span><span class="logo-dot">.</span>
+        </a>
         <nav class="nav-links">
           <a href="#producto">El Suplemento</a>
-          <a href="#nutricion">Tabla Nutricional</a>
+          <a href="#nutricion">Nutrición</a>
           <a href="#nosotras">Nosotras</a>
-          <a href="#comprar">Comprar</a>
+          <a href="#faq">Preguntas</a>
+          <a href="#comprar" class="btn btn-nav">Comprar Ahora</a>
         </nav>
       </div>
     </header>
 
-    <div class="container">
+    <main class="container">
       <!-- Sección Hero -->
-      <section class="section" id="hero">
-        <h1 id="hero-titulo">[Insertar gancho de la marca]</h1>
-        <p id="hero-subtitulo">
+      <section class="hero-section" id="hero">
+        <div class="hero-badge">✨ Preventa Exclusiva 2026</div>
+        <h1 id="hero-titulo" class="hero-title">[Insertar gancho de la marca]</h1>
+        <p id="hero-subtitulo" class="hero-subtitle">
           [Insertar descripción corta y llamativa de la preventa del suplemento]
         </p>
-        <a href="#comprar" class="btn">Reservar Preventa</a>
+        <div class="hero-actions">
+          <a href="#comprar" class="btn btn-primary btn-large">
+            <span>Reservar Preventa</span>
+            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#producto" class="btn btn-ghost">Conocer Más</a>
+        </div>
       </section>
 
       <!-- Sección Producto -->
-      <section class="section" id="producto">
-        <h2>El Suplemento</h2>
-        <p id="producto-descripcion">
-          [Insertar beneficios y descripción detallada del suplemento
-          alimenticio]
+      <section class="section card-section" id="producto">
+        <div class="section-header">
+          <span class="section-tag">Formulación Avanzada</span>
+          <h2>El Suplemento</h2>
+        </div>
+        <p id="producto-descripcion" class="section-lead">
+          [Insertar beneficios y descripción detallada del suplemento alimenticio]
         </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌱</div>
+            <h3>100% Natural</h3>
+            <p>Ingredientes botánicos de máxima pureza seleccionados bajo estándares científicos.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Absorción Rápida</h3>
+            <p>Formulación biodisponible diseñada para máximo rendimiento y bienestar diario.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Calidad Certificada</h3>
+            <p>Elaborado bajo estrictas normas de bioseguridad y controles de laboratorio.</p>
+          </div>
+        </div>
       </section>
 
       <!-- Sección Nutrición -->
-      <section class="section" id="nutricion">
-        <h2>Tabla Nutricional</h2>
-        <p id="nutricion-descripcion">
-          [Insertar ingredientes, dosis e información sobre la formulación
-          científica]
+      <section class="section card-section" id="nutricion">
+        <div class="section-header">
+          <span class="section-tag">Transparencia Total</span>
+          <h2>Tabla Nutricional</h2>
+        </div>
+        <p id="nutricion-descripcion" class="section-lead">
+          [Insertar ingredientes, dosis e información sobre la formulación científica]
         </p>
 
-        <table class="nutrition-table">
-          <thead>
-            <tr>
-              <th>Componente</th>
-              <th>Cantidad por porción</th>
-              <th>% DDR</th>
-            </tr>
-          </thead>
-          <tbody id="tabla-nutricion-body">
-            <tr>
-              <td>[Componente 1]</td>
-              <td>[Cantidad 1]</td>
-              <td>[DDR 1]</td>
-            </tr>
-            <tr>
-              <td>[Componente 2]</td>
-              <td>[Cantidad 2]</td>
-              <td>[DDR 2]</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-wrapper">
+          <table class="nutrition-table">
+            <thead>
+              <tr>
+                <th>Componente</th>
+                <th>Cantidad por porción</th>
+                <th>% DDR</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-nutricion-body">
+              <tr>
+                <td>[Componente 1]</td>
+                <td>[Cantidad 1]</td>
+                <td>[DDR 1]</td>
+              </tr>
+              <tr>
+                <td>[Componente 2]</td>
+                <td>[Cantidad 2]</td>
+                <td>[DDR 2]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <!-- Sección Nosotros -->
-      <section class="section" id="nosotras">
-        <h2>Nosotras</h2>
-        <p id="nosotras-descripcion">[Historia de la marca y propósito de las fundadoras]</p>
+      <section class="section card-section" id="nosotras">
+        <div class="section-header">
+          <span class="section-tag">Nuestra Historia</span>
+          <h2>Nosotras</h2>
+        </div>
+        <p id="nosotras-descripcion" class="section-lead">
+          [Historia de la marca y propósito de las fundadoras]
+        </p>
       </section>
 
       <!-- Sección Checkout -->
-      <section class="section" id="comprar">
-        <h2>Reservar Preventa</h2>
+      <section class="section checkout-section" id="comprar">
+        <div class="section-header text-center">
+          <span class="section-tag">Garantiza tu Stock</span>
+          <h2>Reservar Preventa</h2>
+          <p class="section-subtext">Completa tus datos para agendar tu pedido de preventa con envío prioritario.</p>
+        </div>
 
-        <div class="grid-2">
+        <div class="grid-2 checkout-grid">
           <!-- Información de Despacho del Cliente -->
-          <div>
-            <h3>Información de Despacho</h3>
-            <p id="despacho-info">
-              [Rellenar info de despacho: tarifas de envío, courier
-              Starken/Chilexpress y plazos de entrega]
+          <div class="info-card">
+            <div class="info-card-header">
+              <div class="info-icon">📦</div>
+              <h3>Información de Despacho</h3>
+            </div>
+            <p id="despacho-info" class="despacho-text">
+              [Rellenar info de despacho: tarifas de envío, courier Starken/Chilexpress y plazos de entrega]
             </p>
+            <div class="guarantees-list">
+              <div class="guarantee-item">
+                <span class="check-icon">✓</span>
+                <span>Pago 100% Seguro cifrado por Flow</span>
+              </div>
+              <div class="guarantee-item">
+                <span class="check-icon">✓</span>
+                <span>Despacho directo a todo Chile</span>
+              </div>
+              <div class="guarantee-item">
+                <span class="check-icon">✓</span>
+                <span>Notificación con número de seguimiento</span>
+              </div>
+            </div>
           </div>
 
           <!-- Formulario de Compra -->
-          <div>
+          <div class="form-card">
             <form id="checkout-form">
               <!-- Alerta de Error -->
               <div id="error-alert" class="alert hidden">
@@ -116,7 +169,7 @@
                   type="text"
                   id="nombre"
                   required
-                  placeholder="Nombre Apellido"
+                  placeholder="Nombre y Apellido"
                   class="form-control"
                 />
               </div>
@@ -149,74 +202,54 @@
                   type="text"
                   id="direccion"
                   required
-                  placeholder="Calle, Número, Comuna"
+                  placeholder="Calle, Número, Comuna, Ciudad"
                   class="form-control"
                 />
               </div>
 
               <!-- Cantidad e Indicadores -->
-              <div
-                class="form-group flex justify-between items-center"
-                style="
-                  border: 1px solid #ccc;
-                  padding: 1rem;
-                  border-radius: 4px;
-                  background: #fff;
-                "
-              >
-                <div class="flex items-center">
-                  <span style="margin-right: 1rem">Cantidad:</span>
-                  <button
-                    type="button"
-                    id="btn-restar"
-                    class="btn btn-secondary"
-                    style="padding: 0.25rem 0.75rem"
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    id="cantidad"
-                    name="cantidad"
-                    value="1"
-                    min="1"
-                    max="10"
-                    readonly
-                    class="hidden"
-                  />
-                  <span
-                    id="display-cantidad"
-                    style="font-weight: bold; margin: 0 1rem"
-                    >1</span
-                  >
-                  <button
-                    type="button"
-                    id="btn-sumar"
-                    class="btn btn-secondary"
-                    style="padding: 0.25rem 0.75rem"
-                  >
-                    +
-                  </button>
+              <div class="quantity-box">
+                <div class="quantity-controls">
+                  <span class="quantity-label">Cantidad:</span>
+                  <div class="stepper-group">
+                    <button
+                      type="button"
+                      id="btn-restar"
+                      class="btn-step"
+                      aria-label="Restar una unidad"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      id="cantidad"
+                      name="cantidad"
+                      value="1"
+                      min="1"
+                      max="10"
+                      readonly
+                      class="hidden"
+                    />
+                    <span id="display-cantidad" class="quantity-val">1</span>
+                    <button
+                      type="button"
+                      id="btn-sumar"
+                      class="btn-step"
+                      aria-label="Sumar una unidad"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-                <div style="text-align: right">
-                  <div style="font-size: 0.8rem; color: #666">
-                    Total Estimado
-                  </div>
-                  <div
-                    id="display-total"
-                    style="
-                      font-weight: bold;
-                      font-size: 1.25rem;
-                      color: #0066cc;
-                    "
-                  >
-                    $29.990 CLP
-                  </div>
+                <div class="total-box">
+                  <span class="total-label">Total Estimado</span>
+                  <span id="display-total" class="total-price">$29.990 CLP</span>
                 </div>
               </div>
 
-              <button type="submit" class="btn" style="width: 100%">
-                Proceder al Pago
+              <button type="submit" class="btn btn-primary btn-block">
+                <span>Proceder al Pago Seguro</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </button>
             </form>
           </div>
@@ -224,80 +257,71 @@
       </section>
 
       <!-- Sección Preguntas Frecuentes -->
-      <section class="section" id="faq">
-        <h2>Preguntas Frecuentes</h2>
-
-        <div class="faq-item">
-          <h3>¿Cuándo recibiré mi pedido?</h3>
-          <p>[Respuesta]</p>
+      <section class="section card-section" id="faq">
+        <div class="section-header">
+          <span class="section-tag">Resolvamos tus dudas</span>
+          <h2>Preguntas Frecuentes</h2>
         </div>
 
-        <div class="faq-item">
-          <h3>¿Cuál es el valor del envío y cobertura?</h3>
-          <p>[Respuesta]</p>
-        </div>
+        <div class="faq-grid">
+          <div class="faq-card">
+            <h3>¿Cuándo recibiré mi pedido?</h3>
+            <p>Los pedidos de preventa serán despachados prioritariamente en la fecha oficial de lanzamiento programada para Agosto de 2026. Te mantendremos informado por email.</p>
+          </div>
 
-        <div class="faq-item">
-          <h3>¿Tienen garantía de reembolso?</h3>
-          <p>[Respuesta]</p>
+          <div class="faq-card">
+            <h3>¿Cuál es el valor del envío y cobertura?</h3>
+            <p>Realizamos envíos a todo Chile mediante couriers certificados (Starken / Chilexpress). El costo de envío se confirmará de acuerdo a tu comuna.</p>
+          </div>
+
+          <div class="faq-card">
+            <h3>¿Tienen garantía de reembolso?</h3>
+            <p>Sí, garantizamos la seguridad de tu preventa y contarás con nuestro canal directo de atención para resolver cualquier inconveniente o consulta.</p>
+          </div>
         </div>
       </section>
 
       <!-- Sección Newsletter (Boletín Oficial) -->
-      <section
-        class="section"
-        id="newsletter"
-        style="
-          background: #ffffff;
-          padding: 2rem;
-          border-radius: 8px;
-          text-align: center;
-        "
-      >
-        <h2>Suscríbete a Nuestro Boletín</h2>
-        <p style="color: #666; max-width: 500px; margin: 0 auto 1.5rem auto">
-          Recibe novedades exclusivas sobre el lanzamiento de preventa, consejos
-          de nutrición activa y ofertas especiales.
-        </p>
+      <section class="section newsletter-card" id="newsletter">
+        <div class="newsletter-content">
+          <span class="newsletter-icon">💌</span>
+          <h2>Suscríbete a Nuestro Boletín</h2>
+          <p>
+            Recibe novedades exclusivas sobre el lanzamiento de preventa, consejos
+            de nutrición activa y promociones especiales.
+          </p>
 
-        <form
-          id="newsletter-form"
-          class="flex justify-between items-center"
-          style="max-width: 480px; margin: 0 auto; gap: 0.5rem"
-        >
-          <input
-            type="email"
-            id="newsletter-email"
-            required
-            placeholder="Tu correo electrónico"
-            class="form-control"
-            style="margin-bottom: 0"
-          />
-          <button
-            type="submit"
-            id="btn-newsletter"
-            class="btn"
-            style="white-space: nowrap"
-          >
-            Suscribirme
-          </button>
-        </form>
-        <div
-          id="newsletter-msg"
-          style="font-size: 0.85rem; margin-top: 1rem"
-          class="hidden"
-        ></div>
+          <form id="newsletter-form" class="newsletter-form">
+            <input
+              type="email"
+              id="newsletter-email"
+              required
+              placeholder="Tu correo electrónico"
+              class="form-control newsletter-input"
+            />
+            <button type="submit" id="btn-newsletter" class="btn btn-primary">
+              Suscribirme
+            </button>
+          </form>
+          <div id="newsletter-msg" class="newsletter-message hidden"></div>
+        </div>
       </section>
+    </main>
 
-      <!-- Disclaimer Legal -->
-      <footer style="margin-top: 2rem; padding: 1rem 0; text-align: center;">
-        <p id="disclaimer-legal" style="font-size: 0.8rem; color: #777; max-width: 800px; margin: 0 auto;"></p>
-      </footer>
-    </div>
+    <!-- Disclaimer Legal y Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <p id="disclaimer-legal" class="footer-disclaimer"></p>
+        <p class="footer-copy">&copy; 2026 Lynto. Todos los derechos reservados. | <a href="./terminos.html">Términos</a> | <a href="./privacidad.html">Privacidad</a></p>
+      </div>
+    </footer>
 
     <!-- Pantalla de Carga (Overlay) -->
     <div id="loading-overlay" class="overlay hidden">
-      <div>Procesando...</div>
+      <div class="spinner-box">
+        <div class="spinner"></div>
+        <span>Procesando pago seguro...</span>
+      </div>
     </div>
 
     <script src="./assets/js/app.js"></script>
