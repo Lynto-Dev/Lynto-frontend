@@ -127,9 +127,14 @@ a:hover {
 }
 
 .brand-logo-img {
-  height: 38px;
+  height: 100px;
   width: auto;
   object-fit: contain;
+  transition: transform var(--transition-fast);
+}
+
+.brand-logo-img:hover {
+  transform: scale(1.5);
 }
 
 .nav-links {
@@ -857,5 +862,9 @@ a:hover {
   
   .nav-links a:not(.btn-nav) {
     display: none;
+  }
+
+  .brand-logo-img {
+    height: 48px;
   }
 }
