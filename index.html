@@ -31,7 +31,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Varela+Round&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./assets/css/style.css?v=1.5" />
+    <link rel="stylesheet" href="./assets/css/style.css?v=1.6" />
   </head>
   <body>
     <!-- Navegación Flotante Glassmorphic -->
@@ -148,13 +148,30 @@
               </tr>
             </thead>
             <tbody id="tabla-nutricion-body">
-              <tr>
-                <td colspan="3" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
-                  <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
-                    <div class="spinner" style="width: 22px; height: 22px; border-width: 3px;"></div>
-                    <span style="font-weight: 500; font-size: 0.95rem;">Cargando información nutricional oficial desde el servidor...</span>
-                  </div>
-                </td>
+              <tr class="skeleton-row">
+                <td><div class="skeleton-bar" style="width: 75%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 50%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 50%;"></div></td>
+              </tr>
+              <tr class="skeleton-row">
+                <td><div class="skeleton-bar" style="width: 60%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 40%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 40%;"></div></td>
+              </tr>
+              <tr class="skeleton-row">
+                <td><div class="skeleton-bar" style="width: 80%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 45%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 45%;"></div></td>
+              </tr>
+              <tr class="skeleton-row">
+                <td><div class="skeleton-bar" style="width: 65%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 50%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 50%;"></div></td>
+              </tr>
+              <tr class="skeleton-row">
+                <td><div class="skeleton-bar" style="width: 70%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 40%;"></div></td>
+                <td><div class="skeleton-bar" style="width: 40%;"></div></td>
               </tr>
             </tbody>
           </table>
@@ -556,6 +573,6 @@
       </div>
     </div>
 
-    <script src="./assets/js/app.js?v=1.5"></script>
+    <script src="./assets/js/app.js?v=1.6"></script>
   </body>
 </html>
