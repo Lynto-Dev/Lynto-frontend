@@ -469,11 +469,15 @@
               <label for="cupon" style="font-size: 0.85rem; font-weight: 600;">¿Tienes un cupón de descuento?</label>
               <div class="input-btn-group" style="display: flex; gap: 0.5rem;">
                 <input
-                  type="text"
-                  id="cupon"
-                  placeholder="Ej. PREVENTA15"
-                  class="form-control"
-                  style="text-transform: uppercase;"
+                  type="number"
+                  id="cantidad"
+                  name="cantidad"
+                  form="checkout-form"
+                  value="1"
+                  min="1"
+                  max="10"
+                  readonly
+                  class="hidden"
                 />
                 <button
                   type="button"

@@ -141,9 +141,9 @@ a:hover {
 }
 
 .brand-logo-text {
-  font-family: 'Varela Round', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-family: 'Varela Round', 'Plus Jakarta Sans', sans-serif !important;
   font-size: 1.7rem;
-  font-weight: 400 !important;
+  font-weight: 500 !important;
   color: #D39BFF !important;
   letter-spacing: -0.02em;
   opacity: 0;
@@ -551,16 +551,20 @@ a:hover {
 
 .guarantee-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   font-size: 0.92rem;
   font-weight: 500;
   color: var(--text-main);
+  line-height: 1.4;
 }
 
 .check-icon {
   width: 22px;
   height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: var(--brand-purple-deep);
   color: #ffffff;
@@ -569,6 +573,7 @@ a:hover {
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 800;
+  margin-top: 2px;
 }
 
 /* Form Styles */
@@ -633,10 +638,25 @@ a:hover {
 
 .form-card {
   background: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.grid-2-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group {
   margin-bottom: 1.35rem;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group label {
@@ -650,6 +670,9 @@ a:hover {
 
 .form-control {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 0.85rem 1.1rem;
   font-family: var(--font-body);
   font-size: 0.98rem;
@@ -666,6 +689,127 @@ a:hover {
   box-shadow: 0 0 0 4px rgba(220, 161, 255, 0.3);
 }
 
+/* Compact Info Banner in Form */
+.info-card-compact {
+  background: var(--brand-purple-soft);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.info-compact-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.info-icon-sm {
+  font-size: 1.3rem;
+}
+
+.info-compact-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--brand-purple-deep);
+  margin: 0 0 0.15rem 0;
+}
+
+.despacho-text-sm {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Order Summary Card (Right Column) */
+.summary-card {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  height: fit-content;
+}
+
+.summary-card-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.product-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--brand-yellow);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--brand-yellow-border);
+}
+
+.product-summary-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-summary-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.product-summary-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.summary-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.summary-value {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.summary-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0.5rem 0;
+}
+
+.summary-row.total-row {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.total-price {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--brand-purple-deep);
+}
+
 /* Quantity Box & Stepper */
 .quantity-box {
   background: var(--brand-yellow);
@@ -675,15 +819,18 @@ a:hover {
   margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
-  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .quantity-controls {
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding-top: 0.25rem;
 }
 
 .quantity-label {
@@ -732,6 +879,15 @@ a:hover {
 
 .total-box {
   text-align: right;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .total-label {
