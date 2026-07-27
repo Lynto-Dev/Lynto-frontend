@@ -514,11 +514,19 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {
         console.error(err);
         if (submitBtn) submitBtn.disabled = false;
-        loadingOverlay.classList.add("hidden");
-        loadingOverlay.classList.remove("flex");
-        mostrarError(
-          `No se pudo procesar la compra: ${err.message}. Verifica que la URL del servidor esté activa.`,
-        );
+        if (loadingOverlay) {
+          loadingOverlay.classList.add("hidden");
+          loadingOverlay.classList.remove("flex");
+        }
+
+        let userMsg = err.message || "";
+        if (userMsg.includes("1620") || userMsg.includes("not valid") || userMsg.includes("userEmail")) {
+          userMsg = "El correo electrónico ingresado no ha sido validado por el filtro de seguridad de la pasarela de pagos. Por favor intenta con un correo alternativo (ej. correo institucional o personal secundario).";
+        } else {
+          userMsg = `No se pudo procesar la compra: ${userMsg}.`;
+        }
+
+        mostrarError(userMsg);
       }
     });
   }
