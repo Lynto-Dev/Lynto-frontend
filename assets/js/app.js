@@ -44,43 +44,250 @@ document.addEventListener("DOMContentLoaded", () => {
   const newsletterEmail = document.getElementById("newsletter-email");
   const newsletterMsg = document.getElementById("newsletter-msg");
 
-  // --- CONTROL DE CANTIDAD Y DESCUENTO DE CUPÓN ---
+  // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
+  // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
+  let TARIFA_RM = 3500;
+  let TARIFA_REGIONES = 5000;
+  let ultimoDescuentoCupon = 0;
+  let descuentoPorUnidadCupon = 3000;
+  let porcentajeDescuentoCupon = 0;
+  let cuponAplicadoExitoso = false;
+
+  const btnAbrirResumen = document.getElementById("btn-abrir-resumen");
+  const modalResumen = document.getElementById("modal-resumen");
+  const btnCerrarModal = document.getElementById("btn-cerrar-modal");
+
+  const regionSelect = document.getElementById("region");
+  const comunaInput = document.getElementById("comuna");
+  const direccionInput = document.getElementById("direccion");
+  const nombreInput = document.getElementById("nombre");
+
+  const summarySubtotal = document.getElementById("summary-subtotal");
+  const summaryEnvio = document.getElementById("summary-envio");
+  const summaryDescuento = document.getElementById("summary-descuento");
+  const rowDescuento = document.getElementById("row-descuento");
+
+  const modalUserName = document.getElementById("modal-user-name");
+  const modalUserAddress = document.getElementById("modal-user-address");
+  const modalUserRegion = document.getElementById("modal-user-region");
+  const modalProductQty = document.getElementById("modal-product-qty");
+  const modalProductSubtotalItem = document.getElementById("modal-product-subtotal-item");
+
+  const btnAplicarCupon = document.getElementById("btn-aplicar-cupon");
+  const cuponStatusMsg = document.getElementById("cupon-status-msg");
+
   const actualizarVisualizacionPrecio = () => {
     const cant = parseInt(cantidadInput.value, 10) || 1;
-    displayCantidad.innerText = cant;
-    
-    const cuponVal = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
-    let unitPrice = PRODUCT_PRICE;
-    let cuponAplicado = false;
+    if (displayCantidad) displayCantidad.innerText = cant;
+    if (modalProductQty) modalProductQty.innerText = `Cantidad: ${cant} ${cant === 1 ? "caja" : "cajas"} (15 sachets / un.)`;
 
-    // Si ingresa cualquier código de cupón válido (ej. PREVENTA, PREVENTA15, etc.)
-    if (cuponVal.length > 0) {
-      unitPrice = Math.max(0, PRODUCT_PRICE - DESCUENTO_CUPON_UNIDAD); // $16.990
-      cuponAplicado = true;
+    const subtotal = PRODUCT_PRICE * cant;
+    if (summarySubtotal) summarySubtotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
+    if (modalProductSubtotalItem) modalProductSubtotalItem.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
+
+    // 1. Recalcular descuento del cupón proporcionalmente a la cantidad actual
+    let descuentoTotal = 0;
+    if (cuponAplicadoExitoso) {
+      if (porcentajeDescuentoCupon > 0) {
+        descuentoTotal = Math.round((subtotal * porcentajeDescuentoCupon) / 100);
+      } else {
+        descuentoTotal = (descuentoPorUnidadCupon || 3000) * cant;
+      }
+      ultimoDescuentoCupon = descuentoTotal;
+      if (rowDescuento) rowDescuento.classList.remove("hidden");
+      if (summaryDescuento) summaryDescuento.innerText = `-$${descuentoTotal.toLocaleString("es-CL")} CLP`;
+    } else {
+      ultimoDescuentoCupon = 0;
+      if (rowDescuento) rowDescuento.classList.add("hidden");
     }
 
-    const total = unitPrice * cant;
-    displayTotal.innerText = `$${total.toLocaleString("es-CL")} CLP`;
+    // 2. Calcular tarifa de envío por región
+    const regionVal = regionSelect ? regionSelect.value : "";
+    let costoEnvio = TARIFA_RM;
+
+    if (regionVal && regionVal !== "Región Metropolitana") {
+      costoEnvio = TARIFA_REGIONES;
+    }
+
+    if (summaryEnvio) summaryEnvio.innerText = `$${costoEnvio.toLocaleString("es-CL")} CLP`;
+
+    // 3. Total Final (Subtotal - Descuento + Envío)
+    const totalFinal = Math.max(0, subtotal - descuentoTotal + costoEnvio);
+    if (displayTotal) displayTotal.innerText = `$${totalFinal.toLocaleString("es-CL")} CLP`;
+  };
+
+  const aplicarCupon = async () => {
+    const codigoCupon = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
+    const cant = parseInt(cantidadInput.value, 10) || 1;
+    const subtotal = PRODUCT_PRICE * cant;
 
     let badgeCupon = document.getElementById("badge-cupon-aplicado");
-    if (cuponAplicado) {
-      if (!badgeCupon) {
-        badgeCupon = document.createElement("div");
-        badgeCupon.id = "badge-cupon-aplicado";
-        badgeCupon.style.color = "#2e7d32";
-        badgeCupon.style.fontSize = "0.85rem";
-        badgeCupon.style.fontWeight = "600";
-        badgeCupon.style.marginTop = "6px";
-        displayTotal.parentElement.appendChild(badgeCupon);
+
+    if (!codigoCupon) {
+      cuponAplicadoExitoso = false;
+      ultimoDescuentoCupon = 0;
+      actualizarVisualizacionPrecio();
+      if (badgeCupon) badgeCupon.remove();
+      if (cuponStatusMsg) {
+        cuponStatusMsg.innerText = "";
+        cuponStatusMsg.classList.add("hidden");
       }
-      badgeCupon.innerHTML = `⚡ ¡Cupón "${cuponVal}" aplicado! ($16.990 CLP / un.)`;
-    } else if (badgeCupon) {
-      badgeCupon.remove();
+      return;
+    }
+
+    if (btnAplicarCupon) {
+      btnAplicarCupon.disabled = true;
+      btnAplicarCupon.innerText = "...";
+    }
+
+    try {
+      let esValido = false;
+      let montoDescuento = 0;
+      let mensajeRespuesta = "";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "validar_cupon",
+            cupon: codigoCupon,
+            subtotal: subtotal,
+          }),
+        });
+
+        const resData = await response.json();
+        if (resData.success && resData.data && resData.data.valido) {
+          esValido = true;
+          porcentajeDescuentoCupon = Number(resData.data.porcentaje) || 0;
+          if (porcentajeDescuentoCupon === 15) {
+            descuentoPorUnidadCupon = 3000; // $19.990 - $3.000 = $16.990 exactos
+          } else if (porcentajeDescuentoCupon > 0) {
+            descuentoPorUnidadCupon = Math.round((PRODUCT_PRICE * porcentajeDescuentoCupon) / 100);
+          } else {
+            descuentoPorUnidadCupon = Number(resData.data.descuentoUnidad) || Math.round(Number(resData.data.descuento) / cant) || 3000;
+          }
+          montoDescuento = descuentoPorUnidadCupon * cant;
+          mensajeRespuesta = resData.data.mensaje || "¡Cupón válido y aplicado!";
+        } else if (resData.data && resData.data.mensaje) {
+          mensajeRespuesta = resData.data.mensaje;
+        }
+      } catch (e) {
+        console.warn("Validando cupón por regla local (fallback):", e.message);
+      }
+
+      if (
+        !esValido &&
+        (codigoCupon === "PREVENTA" ||
+          codigoCupon === "PREVENTA15" ||
+          codigoCupon === "LYNTO15")
+      ) {
+        esValido = true;
+        descuentoPorUnidadCupon = 3000;
+        porcentajeDescuentoCupon = 0;
+        montoDescuento = 3000 * cant;
+        mensajeRespuesta = "¡Cupón de Preventa aplicado con éxito!";
+      }
+
+      if (esValido) {
+        cuponAplicadoExitoso = true;
+        ultimoDescuentoCupon = montoDescuento;
+        actualizarVisualizacionPrecio();
+
+        if (cuponStatusMsg) {
+          cuponStatusMsg.innerText = `✓ ${mensajeRespuesta}`;
+          cuponStatusMsg.style.color = "#2e7d32";
+          cuponStatusMsg.classList.remove("hidden");
+        }
+      } else {
+        cuponAplicadoExitoso = false;
+        ultimoDescuentoCupon = 0;
+        descuentoPorUnidadCupon = 0;
+        porcentajeDescuentoCupon = 0;
+        actualizarVisualizacionPrecio();
+
+        if (cuponStatusMsg) {
+          cuponStatusMsg.innerText =
+            mensajeRespuesta || `❌ Cupón "${codigoCupon}" no válido o inactivo.`;
+          cuponStatusMsg.style.color = "#c62828";
+          cuponStatusMsg.classList.remove("hidden");
+        }
+      }
+    } finally {
+      if (btnAplicarCupon) {
+        btnAplicarCupon.disabled = false;
+        btnAplicarCupon.innerText = "Aplicar";
+      }
     }
   };
 
+  if (btnAplicarCupon) {
+    btnAplicarCupon.addEventListener("click", aplicarCupon);
+  }
+
   if (cuponInput) {
-    cuponInput.addEventListener("input", actualizarVisualizacionPrecio);
+    cuponInput.addEventListener("input", () => {
+      cuponAplicadoExitoso = false;
+      ultimoDescuentoCupon = 0;
+      actualizarVisualizacionPrecio();
+      if (cuponStatusMsg) cuponStatusMsg.classList.add("hidden");
+    });
+  }
+
+  const abrirModalResumen = () => {
+    ocultarError();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      mostrarError("Por favor completa todos los campos obligatorios (*) antes de continuar.");
+      return;
+    }
+
+    const rut = rutInput ? rutInput.value.trim() : "";
+    if (!validarRut(rut)) {
+      mostrarError("El RUT ingresado no es válido. Formato esperado: 12.345.678-9");
+      return;
+    }
+
+    const email = emailInput ? emailInput.value.trim() : "";
+    if (!validarEmail(email)) {
+      mostrarError("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+
+    if (modalUserName) modalUserName.innerText = sanitizeInput(nombreInput.value.trim());
+    if (modalUserAddress) modalUserAddress.innerText = `${sanitizeInput(direccionInput.value.trim())}, ${sanitizeInput(comunaInput.value.trim())}`;
+    if (modalUserRegion) modalUserRegion.innerText = sanitizeInput(regionSelect.value);
+
+    actualizarVisualizacionPrecio();
+
+    if (modalResumen) {
+      modalResumen.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const cerrarModalResumen = () => {
+    if (modalResumen) {
+      modalResumen.classList.add("hidden");
+      document.body.style.overflow = "auto";
+    }
+  };
+
+  if (btnAbrirResumen) {
+    btnAbrirResumen.addEventListener("click", abrirModalResumen);
+  }
+
+  if (btnCerrarModal) {
+    btnCerrarModal.addEventListener("click", cerrarModalResumen);
+  }
+
+  if (modalResumen) {
+    modalResumen.addEventListener("click", (e) => {
+      if (e.target === modalResumen) {
+        cerrarModalResumen();
+      }
+    });
   }
 
   if (btnRestar && btnSumar) {
