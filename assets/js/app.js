@@ -44,43 +44,109 @@ document.addEventListener("DOMContentLoaded", () => {
   const newsletterEmail = document.getElementById("newsletter-email");
   const newsletterMsg = document.getElementById("newsletter-msg");
 
-  // --- CONTROL DE CANTIDAD Y DESCUENTO DE CUPÓN ---
+  // --- CONTROL DE CANTIDAD Y VALIDACIÓN DINÁMICA DE CUPÓN ---
+  let timerCupon = null;
+  let ultimoDescuentoCupon = 0;
+
+  const validarCuponServidor = async (codigoCupon) => {
+    if (!codigoCupon) {
+      ultimoDescuentoCupon = 0;
+      actualizarVisualizacionPrecio();
+      return;
+    }
+
+    try {
+      const cant = parseInt(cantidadInput.value, 10) || 1;
+      const subtotal = PRODUCT_PRICE * cant;
+
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "validar_cupon",
+          cupon: codigoCupon,
+          subtotal: subtotal,
+        }),
+      });
+
+      const resData = await response.json();
+      let badgeCupon = document.getElementById("badge-cupon-aplicado");
+
+      if (resData.success && resData.data && resData.data.valido) {
+        ultimoDescuentoCupon = Number(resData.data.descuento) || 3000;
+        const totalConDesc = Math.max(0, subtotal - ultimoDescuentoCupon);
+        displayTotal.innerText = `$${totalConDesc.toLocaleString("es-CL")} CLP`;
+
+        if (!badgeCupon) {
+          badgeCupon = document.createElement("div");
+          badgeCupon.id = "badge-cupon-aplicado";
+          badgeCupon.style.fontSize = "0.85rem";
+          badgeCupon.style.fontWeight = "600";
+          badgeCupon.style.marginTop = "6px";
+          badgeCupon.style.maxWidth = "100%";
+          badgeCupon.style.wordBreak = "break-word";
+          displayTotal.parentElement.appendChild(badgeCupon);
+        }
+        badgeCupon.style.color = "#2e7d32";
+        const cuponDisplay =
+          codigoCupon.length > 15
+            ? codigoCupon.substring(0, 15) + "..."
+            : codigoCupon;
+        badgeCupon.innerHTML = `⚡ ¡Cupón "${cuponDisplay}" válido! (-$${ultimoDescuentoCupon.toLocaleString("es-CL")})`;
+      } else {
+        ultimoDescuentoCupon = 0;
+        displayTotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
+
+        if (!badgeCupon) {
+          badgeCupon = document.createElement("div");
+          badgeCupon.id = "badge-cupon-aplicado";
+          badgeCupon.style.fontSize = "0.85rem";
+          badgeCupon.style.fontWeight = "600";
+          badgeCupon.style.marginTop = "6px";
+          badgeCupon.style.maxWidth = "100%";
+          badgeCupon.style.wordBreak = "break-word";
+          displayTotal.parentElement.appendChild(badgeCupon);
+        }
+        badgeCupon.style.color = "#c62828";
+        badgeCupon.innerHTML = `⚠️ Cupón "${codigoCupon}" no válido o inactivo`;
+      }
+    } catch (err) {
+      console.warn("No se pudo validar el cupón en servidor:", err.message);
+    }
+  };
+
   const actualizarVisualizacionPrecio = () => {
     const cant = parseInt(cantidadInput.value, 10) || 1;
     displayCantidad.innerText = cant;
-    
+
     const cuponVal = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
-    let unitPrice = PRODUCT_PRICE;
-    let cuponAplicado = false;
+    const subtotal = PRODUCT_PRICE * cant;
 
-    // Si ingresa cualquier código de cupón válido (ej. PREVENTA, PREVENTA15, etc.)
-    if (cuponVal.length > 0) {
-      unitPrice = Math.max(0, PRODUCT_PRICE - DESCUENTO_CUPON_UNIDAD); // $16.990
-      cuponAplicado = true;
-    }
-
-    const total = unitPrice * cant;
-    displayTotal.innerText = `$${total.toLocaleString("es-CL")} CLP`;
-
-    let badgeCupon = document.getElementById("badge-cupon-aplicado");
-    if (cuponAplicado) {
-      if (!badgeCupon) {
-        badgeCupon = document.createElement("div");
-        badgeCupon.id = "badge-cupon-aplicado";
-        badgeCupon.style.color = "#2e7d32";
-        badgeCupon.style.fontSize = "0.85rem";
-        badgeCupon.style.fontWeight = "600";
-        badgeCupon.style.marginTop = "6px";
-        displayTotal.parentElement.appendChild(badgeCupon);
-      }
-      badgeCupon.innerHTML = `⚡ ¡Cupón "${cuponVal}" aplicado! ($16.990 CLP / un.)`;
-    } else if (badgeCupon) {
-      badgeCupon.remove();
+    if (cuponVal.length === 0) {
+      ultimoDescuentoCupon = 0;
+      displayTotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
+      const badgeCupon = document.getElementById("badge-cupon-aplicado");
+      if (badgeCupon) badgeCupon.remove();
+    } else {
+      const total = Math.max(
+        0,
+        subtotal - (ultimoDescuentoCupon > 0 ? ultimoDescuentoCupon : 0),
+      );
+      displayTotal.innerText = `$${total.toLocaleString("es-CL")} CLP`;
     }
   };
 
   if (cuponInput) {
-    cuponInput.addEventListener("input", actualizarVisualizacionPrecio);
+    cuponInput.addEventListener("input", () => {
+      const val = cuponInput.value.trim().toUpperCase();
+      actualizarVisualizacionPrecio();
+      if (timerCupon) clearTimeout(timerCupon);
+      if (val.length >= 2) {
+        timerCupon = setTimeout(() => {
+          validarCuponServidor(val);
+        }, 500);
+      }
+    });
   }
 
   if (btnRestar && btnSumar) {
