@@ -175,25 +175,39 @@ document.addEventListener("DOMContentLoaded", () => {
     if (errorAlert) errorAlert.classList.add("hidden");
   };
 
+  // --- SANITIZACIÓN ANTI-XSS ---
+  const sanitizeInput = (str) => {
+    if (typeof str !== "string") return "";
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#x27;")
+      .replace(/\//g, "&#x2F;");
+  };
+
   // --- SUBMIT DEL CHECKOUT ---
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       ocultarError();
 
-      const nombre = document.getElementById("nombre").value.trim();
-      const rut = rutInput.value.trim();
-      const email = emailInput.value.trim();
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      const nombre = sanitizeInput(document.getElementById("nombre").value.trim());
+      const rut = sanitizeInput(rutInput.value.trim());
+      const email = sanitizeInput(emailInput.value.trim());
       const telefonoEl = document.getElementById("telefono");
       const regionEl = document.getElementById("region");
       const comunaEl = document.getElementById("comuna");
       const cuponEl = document.getElementById("cupon");
 
-      const telefono = telefonoEl ? telefonoEl.value.trim() : "";
-      const region = regionEl ? regionEl.value.trim() : "";
-      const comuna = comunaEl ? comunaEl.value.trim() : "";
-      const cupon = cuponEl ? cuponEl.value.trim().toUpperCase() : "";
-      const direccion = document.getElementById("direccion").value.trim();
+      const telefono = sanitizeInput(telefonoEl ? telefonoEl.value.trim() : "");
+      const region = sanitizeInput(regionEl ? regionEl.value.trim() : "");
+      const comuna = sanitizeInput(comunaEl ? comunaEl.value.trim() : "");
+      const cupon = sanitizeInput(cuponEl ? cuponEl.value.trim().toUpperCase() : "");
+      const direccion = sanitizeInput(document.getElementById("direccion").value.trim());
       const cantidad = parseInt(cantidadInput.value, 10);
 
       if (!nombre)
@@ -228,6 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return mostrarError("Cantidad inválida.");
       }
 
+      // Prevenir doble clic deshabilitando el botón mientras dura el envío
+      if (submitBtn) submitBtn.disabled = true;
       loadingOverlay.classList.remove("hidden");
       loadingOverlay.classList.add("flex");
 
@@ -269,6 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (err) {
         console.error(err);
+        if (submitBtn) submitBtn.disabled = false;
         loadingOverlay.classList.add("hidden");
         loadingOverlay.classList.remove("flex");
         mostrarError(
