@@ -659,6 +659,17 @@ a:hover {
   font-size: 1.45rem;
   font-weight: 800;
   color: var(--brand-purple-deep);
+  transition: opacity var(--transition-fast);
+}
+
+.total-price-loading {
+  opacity: 0.5;
+  animation: pulse-price 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-price {
+  from { opacity: 0.4; }
+  to { opacity: 0.95; }
 }
 
 /* FAQ Grid */
