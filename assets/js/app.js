@@ -279,83 +279,28 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const resData = await response.json();
-      if (!resData.success || !resData.data) {
-        console.warn("⚠️ La respuesta de get_config no indicó éxito o vino vacía:", resData);
+      if (!resData.success) {
+        console.warn("⚠️ La respuesta de get_config no indicó éxito:", resData);
         return;
       }
 
-      const { configuracion = {}, nutricion = [] } = resData.data;
+      // Estructura oficial enviada por el Backend: resData.config, resData.producto, resData.nutricion (soporta resData.data también)
+      const dataPayload = resData.data || resData;
+      const producto = dataPayload.producto || {};
+      const config = dataPayload.config || dataPayload.configuracion || {};
+      const nutricion = dataPayload.nutricion || [];
 
-      // Normalizar claves de configuración a minúsculas sin caracteres especiales para mapeo seguro
-      const configMap = {};
-      if (Array.isArray(configuracion)) {
-        configuracion.forEach((item) => {
-          if (item.Clave || item.clave) {
-            const k = String(item.Clave || item.clave).toLowerCase().replace(/[^a-z0-9]/g, "");
-            configMap[k] = item.Valor || item.valor || "";
-          }
-        });
-      } else if (typeof configuracion === "object") {
-        Object.keys(configuracion).forEach((key) => {
-          const k = key.toLowerCase().replace(/[^a-z0-9]/g, "");
-          configMap[k] = configuracion[key];
-        });
-      }
+      // 1. Datos del Producto (Inventario: precio y stock)
+      const precioVal = producto.precio !== undefined ? producto.precio : (config.PRECIO_PREVENTA || config.precio || config.precioproducto);
+      const stockVal = producto.stock !== undefined ? producto.stock : (config.STOCK_DISPONIBLE || config.stock || config.stockproducto);
 
-      // 1. Hero Título
-      const heroTituloEl = document.getElementById("hero-titulo");
-      const heroTituloVal = configMap["herotitulo"] || configMap["titulo"] || configMap["herotitle"];
-      if (heroTituloEl && heroTituloVal) {
-        heroTituloEl.innerText = heroTituloVal;
-      }
-
-      // 2. Hero Subtítulo
-      const heroSubtituloEl = document.getElementById("hero-subtitulo");
-      const heroSubtituloVal = configMap["herosubtitulo"] || configMap["subtitulo"] || configMap["herosubtitle"];
-      if (heroSubtituloEl && heroSubtituloVal) {
-        heroSubtituloEl.innerText = heroSubtituloVal;
-      }
-
-      // 3. Descripción del Producto
-      const productoDescEl = document.getElementById("producto-descripcion");
-      const productoDescVal = configMap["productodescripcion"] || configMap["descripcionproducto"] || configMap["producto"];
-      if (productoDescEl && productoDescVal) {
-        productoDescEl.innerText = productoDescVal;
-      }
-
-      // 4. Historia Nosotras
-      const nosotrasDescEl = document.getElementById("nosotras-descripcion");
-      const nosotrasVal = configMap["nosotrashistoria"] || configMap["nosotrasdescripcion"] || configMap["nosotras"];
-      if (nosotrasDescEl && nosotrasVal) {
-        nosotrasDescEl.innerText = nosotrasVal;
-      }
-
-      // 5. Información de Despacho
-      const despachoInfoEl = document.getElementById("despacho-info");
-      const despachoVal = configMap["despachoinfo"] || configMap["envioinfo"] || configMap["despacho"] || configMap["envio"];
-      if (despachoInfoEl && despachoVal) {
-        despachoInfoEl.innerText = despachoVal;
-      }
-
-      // 6. Disclaimer Legal
-      const disclaimerEl = document.getElementById("disclaimer-legal");
-      const disclaimerVal = configMap["disclaimerlegal"] || configMap["disclaimer"] || configMap["avisolegal"];
-      if (disclaimerEl && disclaimerVal) {
-        disclaimerEl.innerText = disclaimerVal;
-      }
-
-      // 7. Precio y Stock Actualizados desde la Planilla (Inventario / Configuración)
-      const prodInfo = resData.data.producto || resData.data.inventario || {};
-      const precioVal = prodInfo.precio || prodInfo.Precio || configMap["precioproducto"] || configMap["precio"];
-      const stockVal = prodInfo.stock !== undefined ? prodInfo.stock : (prodInfo.Stock !== undefined ? prodInfo.Stock : (configMap["stock"] || configMap["stockproducto"]));
-
-      if (precioVal && !isNaN(Number(precioVal))) {
+      if (precioVal !== undefined && !isNaN(Number(precioVal))) {
         PRODUCT_PRICE = Number(precioVal);
         actualizarVisualizacionPrecio();
       }
 
       // Control dinámico de botones según stock real disponible
-      const submitBtn = checkoutForm ? checkoutForm.querySelector('button[type="submit"]') : null;
+      const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
       if (stockVal !== undefined && !isNaN(Number(stockVal))) {
         const numStock = Number(stockVal);
         if (numStock <= 0) {
@@ -365,13 +310,61 @@ document.addEventListener("DOMContentLoaded", () => {
             submitBtn.style.opacity = "0.6";
             submitBtn.style.cursor = "not-allowed";
           }
+        } else {
+          if (submitBtn && submitBtn.disabled) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>Quiero mi Iron Girl en Preventa ⚡</span>`;
+            submitBtn.style.opacity = "1";
+            submitBtn.style.cursor = "pointer";
+          }
         }
       }
 
-      // 8. Tabla Nutricional (#tabla-nutricion-body)
+      // 2. Normalizar claves de configuración para reemplazo seguro
+      const configMap = {};
+      if (Array.isArray(config)) {
+        config.forEach((item) => {
+          if (item.Clave || item.clave) {
+            const k = String(item.Clave || item.clave).toLowerCase().replace(/[^a-z0-9]/g, "");
+            configMap[k] = item.Valor || item.valor || "";
+          }
+        });
+      } else if (typeof config === "object") {
+        Object.keys(config).forEach((key) => {
+          const k = key.toLowerCase().replace(/[^a-z0-9]/g, "");
+          configMap[k] = config[key];
+        });
+      }
+
+      // 3. Inyección dinámica de textos configurables
+      const heroTituloEl = document.getElementById("hero-titulo");
+      const heroTituloVal = configMap["titulositio"] || configMap["herotitulo"] || configMap["titulo"];
+      if (heroTituloEl && heroTituloVal) heroTituloEl.innerText = heroTituloVal;
+
+      const heroSubtituloEl = document.getElementById("hero-subtitulo");
+      const heroSubtituloVal = configMap["subtitulo"] || configMap["herosubtitulo"];
+      if (heroSubtituloEl && heroSubtituloVal) heroSubtituloEl.innerText = heroSubtituloVal;
+
+      const productoDescEl = document.getElementById("producto-descripcion");
+      const productoDescVal = producto.descripcion || configMap["productodescripcion"] || configMap["descripcionproducto"];
+      if (productoDescEl && productoDescVal) productoDescEl.innerText = productoDescVal;
+
+      const nosotrasDescEl = document.getElementById("nosotras-descripcion");
+      const nosotrasVal = configMap["nosotrashistoria"] || configMap["nosotrasdescripcion"];
+      if (nosotrasDescEl && nosotrasVal) nosotrasDescEl.innerText = nosotrasVal;
+
+      const despachoInfoEl = document.getElementById("despacho-info");
+      const despachoVal = configMap["despachoinfo"] || configMap["envioinfo"];
+      if (despachoInfoEl && despachoVal) despachoInfoEl.innerText = despachoVal;
+
+      const disclaimerEl = document.getElementById("disclaimer-legal");
+      const disclaimerVal = configMap["disclaimerlegal"] || configMap["disclaimer"];
+      if (disclaimerEl && disclaimerVal) disclaimerEl.innerText = disclaimerVal;
+
+      // 4. Tabla Nutricional (#tabla-nutricion-body)
       const tablaBody = document.getElementById("tabla-nutricion-body");
       if (tablaBody && Array.isArray(nutricion) && nutricion.length > 0) {
-        tablaBody.innerHTML = ""; // Limpiar placeholders
+        tablaBody.innerHTML = "";
         nutricion.forEach((row) => {
           const comp = row.componente || row.Componente || row[0] || "";
           const cant = row.cantidad || row.Cantidad || row[1] || "";
