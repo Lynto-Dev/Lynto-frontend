@@ -11,7 +11,8 @@ const DEFAULT_API_URL =
 const API_URL = localStorage.getItem("LYNTO_API_URL") || DEFAULT_API_URL;
 
 // Constantes de negocio (para visualización preliminar, la verdad la tiene el Sheets backend)
-let PRODUCT_PRICE = 29990;
+let PRODUCT_PRICE = 19990;
+const DESCUENTO_CUPON_UNIDAD = 3000; // Descuento con cupón: $19.990 -> $16.990
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🚀 Lynto Frontend inicializado.");
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const rutInput = document.getElementById("rut");
   const emailInput = document.getElementById("email");
   const cantidadInput = document.getElementById("cantidad");
+  const cuponInput = document.getElementById("cupon");
   const btnRestar = document.getElementById("btn-restar");
   const btnSumar = document.getElementById("btn-sumar");
 
@@ -42,13 +44,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const newsletterEmail = document.getElementById("newsletter-email");
   const newsletterMsg = document.getElementById("newsletter-msg");
 
-  // --- CONTROL DE CANTIDAD ---
+  // --- CONTROL DE CANTIDAD Y DESCUENTO DE CUPÓN ---
   const actualizarVisualizacionPrecio = () => {
     const cant = parseInt(cantidadInput.value, 10) || 1;
     displayCantidad.innerText = cant;
-    const total = PRODUCT_PRICE * cant;
+    
+    const cuponVal = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
+    let unitPrice = PRODUCT_PRICE;
+    let cuponAplicado = false;
+
+    // Si ingresa cualquier código de cupón válido (ej. PREVENTA, PREVENTA15, etc.)
+    if (cuponVal.length > 0) {
+      unitPrice = Math.max(0, PRODUCT_PRICE - DESCUENTO_CUPON_UNIDAD); // $16.990
+      cuponAplicado = true;
+    }
+
+    const total = unitPrice * cant;
     displayTotal.innerText = `$${total.toLocaleString("es-CL")} CLP`;
+
+    let badgeCupon = document.getElementById("badge-cupon-aplicado");
+    if (cuponAplicado) {
+      if (!badgeCupon) {
+        badgeCupon = document.createElement("div");
+        badgeCupon.id = "badge-cupon-aplicado";
+        badgeCupon.style.color = "#2e7d32";
+        badgeCupon.style.fontSize = "0.85rem";
+        badgeCupon.style.fontWeight = "600";
+        badgeCupon.style.marginTop = "6px";
+        displayTotal.parentElement.appendChild(badgeCupon);
+      }
+      badgeCupon.innerHTML = `⚡ ¡Cupón "${cuponVal}" aplicado! ($16.990 CLP / un.)`;
+    } else if (badgeCupon) {
+      badgeCupon.remove();
+    }
   };
+
+  if (cuponInput) {
+    cuponInput.addEventListener("input", actualizarVisualizacionPrecio);
+  }
 
   if (btnRestar && btnSumar) {
     btnRestar.addEventListener("click", () => {
