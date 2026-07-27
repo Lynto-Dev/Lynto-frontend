@@ -311,25 +311,85 @@
                 />
               </div>
 
+              <div class="grid-2-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="email">Correo Electrónico *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    placeholder="ejemplo@correo.com"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="telefono">Teléfono Celular *</label>
+                  <input
+                    type="tel"
+                    id="telefono"
+                    required
+                    placeholder="+56 9 1234 5678"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="grid-2-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="region">Región de Despacho *</label>
+                  <select id="region" required class="form-control">
+                    <option value="" disabled selected>Selecciona tu región...</option>
+                    <option value="Región Metropolitana">Región Metropolitana de Santiago</option>
+                    <option value="Región de Valparaíso">Región de Valparaíso</option>
+                    <option value="Región del Biobío">Región del Biobío</option>
+                    <option value="Región de La Araucanía">Región de La Araucanía</option>
+                    <option value="Región de Antofagasta">Región de Antofagasta</option>
+                    <option value="Región de Coquimbo">Región de Coquimbo</option>
+                    <option value="Región del Maule">Región del Maule</option>
+                    <option value="Región de O'Higgins">Región del Libertador Gral. Bernardo O'Higgins</option>
+                    <option value="Región de Los Lagos">Región de Los Lagos</option>
+                    <option value="Región de Tarapacá">Región de Tarapacá</option>
+                    <option value="Región de Atacama">Región de Atacama</option>
+                    <option value="Región de Ñuble">Región de Ñuble</option>
+                    <option value="Región de Los Ríos">Región de Los Ríos</option>
+                    <option value="Región de Arica y Parinacota">Región de Arica y Parinacota</option>
+                    <option value="Región de Aysén">Región Aysén del Gral. Carlos Ibáñez</option>
+                    <option value="Región de Magallanes">Región de Magallanes y Antártica Chilena</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="comuna">Comuna *</label>
+                  <input
+                    type="text"
+                    id="comuna"
+                    required
+                    placeholder="Ej. Providencia, Las Condes"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
               <div class="form-group">
-                <label for="email">Correo Electrónico *</label>
+                <label for="direccion">Dirección Completa (Calle, Número, Dpto) *</label>
                 <input
-                  type="email"
-                  id="email"
+                  type="text"
+                  id="direccion"
                   required
-                  placeholder="ejemplo@correo.com"
+                  placeholder="Av. Providencia 1234, Dpto 502"
                   class="form-control"
                 />
               </div>
 
               <div class="form-group">
-                <label for="direccion">Dirección de Despacho *</label>
+                <label for="cupon">Código de Cupón (Opcional)</label>
                 <input
                   type="text"
-                  id="direccion"
-                  required
-                  placeholder="Calle, Número, Comuna, Ciudad"
+                  id="cupon"
+                  placeholder="Ej. PREVENTA15"
                   class="form-control"
+                  style="text-transform: uppercase;"
                 />
               </div>
 
