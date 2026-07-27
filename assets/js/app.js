@@ -11,7 +11,7 @@ const DEFAULT_API_URL =
 const API_URL = localStorage.getItem("LYNTO_API_URL") || DEFAULT_API_URL;
 
 // Constantes de negocio (para visualización preliminar, la verdad la tiene el Sheets backend)
-let PRODUCT_PRICE = 29990;
+let PRODUCT_PRICE = 16990;
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🚀 Lynto Frontend inicializado.");
@@ -299,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cargarConfiguracion = async () => {
     try {
       console.log("⏳ Solicitando configuración inicial desde Google Sheets...");
+      if (displayTotal) displayTotal.classList.add("total-price-loading");
       const response = await fetch(`${API_URL}?action=get_config`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} al consultar la configuración.`);
@@ -409,6 +410,8 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("✅ Configuración dinámica de Sheets cargada con éxito.");
     } catch (error) {
       console.warn("⚠️ No se pudo cargar la configuración dinámica desde Sheets (se mantendrán los valores por defecto):", error.message);
+    } finally {
+      if (displayTotal) displayTotal.classList.remove("total-price-loading");
     }
   };
 
