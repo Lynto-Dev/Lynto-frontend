@@ -478,6 +478,24 @@ a:hover {
   background-color: var(--brand-yellow);
 }
 
+/* Skeleton Loader Shimmer Animation para Tabla Nutricional */
+.skeleton-bar {
+  height: 16px;
+  background: linear-gradient(90deg, #eae5f2 25%, #f5f0fb 50%, #eae5f2 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: skeleton-shimmer 1.5s infinite linear;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 /* Checkout Section Layout */
 .checkout-section {
   background: var(--bg-card);
