@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "Content-Type": "text/plain;charset=utf-8",
           },
           body: JSON.stringify({
-            action: "subscribe_newsletter",
+            action: "subscribe",
             email: email,
             origen: "Landing Page",
           }),
