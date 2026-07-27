@@ -670,8 +670,6 @@ a:hover {
   border-radius: var(--radius-lg);
   padding: 2rem;
   box-shadow: var(--shadow-md);
-  position: sticky;
-  top: 100px;
   height: fit-content;
 }
 
