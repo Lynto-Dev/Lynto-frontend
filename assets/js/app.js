@@ -11,7 +11,7 @@ const DEFAULT_API_URL =
 const API_URL = localStorage.getItem("LYNTO_API_URL") || DEFAULT_API_URL;
 
 // Constantes de negocio (para visualización preliminar, la verdad la tiene el Sheets backend)
-let PRODUCT_PRICE = 29990;
+let PRODUCT_PRICE = 16990;
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🚀 Lynto Frontend inicializado.");
