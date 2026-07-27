@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lynto | Compra Exitosa</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <script>
       if (window.top !== window.self) {
@@ -15,49 +22,26 @@
       }
     </script>
   </head>
-  <body
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    "
-  >
-    <div
-      style="
-        max-width: 450px;
-        background: white;
-        border: 1px solid #ddd;
-        padding: 2rem;
-        border-radius: 8px;
-        text-align: center;
-      "
-    >
-      <h1 style="color: #2e7d32">¡Compra Exitosa!</h1>
-      <p>[Insertar mensaje de agradecimiento y confirmación de la preventa]</p>
+  <body class="flex justify-center items-center" style="min-height: 100vh; padding: 1.5rem;">
+    <div class="card-section text-center" style="max-width: 480px; width: 100%;">
+      <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎉</div>
+      <h1 style="color: var(--primary); font-size: 2.2rem; margin-bottom: 0.75rem;">¡Compra Exitosa!</h1>
+      <p style="font-size: 1rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+        ¡Muchas gracias por confiar en Lynto! Tu pedido de preventa ha sido registrado con éxito.
+      </p>
 
-      <div
-        style="
-          background: #f1f8e9;
-          border: 1px solid #dcedc8;
-          padding: 1rem;
-          border-radius: 4px;
-          text-align: left;
-          margin: 1.5rem 0;
-        "
-      >
-        <h3 style="margin-top: 0; font-size: 0.9rem; color: #33691e">
+      <div class="info-card" style="text-align: left; margin-bottom: 2rem; padding: 1.25rem;">
+        <h3 style="margin-top: 0; font-size: 1.05rem; color: var(--primary); margin-bottom: 0.5rem;">
           ¿Qué sucede ahora?
         </h3>
-        <p style="font-size: 0.85rem; margin-bottom: 0">
-          [Explicación de los pasos siguientes, plazos de envío y contacto de
-          soporte]
+        <p style="font-size: 0.9rem; margin-bottom: 0; color: var(--text-main);">
+          Recibirás la confirmación de pago de Flow en tu correo. Te notificaremos cuando tu pedido sea enviado con el número de seguimiento.
         </p>
       </div>
 
-      <a href="./index.html" target="_top" class="btn" style="display: block"
-        >Volver al Inicio</a
-      >
+      <a href="./index.html" target="_top" class="btn btn-primary btn-block">
+        Volver al Inicio
+      </a>
     </div>
   </body>
 </html>

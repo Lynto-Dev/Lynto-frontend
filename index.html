@@ -3,107 +3,286 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lynto | Preventa Suplemento</title>
+    <title>Lynto | Iron Girl - Escudo Mineral en Preventa</title>
+    <!-- Favicon Oficial -->
+    <link rel="icon" type="image/png" href="./assets/img/Isotipo morado sin fondo.png" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <!-- Navegación -->
-    <header>
-      <div
-        class="flex justify-between items-center"
-        style="max-width: 960px; margin: 0 auto"
-      >
-        <a
-          href="#"
-          style="
-            font-weight: bold;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: #333;
-          "
-          >Lynto</a
-        >
+    <!-- Navegación Flotante Glassmorphic -->
+    <header class="header">
+      <div class="header-container">
+        <a href="#" class="brand-logo">
+          <img src="./assets/img/Logo morado sin fondo.png" alt="Lynto Logo" class="brand-logo-img" />
+        </a>
         <nav class="nav-links">
-          <a href="#producto">El Suplemento</a>
+          <a href="#producto">¿Por qué Iron Girl?</a>
           <a href="#nutricion">Tabla Nutricional</a>
           <a href="#nosotras">Nosotras</a>
-          <a href="#comprar">Comprar</a>
+          <a href="#comunidad">Early Adopters</a>
+          <a href="#faq">Preguntas</a>
+          <a href="#comprar" class="btn btn-nav btn-primary">Reservar Preventa ⚡</a>
         </nav>
       </div>
     </header>
 
-    <div class="container">
-      <!-- Sección Hero -->
-      <section class="section" id="hero">
-        <h1 id="hero-titulo">[Insertar gancho de la marca]</h1>
-        <p id="hero-subtitulo">
-          [Insertar descripción corta y llamativa de la preventa del suplemento]
-        </p>
-        <a href="#comprar" class="btn">Reservar Preventa</a>
-      </section>
-
-      <!-- Sección Producto -->
-      <section class="section" id="producto">
-        <h2>El Suplemento</h2>
-        <p>
-          [Insertar beneficios y descripción detallada del suplemento
-          alimenticio]
-        </p>
-      </section>
-
-      <!-- Sección Nutrición -->
-      <section class="section" id="nutricion">
-        <h2>Tabla Nutricional</h2>
-        <p>
-          [Insertar ingredientes, dosis e información sobre la formulación
-          científica]
+    <main class="container">
+      <!-- Sección Hero Principal -->
+      <section class="hero-section" id="hero">
+        <div class="hero-badge">✨ PREVENTA EARLY ADOPTERS</div>
+        <h1 id="hero-titulo" class="hero-title">
+          Domina el ritmo de lo real. Tu biología en su máximo potencial.
+        </h1>
+        <p id="hero-subtitulo" class="hero-subtitle">
+          El desgaste moderno no se combate con fuerza de voluntad, se resuelve con ciencia. Descubre <strong>Iron Girl</strong>: la primera matriz biotecnológica de minerales esenciales en polvo, diseñada para recuperar tu vitalidad diaria sin pastillas ni molestias.
         </p>
 
-        <table class="nutrition-table">
-          <thead>
-            <tr>
-              <th>Componente</th>
-              <th>Cantidad por porción</th>
-              <th>% DDR</th>
-            </tr>
-          </thead>
-          <tbody id="tabla-nutricion-body">
-            <tr>
-              <td>[Componente 1]</td>
-              <td>[Cantidad 1]</td>
-              <td>[DDR 1]</td>
-            </tr>
-            <tr>
-              <td>[Componente 2]</td>
-              <td>[Cantidad 2]</td>
-              <td>[DDR 2]</td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Micropuntos y Badges de Confianza -->
+        <div class="trust-badges">
+          <span class="trust-badge">🌿 LIBRE DE AZÚCAR</span>
+          <span class="trust-badge">⚡ RÁPIDA ABSORCIÓN</span>
+          <span class="trust-badge">🥤 FORMATO SACHET</span>
+          <span class="trust-badge">🔬 RESPALDO FARMACÉUTICO</span>
+        </div>
+
+        <div class="hero-actions" style="margin-top: 2rem;">
+          <a href="#comprar" class="btn btn-primary btn-large">
+            <span>Quiero mi Iron Girl en Preventa ⚡</span>
+          </a>
+          <a href="#producto" class="btn btn-ghost">
+            <span>Conoce la ciencia detrás</span>
+          </a>
+        </div>
+
+        <!-- Banner de Exclusividad -->
+        <div class="exclusivity-banner">
+          <p>
+            💬 <strong>Forma parte de la primera generación Lynto.</strong> Reservando tu Iron Girl hoy, aseguras precio preferencial de preventa y acceso directo a nuestra comunidad VIP de desarrollo.
+          </p>
+        </div>
       </section>
 
-      <!-- Sección Nosotros -->
-      <section class="section" id="nosotras">
-        <h2>Nosotras</h2>
-        <p>[Historia de la marca y propósito de las fundadoras]</p>
+      <!-- Sección Descripción del Producto: Iron Girl -->
+      <section class="section card-section" id="producto">
+        <div class="section-header">
+          <span class="section-tag">Matriz Biotecnológica</span>
+          <h2>¿Por qué Iron Girl? Chau al agotamiento de las 4 PM.</h2>
+        </div>
+        
+        <div class="section-body">
+          <p id="producto-descripcion" class="section-lead">
+            Normalizamos vivir cansadas, atribuyéndolo a la rutina acelerada o al estrés. Sin embargo, en la mayoría de las mujeres, la verdadera causa es un déficit invisible de minerales clave como el hierro y el magnesio. Los suplementos tradicionales intentan resolverlo con cápsulas difíciles de tragar o de baja asimilación.<br/><br/>
+            <strong>Iron Girl cambia las reglas del juego.</strong> Es una fórmula táctica que combina <strong>Bisglicinato de Hierro, Citrato de Magnesio, Citrato de Calcio y Vitamina D3</strong> en un formato de polvo soluble (sachet) de delicioso sabor natural a frambuesa-limón. Solo disuelves un sachet en 250 mL de agua fresca y le entregas a tu cuerpo un escudo mineral de asimilación rápida, limpia y eficiente.
+          </p>
+
+          <h3 style="margin-top: 2rem; margin-bottom: 1.25rem; color: var(--brand-purple-deep);">Los 4 Pilares de Beneficio:</h3>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>Energía Celular Sustentada</h3>
+              <p>El Bisglicinato Ferroso apoya la producción de hemoglobina y transporte de oxígeno, eliminando la fatiga crónica.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🧠</div>
+              <h3>Enfoque y Recuperación Muscular</h3>
+              <p>El Citrato de Magnesio ayuda a equilibrar el sistema nervioso y relajar la musculatura tras jornadas exigentes.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🦴</div>
+              <h3>Estructura y Balance Mineral</h3>
+              <p>La sinergia entre Citrato de Calcio y Vitamina D3 (600 UI) fortalece la salud ósea y metabólica.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🌱</div>
+              <h3>Sin Fricción ni Pesadez</h3>
+              <p>Formato portable listo para llevar en la cartera o bolso de entrenamiento. Cero azúcares añadidos.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- Sección Checkout -->
-      <section class="section" id="comprar">
-        <h2>Reservar Preventa</h2>
+      <!-- Sección Tabla Nutricional y Ficha Técnica -->
+      <section class="section card-section" id="nutricion">
+        <div class="section-header">
+          <span class="section-tag">Transparencia Farmacéutica</span>
+          <h2>Información Nutricional y Ficha Técnica</h2>
+        </div>
+        <p id="nutricion-descripcion" class="section-lead">
+          <strong>Porción recomendada:</strong> 1 sachet (3,6 g) | <strong>Porciones por envase:</strong> 15 sachets en bolsa Doypack ecológico.<br/>
+          <strong>Modo de uso:</strong> Disolver 1 sachet en 250 mL de agua fría. Consumir preferentemente por la mañana o antes de tus actividades principales.
+        </p>
 
-        <div class="grid-2">
-          <!-- Información de Despacho del Cliente -->
-          <div>
-            <h3>Información de Despacho</h3>
-            <p>
-              [Rellenar info de despacho: tarifas de envío, courier
-              Starken/Chilexpress y plazos de entrega]
+        <div class="table-wrapper" style="margin-top: 2rem;">
+          <table class="nutrition-table">
+            <thead>
+              <tr>
+                <th>Componente / Nutriente</th>
+                <th>Por 100 g</th>
+                <th>Por Porción (1 sachet / 3,6 g)</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-nutricion-body">
+              <tr>
+                <td>Energía (Kcal)</td>
+                <td>39,2</td>
+                <td>1,4</td>
+              </tr>
+              <tr>
+                <td>Proteínas (g)</td>
+                <td>0,0</td>
+                <td>0,0</td>
+              </tr>
+              <tr>
+                <td>Grasas Totales (g)</td>
+                <td>0,0</td>
+                <td>0,0</td>
+              </tr>
+              <tr>
+                <td>Hidratos de Carbono Disponibles (g)</td>
+                <td>9,8</td>
+                <td>0,3</td>
+              </tr>
+              <tr>
+                <td>Azúcares Totales (g)</td>
+                <td>0,0</td>
+                <td>0,0</td>
+              </tr>
+              <tr>
+                <td>Sodio (mg)</td>
+                <td>0,0</td>
+                <td>0,0</td>
+              </tr>
+              <tr>
+                <td>Citrato de Calcio (mg) [Calcio Elemental: 400 mg]</td>
+                <td>55.556</td>
+                <td>2.000</td>
+              </tr>
+              <tr>
+                <td>Citrato de Magnesio (mg) [Magnesio Elemental: 72 mg]</td>
+                <td>12.500</td>
+                <td>450</td>
+              </tr>
+              <tr>
+                <td>Bisglicinato Ferroso (mg) [Hierro Elemental: 16 mg]</td>
+                <td>2.222</td>
+                <td>80</td>
+              </tr>
+              <tr>
+                <td>Vitamina D3 (μg) (600 UI)</td>
+                <td>424</td>
+                <td>15</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ingredients-box" style="margin-top: 1.75rem; background: var(--brand-yellow); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <h4 style="color: var(--brand-purple-deep); margin-bottom: 0.5rem;">Ingredientes Oficiales:</h4>
+          <p style="font-size: 0.92rem; color: var(--text-main); margin-bottom: 1.25rem;">
+            Citrato de calcio, Ácido cítrico, Citrato de magnesio, Saborizante idéntico al natural frambuesa, Saborizante idéntico al natural limón, Bisglicinato ferroso, Estevia (15 mg/porción), Sucralosa (40 mg/porción), Vitamina D3.
+          </p>
+
+          <div style="background: rgba(255, 255, 255, 0.85); border-left: 4px solid var(--brand-purple-deep); padding: 0.85rem 1.1rem; border-radius: var(--radius-sm); margin-top: 1rem;">
+            <p id="disclaimer-legal" style="font-size: 0.84rem; color: var(--text-main); line-height: 1.5; font-weight: 500; margin: 0;">
+              ⚠️ <strong>ADVERTENCIA LEGAL:</strong> Su uso no es recomendable para consumo por menores de 8 años, embarazadas y nodrizas, salvo indicación profesional competente y no reemplaza a una alimentación balanceada.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección Sobre Nosotras -->
+      <section class="section card-section" id="nosotras">
+        <div class="section-header">
+          <span class="section-tag">Conexión y Propósito</span>
+          <h2>Nacidas entre laboratorios, reuniones y el ritmo de la vida real.</h2>
+        </div>
+        <p id="nosotras-descripcion" class="section-lead">
+          Hola, somos el equipo detrás de <strong>Lynto</strong>. Nuestra historia no empieza en una oficina corporativa, sino en la intersección entre la investigación en biología molecular y la práctica de la medicina deportiva.<br/><br/>
+          Como científicas y profesionales activas, vivimos en carne propia la paradoja moderna: queríamos dar nuestro 100% en el laboratorio, en nuestros proyectos y en el entrenamiento, pero nuestro cuerpo nos pedía pausa por la fatiga. Al buscar soluciones en el mercado, solo encontramos dos caminos: medicamentos tradicionales con formatos incómodos o suplementos genéricos llenos de promesas vacías.<br/><br/>
+          Entendimos que la respuesta no era exigirse más, sino entender la biología humana. Así nació <strong>Lynto</strong> una marca de biohacking y nutrición táctica diseñada para crear fórmulas científicas rigurosas, pero pensadas para disfrutarse en el día a día.
+        </p>
+      </section>
+
+      <!-- Módulo Fidelización Early Adopters -->
+      <section class="section card-section" id="comunidad" style="background: var(--brand-yellow); border: 1.5px solid var(--brand-purple);">
+        <div class="section-header">
+          <span class="section-tag">Comunidad Pionera</span>
+          <h2>No eres solo un cliente. Eres fundadora/or de esta revolución.</h2>
+        </div>
+        <p class="section-lead" style="margin-bottom: 1rem;">
+          Lynto no es una gran corporación; es un proyecto vivo, independiente y creado con rigor y pasión desde Chile. Al adquirir tu primer lote de <strong>Iron Girl</strong> durante esta preventa, te conviertes oficialmente en parte de nuestra comunidad pionera.
+        </p>
+
+        <h3 style="color: var(--brand-purple-deep); margin-top: 1.5rem; margin-bottom: 1.25rem; font-size: 1.25rem;">
+          ¿Qué significa ser un Early Adopter de Lynto?
+        </h3>
+
+        <div class="features-grid">
+          <div class="feature-card" style="background: #ffffff;">
+            <div class="feature-icon">💬</div>
+            <h3>Acceso Directo</h3>
+            <p>Podrás evaluar nuestros sabores, sugerir mejoras y votar por los próximos lanzamientos de la marca.</p>
+          </div>
+          <div class="feature-card" style="background: #ffffff;">
+            <div class="feature-icon">🎁</div>
+            <h3>Condiciones Preferenciales De Por Vida</h3>
+            <p>Garantizas descuentos exclusivos y prioridad de despacho en las futuras líneas de producto.</p>
+          </div>
+          <div class="feature-card" style="background: #ffffff;">
+            <div class="feature-icon">🚀</div>
+            <h3>Paso Firme</h3>
+            <p>Tu compra apoya directamente el desarrollo de biotecnología local enfocada en el bienestar femenino.</p>
+          </div>
+        </div>
+
+        <p style="margin-top: 2rem; font-weight: 600; text-align: center; color: var(--brand-purple-deep); font-size: 1.05rem;">
+          ✨ Gracias por confiar en la ciencia, en el proceso y en el comienzo de algo grande.
+        </p>
+      </section>
+
+      <!-- Sección Checkout (Reserva Preventa) -->
+      <section class="section checkout-section" id="comprar">
+        <div class="section-header text-center">
+          <span class="section-tag">Stock Limitado Preventa</span>
+          <h2>Reservar Iron Girl en Preventa</h2>
+          <p class="section-subtext">Reserva tu lote de Iron Girl con precio preferencial y envío prioritario a todo Chile.</p>
+        </div>
+
+        <div class="grid-2 checkout-grid">
+          <!-- Información de Despacho del Cliente -->
+          <div class="info-card">
+            <div class="info-card-header">
+              <div class="info-icon">📦</div>
+              <h3>Información de Despacho</h3>
+            </div>
+            <p id="despacho-info" class="despacho-text">
+              Realizamos envíos a todo Chile mediante couriers certificados. Tu orden de preventa será despachada prioritariamente al completar el primer lote de producción oficial.
+            </p>
+            <div class="guarantees-list">
+              <div class="guarantee-item">
+                <span class="check-icon">✓</span>
+                <span>Pago 100% Seguro cifrado por Flow</span>
+              </div>
+              <div class="guarantee-item">
+                <span class="check-icon">✓</span>
+                <span>Despacho directo a todo Chile</span>
+              </div>
+              <div class="guarantee-item">
+                <span class="check-icon">✓</span>
+                <span>Notificación por correo con número de seguimiento</span>
+              </div>
+            </div>
           </div>
 
           <!-- Formulario de Compra -->
-          <div>
+          <div class="form-card">
             <form id="checkout-form">
               <!-- Alerta de Error -->
               <div id="error-alert" class="alert hidden">
@@ -116,7 +295,7 @@
                   type="text"
                   id="nombre"
                   required
-                  placeholder="Nombre Apellido"
+                  placeholder="Nombre y Apellido"
                   class="form-control"
                 />
               </div>
@@ -132,167 +311,200 @@
                 />
               </div>
 
-              <div class="form-group">
-                <label for="email">Correo Electrónico *</label>
-                <input
-                  type="email"
-                  id="email"
-                  required
-                  placeholder="ejemplo@correo.com"
-                  class="form-control"
-                />
+              <div class="grid-2-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="email">Correo Electrónico *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    placeholder="ejemplo@correo.com"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="telefono">Teléfono Celular *</label>
+                  <input
+                    type="tel"
+                    id="telefono"
+                    required
+                    placeholder="+56 9 1234 5678"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="grid-2-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="region">Región de Despacho *</label>
+                  <select id="region" required class="form-control">
+                    <option value="" disabled selected>Selecciona tu región...</option>
+                    <option value="Región Metropolitana">Región Metropolitana de Santiago</option>
+                    <option value="Región de Valparaíso">Región de Valparaíso</option>
+                    <option value="Región del Biobío">Región del Biobío</option>
+                    <option value="Región de La Araucanía">Región de La Araucanía</option>
+                    <option value="Región de Antofagasta">Región de Antofagasta</option>
+                    <option value="Región de Coquimbo">Región de Coquimbo</option>
+                    <option value="Región del Maule">Región del Maule</option>
+                    <option value="Región de O'Higgins">Región del Libertador Gral. Bernardo O'Higgins</option>
+                    <option value="Región de Los Lagos">Región de Los Lagos</option>
+                    <option value="Región de Tarapacá">Región de Tarapacá</option>
+                    <option value="Región de Atacama">Región de Atacama</option>
+                    <option value="Región de Ñuble">Región de Ñuble</option>
+                    <option value="Región de Los Ríos">Región de Los Ríos</option>
+                    <option value="Región de Arica y Parinacota">Región de Arica y Parinacota</option>
+                    <option value="Región de Aysén">Región Aysén del Gral. Carlos Ibáñez</option>
+                    <option value="Región de Magallanes">Región de Magallanes y Antártica Chilena</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="comuna">Comuna *</label>
+                  <input
+                    type="text"
+                    id="comuna"
+                    required
+                    placeholder="Ej. Providencia, Las Condes"
+                    class="form-control"
+                  />
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="direccion">Dirección de Despacho *</label>
+                <label for="direccion">Dirección Completa (Calle, Número, Dpto) *</label>
                 <input
                   type="text"
                   id="direccion"
                   required
-                  placeholder="Calle, Número, Comuna"
+                  placeholder="Av. Providencia 1234, Dpto 502"
                   class="form-control"
                 />
               </div>
 
+              <div class="form-group">
+                <label for="cupon">Código de Cupón (Opcional)</label>
+                <input
+                  type="text"
+                  id="cupon"
+                  placeholder="Ej. PREVENTA15"
+                  class="form-control"
+                  style="text-transform: uppercase;"
+                />
+              </div>
+
               <!-- Cantidad e Indicadores -->
-              <div
-                class="form-group flex justify-between items-center"
-                style="
-                  border: 1px solid #ccc;
-                  padding: 1rem;
-                  border-radius: 4px;
-                  background: #fff;
-                "
-              >
-                <div class="flex items-center">
-                  <span style="margin-right: 1rem">Cantidad:</span>
-                  <button
-                    type="button"
-                    id="btn-restar"
-                    class="btn btn-secondary"
-                    style="padding: 0.25rem 0.75rem"
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    id="cantidad"
-                    name="cantidad"
-                    value="1"
-                    min="1"
-                    max="10"
-                    readonly
-                    class="hidden"
-                  />
-                  <span
-                    id="display-cantidad"
-                    style="font-weight: bold; margin: 0 1rem"
-                    >1</span
-                  >
-                  <button
-                    type="button"
-                    id="btn-sumar"
-                    class="btn btn-secondary"
-                    style="padding: 0.25rem 0.75rem"
-                  >
-                    +
-                  </button>
+              <div class="quantity-box">
+                <div class="quantity-controls">
+                  <span class="quantity-label">Cantidad:</span>
+                  <div class="stepper-group">
+                    <button
+                      type="button"
+                      id="btn-restar"
+                      class="btn-step"
+                      aria-label="Restar una unidad"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      id="cantidad"
+                      name="cantidad"
+                      value="1"
+                      min="1"
+                      max="10"
+                      readonly
+                      class="hidden"
+                    />
+                    <span id="display-cantidad" class="quantity-val">1</span>
+                    <button
+                      type="button"
+                      id="btn-sumar"
+                      class="btn-step"
+                      aria-label="Sumar una unidad"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-                <div style="text-align: right">
-                  <div style="font-size: 0.8rem; color: #666">
-                    Total Estimado
-                  </div>
-                  <div
-                    id="display-total"
-                    style="
-                      font-weight: bold;
-                      font-size: 1.25rem;
-                      color: #0066cc;
-                    "
-                  >
-                    $29.990 CLP
-                  </div>
+                <div class="total-box">
+                  <span class="total-label">Total Estimado</span>
+                  <span id="display-total" class="total-price">$19.990 CLP</span>
                 </div>
               </div>
 
-              <button type="submit" class="btn" style="width: 100%">
-                Proceder al Pago
+              <button type="submit" class="btn btn-primary btn-block">
+                <span>Quiero mi Iron Girl en Preventa ⚡</span>
               </button>
             </form>
           </div>
         </div>
       </section>
 
-      <!-- Sección Preguntas Frecuentes -->
-      <section class="section" id="faq">
-        <h2>Preguntas Frecuentes</h2>
-
-        <div class="faq-item">
-          <h3>¿Cuándo recibiré mi pedido?</h3>
-          <p>[Respuesta]</p>
+      <!-- Sección Preguntas Frecuentes (FAQ Oficial) -->
+      <section class="section card-section" id="faq">
+        <div class="section-header">
+          <span class="section-tag">Resolvamos tus dudas</span>
+          <h2>Preguntas Frecuentes</h2>
         </div>
 
-        <div class="faq-item">
-          <h3>¿Cuál es el valor del envío y cobertura?</h3>
-          <p>[Respuesta]</p>
-        </div>
+        <div class="faq-grid">
+          <div class="faq-card">
+            <h3>1. ¿En cuánto tiempo sentiré los efectos de Iron Girl?</h3>
+            <p>Al ser una fórmula mineral solubilizada de alta biodisponibilidad, la absorción comienza desde el primer consumo. La recuperación de la vitalidad y disminución del cansancio se perciben de manera progresiva tras las primeras semanas de uso constante.</p>
+          </div>
 
-        <div class="faq-item">
-          <h3>¿Tienen garantía de reembolso?</h3>
-          <p>[Respuesta]</p>
+          <div class="faq-card">
+            <h3>2. ¿Cómo funciona el proceso de Preventa?</h3>
+            <p>Al comprar en esta etapa, aseguras tu producto del primer lote oficial de producción. Los despachos se realizarán en la fecha indicada al finalizar tu orden, manteniéndote informada paso a paso vía correo electrónico sobre el estado del envasado y despacho.</p>
+          </div>
+
+          <div class="faq-card">
+            <h3>3. ¿Tiene sabor metálico como otros suplementos de hierro?</h3>
+            <p>¡Para nada! Trabajamos arduamente en el laboratorio para lograr un perfil de sabor refrescante a frambuesa-limón, utilizando edulcorantes seguros y autorizados (estevia y sucralosa), eliminando por completo el regusto metálico o pesado.</p>
+          </div>
         </div>
       </section>
 
       <!-- Sección Newsletter (Boletín Oficial) -->
-      <section
-        class="section"
-        id="newsletter"
-        style="
-          background: #ffffff;
-          padding: 2rem;
-          border-radius: 8px;
-          text-align: center;
-        "
-      >
-        <h2>Suscríbete a Nuestro Boletín</h2>
-        <p style="color: #666; max-width: 500px; margin: 0 auto 1.5rem auto">
-          Recibe novedades exclusivas sobre el lanzamiento de preventa, consejos
-          de nutrición activa y ofertas especiales.
-        </p>
+      <section class="section newsletter-card" id="newsletter">
+        <div class="newsletter-content">
+          <span class="newsletter-icon">💌</span>
+          <h2>Suscríbete a Nuestro Boletín</h2>
+          <p>
+            Recibe novedades exclusivas sobre el lanzamiento de preventa, consejos de nutrición activa y promociones especiales.
+          </p>
 
-        <form
-          id="newsletter-form"
-          class="flex justify-between items-center"
-          style="max-width: 480px; margin: 0 auto; gap: 0.5rem"
-        >
-          <input
-            type="email"
-            id="newsletter-email"
-            required
-            placeholder="Tu correo electrónico"
-            class="form-control"
-            style="margin-bottom: 0"
-          />
-          <button
-            type="submit"
-            id="btn-newsletter"
-            class="btn"
-            style="white-space: nowrap"
-          >
-            Suscribirme
-          </button>
-        </form>
-        <div
-          id="newsletter-msg"
-          style="font-size: 0.85rem; margin-top: 1rem"
-          class="hidden"
-        ></div>
+          <form id="newsletter-form" class="newsletter-form">
+            <input
+              type="email"
+              id="newsletter-email"
+              required
+              placeholder="Tu correo electrónico"
+              class="form-control newsletter-input"
+            />
+            <button type="submit" id="btn-newsletter" class="btn btn-primary">
+              Suscribirme
+            </button>
+          </form>
+          <div id="newsletter-msg" class="newsletter-message hidden"></div>
+        </div>
       </section>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <p class="footer-copy">&copy; 2026 Lynto SpA. Todos los derechos reservados. | Soporte: <a href="mailto:contacto@lynto.cl">contacto@lynto.cl</a> | <a href="./terminos.html">Términos</a> | <a href="./privacidad.html">Privacidad</a></p>
+      </div>
+    </footer>
 
     <!-- Pantalla de Carga (Overlay) -->
     <div id="loading-overlay" class="overlay hidden">
-      <div>Procesando...</div>
+      <div class="spinner-box">
+        <div class="spinner"></div>
+        <span>Procesando pago seguro...</span>
+      </div>
     </div>
 
     <script src="./assets/js/app.js"></script>
