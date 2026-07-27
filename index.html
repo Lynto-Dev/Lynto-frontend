@@ -269,8 +269,8 @@
           <p class="section-subtext">Reserva tu lote de Iron Girl con precio preferencial y envío prioritario a todo Chile.</p>
         </div>
 
-        <div class="grid-2 checkout-grid">
-          <!-- Columna Izquierda: Formulario de Datos del Cliente -->
+        <div class="checkout-container-centered" style="max-width: 680px; margin: 0 auto;">
+          <!-- Formulario de Compra -->
           <div class="form-card">
             <form id="checkout-form">
               <!-- Alerta de Error -->
@@ -278,15 +278,24 @@
                 <span id="error-text">Ocurrió un error.</span>
               </div>
 
-              <!-- Banner Compacto de Despacho & Garantía -->
-              <div class="info-card-compact">
-                <div class="info-compact-header">
-                  <span class="info-icon-sm">📦</span>
-                  <div>
-                    <h4 class="info-compact-title">Despacho Certificado a todo Chile</h4>
-                    <p id="despacho-info" class="despacho-text-sm">
-                      Envíos con seguimiento y pago 100% cifrado por Flow.
-                    </p>
+              <!-- Banner Premium de Despacho & Garantía -->
+              <div class="info-card-premium">
+                <div class="info-premium-header">
+                  <span class="info-premium-badge">🚚 Despacho Certificado</span>
+                  <h4 class="info-premium-title">Envíos a todo Chile vía Blue Express</h4>
+                </div>
+                <div class="guarantees-grid">
+                  <div class="guarantee-pill">
+                    <span class="pill-icon">🔒</span>
+                    <span>Pago 100% Cifrado por Flow</span>
+                  </div>
+                  <div class="guarantee-pill">
+                    <span class="pill-icon">📦</span>
+                    <span>Despacho Prioritario de Preventa</span>
+                  </div>
+                  <div class="guarantee-pill">
+                    <span class="pill-icon">📬</span>
+                    <span>Seguimiento en Vivo por Email</span>
                   </div>
                 </div>
               </div>
@@ -384,38 +393,41 @@
                 />
               </div>
 
-              <div class="form-group">
-                <label for="cupon">Código de Cupón (Opcional)</label>
-                <div class="input-btn-group" style="display: flex; gap: 0.5rem;">
-                  <input
-                    type="text"
-                    id="cupon"
-                    placeholder="Ej. PREVENTA15"
-                    class="form-control"
-                    style="text-transform: uppercase;"
-                  />
-                  <button
-                    type="button"
-                    id="btn-aplicar-cupon"
-                    class="btn btn-secondary"
-                    style="padding: 0 1.25rem; white-space: nowrap; flex-shrink: 0;"
-                  >
-                    Aplicar
-                  </button>
-                </div>
-                <small id="cupon-status-msg" class="hidden" style="display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 600;"></small>
-              </div>
+              <button type="button" id="btn-abrir-resumen" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.75rem;">
+                <span>Continuar al Resumen y Pago ➔</span>
+              </button>
             </form>
           </div>
+        </div>
+      </section>
 
-          <!-- Columna Derecha: Resumen de la Compra & Totales Calculados -->
-          <div class="summary-card">
-            <div class="summary-card-header">
-              <h3>Resumen de la Compra</h3>
+      <!-- Modal de Resumen de la Compra -->
+      <div id="modal-resumen" class="modal-backdrop hidden">
+        <div class="modal-card">
+          <div class="modal-card-header">
+            <h3>Resumen de tu Compra</h3>
+            <button type="button" id="btn-cerrar-modal" class="btn-close-modal" aria-label="Cerrar ventana">✕</button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Datos del Cliente Resumidos -->
+            <div class="modal-user-summary">
+              <div class="user-summary-row">
+                <span class="user-summary-label">Cliente:</span>
+                <span id="modal-user-name" class="user-summary-val">-</span>
+              </div>
+              <div class="user-summary-row">
+                <span class="user-summary-label">Envío a:</span>
+                <span id="modal-user-address" class="user-summary-val">-</span>
+              </div>
+              <div class="user-summary-row">
+                <span class="user-summary-label">Región:</span>
+                <span id="modal-user-region" class="user-summary-val">-</span>
+              </div>
             </div>
 
-            <!-- Previsualización del Producto & Cantidad -->
-            <div class="product-summary-item">
+            <!-- Previsualización del Producto & Cantidad Stepper -->
+            <div class="product-summary-item" style="margin-top: 1rem;">
               <div class="product-summary-info">
                 <span class="product-summary-title">Iron Girl (15 sachets - 54g)</span>
                 <span class="product-summary-subtitle">Hierro aminoquelado de alta absorción</span>
@@ -452,8 +464,35 @@
               </div>
             </div>
 
-            <!-- Desglose de Precios -->
-            <div class="summary-breakdown">
+            <!-- Código de Cupón -->
+            <div class="form-group" style="margin-top: 1.25rem;">
+              <label for="cupon" style="font-size: 0.85rem; font-weight: 600;">¿Tienes un cupón de descuento?</label>
+              <div class="input-btn-group" style="display: flex; gap: 0.5rem;">
+                <input
+                  type="number"
+                  id="cantidad"
+                  name="cantidad"
+                  form="checkout-form"
+                  value="1"
+                  min="1"
+                  max="10"
+                  readonly
+                  class="hidden"
+                />
+                <button
+                  type="button"
+                  id="btn-aplicar-cupon"
+                  class="btn btn-secondary"
+                  style="padding: 0 1.25rem; white-space: nowrap; flex-shrink: 0;"
+                >
+                  Aplicar
+                </button>
+              </div>
+              <small id="cupon-status-msg" class="hidden" style="display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 600;"></small>
+            </div>
+
+            <!-- Desglose de Precios en el Modal -->
+            <div class="summary-breakdown" style="margin-top: 1.25rem;">
               <div class="summary-row">
                 <span class="summary-label">Subtotal Suplementos:</span>
                 <span id="summary-subtotal" class="summary-value">$19.990 CLP</span>
@@ -465,32 +504,30 @@
               </div>
 
               <div class="summary-row">
-                <span class="summary-label">Despacho (Blue Express):</span>
+                <span class="summary-label">Despacho Blue Express:</span>
                 <span id="summary-envio" class="summary-value">$3.500 CLP</span>
               </div>
 
               <div class="summary-divider"></div>
 
               <div class="summary-row total-row">
-                <span class="summary-total-label">Total a Pagar:</span>
+                <span class="summary-total-label">Total Final a Pagar:</span>
                 <div class="total-box">
-                  <span id="display-total" class="total-price">$23.490 CLP</span>
+                  <span id="display-total" class="total-price" style="font-size: 1.6rem; color: var(--brand-purple-deep);">$23.490 CLP</span>
                 </div>
               </div>
             </div>
 
-            <!-- Botón Principal de Pago -->
-            <button type="submit" form="checkout-form" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.5rem;">
-              <span>Quiero mi Iron Girl en Preventa ⚡</span>
+            <button type="submit" form="checkout-form" id="btn-confirmar-pago-flow" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.5rem;">
+              <span>Pagar con Flow ⚡</span>
             </button>
 
-            <!-- Sellos de Seguridad -->
             <div class="security-badges-summary" style="margin-top: 1rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
-              <span>🔒 Pago Cifrado SSL vía Flow</span>
+              <span>🔒 Transacción 100% segura cifrada con SSL vía Flow</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <!-- Sección Preguntas Frecuentes (FAQ Oficial) -->
       <section class="section card-section" id="faq">

@@ -44,19 +44,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const newsletterEmail = document.getElementById("newsletter-email");
   const newsletterMsg = document.getElementById("newsletter-msg");
 
-  // --- CONTROL DE CANTIDAD Y BOTÓN DE APLICAR CUPÓN ---
-  let ultimoDescuentoCupon = 0;
-  let cuponAplicadoExitoso = false;
-
-  // --- CONTROL DE TARIFAS DE ENVÍO Y CÁLCULO DE TOTALES ---
+  // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
+  // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
   let TARIFA_RM = 3500;
   let TARIFA_REGIONES = 5000;
+  let ultimoDescuentoCupon = 0;
+  let descuentoPorUnidadCupon = 3000;
+  let porcentajeDescuentoCupon = 0;
+  let cuponAplicadoExitoso = false;
+
+  const btnAbrirResumen = document.getElementById("btn-abrir-resumen");
+  const modalResumen = document.getElementById("modal-resumen");
+  const btnCerrarModal = document.getElementById("btn-cerrar-modal");
 
   const regionSelect = document.getElementById("region");
+  const comunaInput = document.getElementById("comuna");
+  const direccionInput = document.getElementById("direccion");
+  const nombreInput = document.getElementById("nombre");
+
   const summarySubtotal = document.getElementById("summary-subtotal");
   const summaryEnvio = document.getElementById("summary-envio");
   const summaryDescuento = document.getElementById("summary-descuento");
   const rowDescuento = document.getElementById("row-descuento");
+
+  const modalUserName = document.getElementById("modal-user-name");
+  const modalUserAddress = document.getElementById("modal-user-address");
+  const modalUserRegion = document.getElementById("modal-user-region");
+  const modalProductQty = document.getElementById("modal-product-qty");
+  const modalProductSubtotalItem = document.getElementById("modal-product-subtotal-item");
 
   const btnAplicarCupon = document.getElementById("btn-aplicar-cupon");
   const cuponStatusMsg = document.getElementById("cupon-status-msg");
@@ -64,11 +79,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const actualizarVisualizacionPrecio = () => {
     const cant = parseInt(cantidadInput.value, 10) || 1;
     if (displayCantidad) displayCantidad.innerText = cant;
+    if (modalProductQty) modalProductQty.innerText = `Cantidad: ${cant} ${cant === 1 ? "caja" : "cajas"} (15 sachets / un.)`;
 
     const subtotal = PRODUCT_PRICE * cant;
     if (summarySubtotal) summarySubtotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
+    if (modalProductSubtotalItem) modalProductSubtotalItem.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
 
-    // 1. Calcular tarifa de envío por región
+    // 1. Recalcular descuento del cupón proporcionalmente a la cantidad actual
+    let descuentoTotal = 0;
+    if (cuponAplicadoExitoso) {
+      if (porcentajeDescuentoCupon > 0) {
+        descuentoTotal = Math.round((subtotal * porcentajeDescuentoCupon) / 100);
+      } else {
+        descuentoTotal = (descuentoPorUnidadCupon || 3000) * cant;
+      }
+      ultimoDescuentoCupon = descuentoTotal;
+      if (rowDescuento) rowDescuento.classList.remove("hidden");
+      if (summaryDescuento) summaryDescuento.innerText = `-$${descuentoTotal.toLocaleString("es-CL")} CLP`;
+    } else {
+      ultimoDescuentoCupon = 0;
+      if (rowDescuento) rowDescuento.classList.add("hidden");
+    }
+
+    // 2. Calcular tarifa de envío por región
     const regionVal = regionSelect ? regionSelect.value : "";
     let costoEnvio = TARIFA_RM;
 
@@ -78,24 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (summaryEnvio) summaryEnvio.innerText = `$${costoEnvio.toLocaleString("es-CL")} CLP`;
 
-    // 2. Fila de Descuento
-    let descuentoTotal = 0;
-    if (cuponAplicadoExitoso && ultimoDescuentoCupon > 0) {
-      descuentoTotal = ultimoDescuentoCupon;
-      if (rowDescuento) rowDescuento.classList.remove("hidden");
-      if (summaryDescuento) summaryDescuento.innerText = `-$${descuentoTotal.toLocaleString("es-CL")} CLP`;
-    } else {
-      if (rowDescuento) rowDescuento.classList.add("hidden");
-    }
-
     // 3. Total Final (Subtotal - Descuento + Envío)
     const totalFinal = Math.max(0, subtotal - descuentoTotal + costoEnvio);
     if (displayTotal) displayTotal.innerText = `$${totalFinal.toLocaleString("es-CL")} CLP`;
   };
-
-  if (regionSelect) {
-    regionSelect.addEventListener("change", actualizarVisualizacionPrecio);
-  }
 
   const aplicarCupon = async () => {
     const codigoCupon = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
@@ -126,7 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let montoDescuento = 0;
       let mensajeRespuesta = "";
 
-      // 1. Intentar validar con la API de Sheets en tiempo real
       try {
         const response = await fetch(API_URL, {
           method: "POST",
@@ -141,7 +159,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const resData = await response.json();
         if (resData.success && resData.data && resData.data.valido) {
           esValido = true;
-          montoDescuento = Number(resData.data.descuento) || 3000 * cant;
+          porcentajeDescuentoCupon = Number(resData.data.porcentaje) || 0;
+          if (porcentajeDescuentoCupon === 15) {
+            descuentoPorUnidadCupon = 3000; // $19.990 - $3.000 = $16.990 exactos
+          } else if (porcentajeDescuentoCupon > 0) {
+            descuentoPorUnidadCupon = Math.round((PRODUCT_PRICE * porcentajeDescuentoCupon) / 100);
+          } else {
+            descuentoPorUnidadCupon = Number(resData.data.descuentoUnidad) || Math.round(Number(resData.data.descuento) / cant) || 3000;
+          }
+          montoDescuento = descuentoPorUnidadCupon * cant;
           mensajeRespuesta = resData.data.mensaje || "¡Cupón válido y aplicado!";
         } else if (resData.data && resData.data.mensaje) {
           mensajeRespuesta = resData.data.mensaje;
@@ -150,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("Validando cupón por regla local (fallback):", e.message);
       }
 
-      // 2. Fallback de validación local si es el código de preventa oficial
       if (
         !esValido &&
         (codigoCupon === "PREVENTA" ||
@@ -158,6 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
           codigoCupon === "LYNTO15")
       ) {
         esValido = true;
+        descuentoPorUnidadCupon = 3000;
+        porcentajeDescuentoCupon = 0;
         montoDescuento = 3000 * cant;
         mensajeRespuesta = "¡Cupón de Preventa aplicado con éxito!";
       }
@@ -167,23 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ultimoDescuentoCupon = montoDescuento;
         actualizarVisualizacionPrecio();
 
-        if (!badgeCupon) {
-          badgeCupon = document.createElement("div");
-          badgeCupon.id = "badge-cupon-aplicado";
-          badgeCupon.style.fontSize = "0.85rem";
-          badgeCupon.style.fontWeight = "600";
-          badgeCupon.style.marginTop = "6px";
-          badgeCupon.style.maxWidth = "100%";
-          badgeCupon.style.wordBreak = "break-word";
-          displayTotal.parentElement.appendChild(badgeCupon);
-        }
-        badgeCupon.style.color = "#2e7d32";
-        const cuponDisplay =
-          codigoCupon.length > 15
-            ? codigoCupon.substring(0, 15) + "..."
-            : codigoCupon;
-        badgeCupon.innerHTML = `⚡ ¡Cupón "${cuponDisplay}" aplicado! (-$${montoDescuento.toLocaleString("es-CL")})`;
-
         if (cuponStatusMsg) {
           cuponStatusMsg.innerText = `✓ ${mensajeRespuesta}`;
           cuponStatusMsg.style.color = "#2e7d32";
@@ -192,9 +202,9 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         cuponAplicadoExitoso = false;
         ultimoDescuentoCupon = 0;
+        descuentoPorUnidadCupon = 0;
+        porcentajeDescuentoCupon = 0;
         actualizarVisualizacionPrecio();
-
-        if (badgeCupon) badgeCupon.remove();
 
         if (cuponStatusMsg) {
           cuponStatusMsg.innerText =
@@ -216,20 +226,66 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (cuponInput) {
-    // Si el usuario modifica o borra el texto, resetear descuento hasta presionar Aplicar
     cuponInput.addEventListener("input", () => {
       cuponAplicadoExitoso = false;
       ultimoDescuentoCupon = 0;
       actualizarVisualizacionPrecio();
-      const badgeCupon = document.getElementById("badge-cupon-aplicado");
-      if (badgeCupon) badgeCupon.remove();
       if (cuponStatusMsg) cuponStatusMsg.classList.add("hidden");
     });
+  }
 
-    cuponInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        aplicarCupon();
+  const abrirModalResumen = () => {
+    ocultarError();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      mostrarError("Por favor completa todos los campos obligatorios (*) antes de continuar.");
+      return;
+    }
+
+    const rut = rutInput ? rutInput.value.trim() : "";
+    if (!validarRut(rut)) {
+      mostrarError("El RUT ingresado no es válido. Formato esperado: 12.345.678-9");
+      return;
+    }
+
+    const email = emailInput ? emailInput.value.trim() : "";
+    if (!validarEmail(email)) {
+      mostrarError("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+
+    if (modalUserName) modalUserName.innerText = sanitizeInput(nombreInput.value.trim());
+    if (modalUserAddress) modalUserAddress.innerText = `${sanitizeInput(direccionInput.value.trim())}, ${sanitizeInput(comunaInput.value.trim())}`;
+    if (modalUserRegion) modalUserRegion.innerText = sanitizeInput(regionSelect.value);
+
+    actualizarVisualizacionPrecio();
+
+    if (modalResumen) {
+      modalResumen.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const cerrarModalResumen = () => {
+    if (modalResumen) {
+      modalResumen.classList.add("hidden");
+      document.body.style.overflow = "auto";
+    }
+  };
+
+  if (btnAbrirResumen) {
+    btnAbrirResumen.addEventListener("click", abrirModalResumen);
+  }
+
+  if (btnCerrarModal) {
+    btnCerrarModal.addEventListener("click", cerrarModalResumen);
+  }
+
+  if (modalResumen) {
+    modalResumen.addEventListener("click", (e) => {
+      if (e.target === modalResumen) {
+        cerrarModalResumen();
       }
     });
   }
