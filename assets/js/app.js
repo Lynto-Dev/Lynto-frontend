@@ -151,13 +151,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const nombre = document.getElementById("nombre").value.trim();
       const rut = rutInput.value.trim();
       const email = emailInput.value.trim();
+      const telefonoEl = document.getElementById("telefono");
+      const regionEl = document.getElementById("region");
+      const comunaEl = document.getElementById("comuna");
+      const cuponEl = document.getElementById("cupon");
+
+      const telefono = telefonoEl ? telefonoEl.value.trim() : "";
+      const region = regionEl ? regionEl.value.trim() : "";
+      const comuna = comunaEl ? comunaEl.value.trim() : "";
+      const cupon = cuponEl ? cuponEl.value.trim().toUpperCase() : "";
       const direccion = document.getElementById("direccion").value.trim();
       const cantidad = parseInt(cantidadInput.value, 10);
 
       if (!nombre)
         return mostrarError("Por favor, ingresa tu nombre completo.");
-      if (!direccion)
-        return mostrarError("Por favor, ingresa una dirección de despacho.");
 
       if (!validarRut(rut)) {
         return mostrarError("El RUT ingresado no es válido. Ej: 12.345.678-9");
@@ -168,6 +175,21 @@ document.addEventListener("DOMContentLoaded", () => {
           "El correo electrónico no tiene un formato válido.",
         );
       }
+
+      if (!telefono) {
+        return mostrarError("Por favor, ingresa tu teléfono celular para el seguimiento del envío.");
+      }
+
+      if (!region) {
+        return mostrarError("Por favor, selecciona tu región de despacho.");
+      }
+
+      if (!comuna) {
+        return mostrarError("Por favor, ingresa tu comuna.");
+      }
+
+      if (!direccion)
+        return mostrarError("Por favor, ingresa tu dirección completa de despacho.");
 
       if (isNaN(cantidad) || cantidad <= 0) {
         return mostrarError("Cantidad inválida.");
@@ -180,8 +202,12 @@ document.addEventListener("DOMContentLoaded", () => {
         nombre,
         rut,
         email,
+        telefono,
+        region,
+        comuna,
         direccion,
         cantidad,
+        cupon,
       };
 
       try {
