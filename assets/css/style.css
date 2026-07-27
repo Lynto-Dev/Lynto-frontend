@@ -1243,4 +1243,38 @@ a:hover {
     height: 40px !important;
     max-height: 40px !important;
   }
+
+  .producto-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .nutricion-highlights {
+    flex-direction: column !important;
+  }
 }
+
+/* UI/UX Refactor Enhancements */
+.producto-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.pill-highlight {
+  transition: transform var(--transition-fast);
+}
+
+.pill-highlight:hover {
+  transform: translateY(-2px);
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  list-style: none;
+}
+
