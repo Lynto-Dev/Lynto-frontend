@@ -344,11 +344,28 @@ document.addEventListener("DOMContentLoaded", () => {
         disclaimerEl.innerText = disclaimerVal;
       }
 
-      // 7. Precio Actualizado
-      const precioVal = configMap["precioproducto"] || configMap["precio"];
+      // 7. Precio y Stock Actualizados desde la Planilla (Inventario / Configuración)
+      const prodInfo = resData.data.producto || resData.data.inventario || {};
+      const precioVal = prodInfo.precio || prodInfo.Precio || configMap["precioproducto"] || configMap["precio"];
+      const stockVal = prodInfo.stock !== undefined ? prodInfo.stock : (prodInfo.Stock !== undefined ? prodInfo.Stock : (configMap["stock"] || configMap["stockproducto"]));
+
       if (precioVal && !isNaN(Number(precioVal))) {
         PRODUCT_PRICE = Number(precioVal);
         actualizarVisualizacionPrecio();
+      }
+
+      // Control dinámico de botones según stock real disponible
+      const submitBtn = checkoutForm ? checkoutForm.querySelector('button[type="submit"]') : null;
+      if (stockVal !== undefined && !isNaN(Number(stockVal))) {
+        const numStock = Number(stockVal);
+        if (numStock <= 0) {
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span>Agotado - Stock Agotado</span>`;
+            submitBtn.style.opacity = "0.6";
+            submitBtn.style.cursor = "not-allowed";
+          }
+        }
       }
 
       // 8. Tabla Nutricional (#tabla-nutricion-body)
