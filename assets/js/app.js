@@ -44,38 +44,128 @@ document.addEventListener("DOMContentLoaded", () => {
   const newsletterEmail = document.getElementById("newsletter-email");
   const newsletterMsg = document.getElementById("newsletter-msg");
 
-  // --- CONTROL DE CANTIDAD Y VALIDACIÓN DINÁMICA DE CUPÓN ---
-  let timerCupon = null;
+  // --- CONTROL DE CANTIDAD Y BOTÓN DE APLICAR CUPÓN ---
   let ultimoDescuentoCupon = 0;
+  let cuponAplicadoExitoso = false;
 
-  const validarCuponServidor = async (codigoCupon) => {
+  // --- CONTROL DE TARIFAS DE ENVÍO Y CÁLCULO DE TOTALES ---
+  let TARIFA_RM = 3500;
+  let TARIFA_REGIONES = 5000;
+
+  const regionSelect = document.getElementById("region");
+  const summarySubtotal = document.getElementById("summary-subtotal");
+  const summaryEnvio = document.getElementById("summary-envio");
+  const summaryDescuento = document.getElementById("summary-descuento");
+  const rowDescuento = document.getElementById("row-descuento");
+
+  const btnAplicarCupon = document.getElementById("btn-aplicar-cupon");
+  const cuponStatusMsg = document.getElementById("cupon-status-msg");
+
+  const actualizarVisualizacionPrecio = () => {
+    const cant = parseInt(cantidadInput.value, 10) || 1;
+    if (displayCantidad) displayCantidad.innerText = cant;
+
+    const subtotal = PRODUCT_PRICE * cant;
+    if (summarySubtotal) summarySubtotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
+
+    // 1. Calcular tarifa de envío por región
+    const regionVal = regionSelect ? regionSelect.value : "";
+    let costoEnvio = TARIFA_RM;
+
+    if (regionVal && regionVal !== "Región Metropolitana") {
+      costoEnvio = TARIFA_REGIONES;
+    }
+
+    if (summaryEnvio) summaryEnvio.innerText = `$${costoEnvio.toLocaleString("es-CL")} CLP`;
+
+    // 2. Fila de Descuento
+    let descuentoTotal = 0;
+    if (cuponAplicadoExitoso && ultimoDescuentoCupon > 0) {
+      descuentoTotal = ultimoDescuentoCupon;
+      if (rowDescuento) rowDescuento.classList.remove("hidden");
+      if (summaryDescuento) summaryDescuento.innerText = `-$${descuentoTotal.toLocaleString("es-CL")} CLP`;
+    } else {
+      if (rowDescuento) rowDescuento.classList.add("hidden");
+    }
+
+    // 3. Total Final (Subtotal - Descuento + Envío)
+    const totalFinal = Math.max(0, subtotal - descuentoTotal + costoEnvio);
+    if (displayTotal) displayTotal.innerText = `$${totalFinal.toLocaleString("es-CL")} CLP`;
+  };
+
+  if (regionSelect) {
+    regionSelect.addEventListener("change", actualizarVisualizacionPrecio);
+  }
+
+  const aplicarCupon = async () => {
+    const codigoCupon = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
+    const cant = parseInt(cantidadInput.value, 10) || 1;
+    const subtotal = PRODUCT_PRICE * cant;
+
+    let badgeCupon = document.getElementById("badge-cupon-aplicado");
+
     if (!codigoCupon) {
+      cuponAplicadoExitoso = false;
       ultimoDescuentoCupon = 0;
       actualizarVisualizacionPrecio();
+      if (badgeCupon) badgeCupon.remove();
+      if (cuponStatusMsg) {
+        cuponStatusMsg.innerText = "";
+        cuponStatusMsg.classList.add("hidden");
+      }
       return;
     }
 
+    if (btnAplicarCupon) {
+      btnAplicarCupon.disabled = true;
+      btnAplicarCupon.innerText = "...";
+    }
+
     try {
-      const cant = parseInt(cantidadInput.value, 10) || 1;
-      const subtotal = PRODUCT_PRICE * cant;
+      let esValido = false;
+      let montoDescuento = 0;
+      let mensajeRespuesta = "";
 
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          action: "validar_cupon",
-          cupon: codigoCupon,
-          subtotal: subtotal,
-        }),
-      });
+      // 1. Intentar validar con la API de Sheets en tiempo real
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "validar_cupon",
+            cupon: codigoCupon,
+            subtotal: subtotal,
+          }),
+        });
 
-      const resData = await response.json();
-      let badgeCupon = document.getElementById("badge-cupon-aplicado");
+        const resData = await response.json();
+        if (resData.success && resData.data && resData.data.valido) {
+          esValido = true;
+          montoDescuento = Number(resData.data.descuento) || 3000 * cant;
+          mensajeRespuesta = resData.data.mensaje || "¡Cupón válido y aplicado!";
+        } else if (resData.data && resData.data.mensaje) {
+          mensajeRespuesta = resData.data.mensaje;
+        }
+      } catch (e) {
+        console.warn("Validando cupón por regla local (fallback):", e.message);
+      }
 
-      if (resData.success && resData.data && resData.data.valido) {
-        ultimoDescuentoCupon = Number(resData.data.descuento) || 3000;
-        const totalConDesc = Math.max(0, subtotal - ultimoDescuentoCupon);
-        displayTotal.innerText = `$${totalConDesc.toLocaleString("es-CL")} CLP`;
+      // 2. Fallback de validación local si es el código de preventa oficial
+      if (
+        !esValido &&
+        (codigoCupon === "PREVENTA" ||
+          codigoCupon === "PREVENTA15" ||
+          codigoCupon === "LYNTO15")
+      ) {
+        esValido = true;
+        montoDescuento = 3000 * cant;
+        mensajeRespuesta = "¡Cupón de Preventa aplicado con éxito!";
+      }
+
+      if (esValido) {
+        cuponAplicadoExitoso = true;
+        ultimoDescuentoCupon = montoDescuento;
+        actualizarVisualizacionPrecio();
 
         if (!badgeCupon) {
           badgeCupon = document.createElement("div");
@@ -92,59 +182,54 @@ document.addEventListener("DOMContentLoaded", () => {
           codigoCupon.length > 15
             ? codigoCupon.substring(0, 15) + "..."
             : codigoCupon;
-        badgeCupon.innerHTML = `⚡ ¡Cupón "${cuponDisplay}" válido! (-$${ultimoDescuentoCupon.toLocaleString("es-CL")})`;
-      } else {
-        ultimoDescuentoCupon = 0;
-        displayTotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
+        badgeCupon.innerHTML = `⚡ ¡Cupón "${cuponDisplay}" aplicado! (-$${montoDescuento.toLocaleString("es-CL")})`;
 
-        if (!badgeCupon) {
-          badgeCupon = document.createElement("div");
-          badgeCupon.id = "badge-cupon-aplicado";
-          badgeCupon.style.fontSize = "0.85rem";
-          badgeCupon.style.fontWeight = "600";
-          badgeCupon.style.marginTop = "6px";
-          badgeCupon.style.maxWidth = "100%";
-          badgeCupon.style.wordBreak = "break-word";
-          displayTotal.parentElement.appendChild(badgeCupon);
+        if (cuponStatusMsg) {
+          cuponStatusMsg.innerText = `✓ ${mensajeRespuesta}`;
+          cuponStatusMsg.style.color = "#2e7d32";
+          cuponStatusMsg.classList.remove("hidden");
         }
-        badgeCupon.style.color = "#c62828";
-        badgeCupon.innerHTML = `⚠️ Cupón "${codigoCupon}" no válido o inactivo`;
+      } else {
+        cuponAplicadoExitoso = false;
+        ultimoDescuentoCupon = 0;
+        actualizarVisualizacionPrecio();
+
+        if (badgeCupon) badgeCupon.remove();
+
+        if (cuponStatusMsg) {
+          cuponStatusMsg.innerText =
+            mensajeRespuesta || `❌ Cupón "${codigoCupon}" no válido o inactivo.`;
+          cuponStatusMsg.style.color = "#c62828";
+          cuponStatusMsg.classList.remove("hidden");
+        }
       }
-    } catch (err) {
-      console.warn("No se pudo validar el cupón en servidor:", err.message);
+    } finally {
+      if (btnAplicarCupon) {
+        btnAplicarCupon.disabled = false;
+        btnAplicarCupon.innerText = "Aplicar";
+      }
     }
   };
 
-  const actualizarVisualizacionPrecio = () => {
-    const cant = parseInt(cantidadInput.value, 10) || 1;
-    displayCantidad.innerText = cant;
-
-    const cuponVal = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
-    const subtotal = PRODUCT_PRICE * cant;
-
-    if (cuponVal.length === 0) {
-      ultimoDescuentoCupon = 0;
-      displayTotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
-      const badgeCupon = document.getElementById("badge-cupon-aplicado");
-      if (badgeCupon) badgeCupon.remove();
-    } else {
-      const total = Math.max(
-        0,
-        subtotal - (ultimoDescuentoCupon > 0 ? ultimoDescuentoCupon : 0),
-      );
-      displayTotal.innerText = `$${total.toLocaleString("es-CL")} CLP`;
-    }
-  };
+  if (btnAplicarCupon) {
+    btnAplicarCupon.addEventListener("click", aplicarCupon);
+  }
 
   if (cuponInput) {
+    // Si el usuario modifica o borra el texto, resetear descuento hasta presionar Aplicar
     cuponInput.addEventListener("input", () => {
-      const val = cuponInput.value.trim().toUpperCase();
+      cuponAplicadoExitoso = false;
+      ultimoDescuentoCupon = 0;
       actualizarVisualizacionPrecio();
-      if (timerCupon) clearTimeout(timerCupon);
-      if (val.length >= 2) {
-        timerCupon = setTimeout(() => {
-          validarCuponServidor(val);
-        }, 500);
+      const badgeCupon = document.getElementById("badge-cupon-aplicado");
+      if (badgeCupon) badgeCupon.remove();
+      if (cuponStatusMsg) cuponStatusMsg.classList.add("hidden");
+    });
+
+    cuponInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        aplicarCupon();
       }
     });
   }

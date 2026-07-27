@@ -270,37 +270,25 @@
         </div>
 
         <div class="grid-2 checkout-grid">
-          <!-- Información de Despacho del Cliente -->
-          <div class="info-card">
-            <div class="info-card-header">
-              <div class="info-icon">📦</div>
-              <h3>Información de Despacho</h3>
-            </div>
-            <p id="despacho-info" class="despacho-text">
-              Realizamos envíos a todo Chile mediante couriers certificados. Tu orden de preventa será despachada prioritariamente al completar el primer lote de producción oficial.
-            </p>
-            <div class="guarantees-list">
-              <div class="guarantee-item">
-                <span class="check-icon">✓</span>
-                <span>Pago 100% Seguro cifrado por Flow</span>
-              </div>
-              <div class="guarantee-item">
-                <span class="check-icon">✓</span>
-                <span>Despacho directo a todo Chile</span>
-              </div>
-              <div class="guarantee-item">
-                <span class="check-icon">✓</span>
-                <span>Notificación por correo con número de seguimiento</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Formulario de Compra -->
+          <!-- Columna Izquierda: Formulario de Datos del Cliente -->
           <div class="form-card">
             <form id="checkout-form">
               <!-- Alerta de Error -->
               <div id="error-alert" class="alert hidden">
                 <span id="error-text">Ocurrió un error.</span>
+              </div>
+
+              <!-- Banner Compacto de Despacho & Garantía -->
+              <div class="info-card-compact">
+                <div class="info-compact-header">
+                  <span class="info-icon-sm">📦</span>
+                  <div>
+                    <h4 class="info-compact-title">Despacho Certificado a todo Chile</h4>
+                    <p id="despacho-info" class="despacho-text-sm">
+                      Envíos con seguimiento y pago 100% cifrado por Flow.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
@@ -398,59 +386,108 @@
 
               <div class="form-group">
                 <label for="cupon">Código de Cupón (Opcional)</label>
-                <input
-                  type="text"
-                  id="cupon"
-                  placeholder="Ej. PREVENTA15"
-                  class="form-control"
-                  style="text-transform: uppercase;"
-                />
-              </div>
-
-              <!-- Cantidad e Indicadores -->
-              <div class="quantity-box">
-                <div class="quantity-controls">
-                  <span class="quantity-label">Cantidad:</span>
-                  <div class="stepper-group">
-                    <button
-                      type="button"
-                      id="btn-restar"
-                      class="btn-step"
-                      aria-label="Restar una unidad"
-                    >
-                      −
-                    </button>
-                    <input
-                      type="number"
-                      id="cantidad"
-                      name="cantidad"
-                      value="1"
-                      min="1"
-                      max="10"
-                      readonly
-                      class="hidden"
-                    />
-                    <span id="display-cantidad" class="quantity-val">1</span>
-                    <button
-                      type="button"
-                      id="btn-sumar"
-                      class="btn-step"
-                      aria-label="Sumar una unidad"
-                    >
-                      +
-                    </button>
-                  </div>
+                <div class="input-btn-group" style="display: flex; gap: 0.5rem;">
+                  <input
+                    type="text"
+                    id="cupon"
+                    placeholder="Ej. PREVENTA15"
+                    class="form-control"
+                    style="text-transform: uppercase;"
+                  />
+                  <button
+                    type="button"
+                    id="btn-aplicar-cupon"
+                    class="btn btn-secondary"
+                    style="padding: 0 1.25rem; white-space: nowrap; flex-shrink: 0;"
+                  >
+                    Aplicar
+                  </button>
                 </div>
-                <div class="total-box">
-                  <span class="total-label">Total Estimado</span>
-                  <span id="display-total" class="total-price">$19.990 CLP</span>
-                </div>
+                <small id="cupon-status-msg" class="hidden" style="display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 600;"></small>
               </div>
-
-              <button type="submit" class="btn btn-primary btn-block">
-                <span>Quiero mi Iron Girl en Preventa ⚡</span>
-              </button>
             </form>
+          </div>
+
+          <!-- Columna Derecha: Resumen de la Compra & Totales Calculados -->
+          <div class="summary-card">
+            <div class="summary-card-header">
+              <h3>Resumen de la Compra</h3>
+            </div>
+
+            <!-- Previsualización del Producto & Cantidad -->
+            <div class="product-summary-item">
+              <div class="product-summary-info">
+                <span class="product-summary-title">Iron Girl (15 sachets - 54g)</span>
+                <span class="product-summary-subtitle">Hierro aminoquelado de alta absorción</span>
+              </div>
+              <div class="stepper-group">
+                <button
+                  type="button"
+                  id="btn-restar"
+                  class="btn-step"
+                  aria-label="Restar una unidad"
+                >
+                  −
+                </button>
+                <input
+                  type="number"
+                  id="cantidad"
+                  name="cantidad"
+                  form="checkout-form"
+                  value="1"
+                  min="1"
+                  max="10"
+                  readonly
+                  class="hidden"
+                />
+                <span id="display-cantidad" class="quantity-val">1</span>
+                <button
+                  type="button"
+                  id="btn-sumar"
+                  class="btn-step"
+                  aria-label="Sumar una unidad"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <!-- Desglose de Precios -->
+            <div class="summary-breakdown">
+              <div class="summary-row">
+                <span class="summary-label">Subtotal Suplementos:</span>
+                <span id="summary-subtotal" class="summary-value">$19.990 CLP</span>
+              </div>
+
+              <div id="row-descuento" class="summary-row hidden" style="color: #2e7d32; font-weight: 600;">
+                <span class="summary-label">Descuento Cupón:</span>
+                <span id="summary-descuento" class="summary-value">-$0 CLP</span>
+              </div>
+
+              <div class="summary-row">
+                <span class="summary-label">Despacho (Blue Express):</span>
+                <span id="summary-envio" class="summary-value">$3.500 CLP</span>
+              </div>
+
+              <div class="summary-divider"></div>
+
+              <div class="summary-row total-row">
+                <span class="summary-total-label">Total a Pagar:</span>
+                <div class="total-box">
+                  <span id="display-total" class="total-price">$23.490 CLP</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón Principal de Pago -->
+            <button type="submit" form="checkout-form" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.5rem;">
+              <span>Quiero mi Iron Girl en Preventa ⚡</span>
+            </button>
+
+            <!-- Sellos de Seguridad -->
+            <div class="security-badges-summary" style="margin-top: 1rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+              <span>🔒 Pago Cifrado SSL vía Flow</span>
+            </div>
           </div>
         </div>
       </section>
