@@ -232,6 +232,16 @@ document.addEventListener("DOMContentLoaded", () => {
       actualizarVisualizacionPrecio();
       if (cuponStatusMsg) cuponStatusMsg.classList.add("hidden");
     });
+
+    // Al presionar Enter dentro del campo de cupón, ejecutar "Aplicar" en lugar de enviar la compra
+    cuponInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (btnAplicarCupon) {
+          btnAplicarCupon.click();
+        }
+      }
+    });
   }
 
   const abrirModalResumen = () => {
@@ -404,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const nombre = sanitizeInput(document.getElementById("nombre").value.trim());
       const rut = sanitizeInput(rutInput.value.trim());
-      const email = sanitizeInput(emailInput.value.trim());
+      const email = emailInput ? emailInput.value.trim().toLowerCase() : "";
       const telefonoEl = document.getElementById("telefono");
       const regionEl = document.getElementById("region");
       const comunaEl = document.getElementById("comuna");
@@ -449,10 +459,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return mostrarError("Cantidad inválida.");
       }
 
-      // Prevenir doble clic deshabilitando el botón mientras dura el envío
+      // 1. Cerrar el modal de resumen para mostrar limpiamente la tarjeta de carga
+      cerrarModalResumen();
+
+      // 2. Prevenir doble clic deshabilitando el botón mientras dura el envío
       if (submitBtn) submitBtn.disabled = true;
-      loadingOverlay.classList.remove("hidden");
-      loadingOverlay.classList.add("flex");
+      if (loadingOverlay) {
+        loadingOverlay.classList.remove("hidden");
+        loadingOverlay.classList.add("flex");
+      }
 
       const payload = {
         nombre,
