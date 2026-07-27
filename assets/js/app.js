@@ -482,12 +482,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const resData = await response.json();
+        const redirectUrl =
+          (resData && resData.data && resData.data.url)
+            ? resData.data.url
+            : (resData && (resData.url || resData.redirectUrl))
+            ? (resData.url || resData.redirectUrl)
+            : null;
 
-        if (resData.success && resData.data && resData.data.url) {
-          window.location.href = resData.data.url;
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
         } else {
           throw new Error(
-            resData.message || "Error desconocido al registrar pedido.",
+            resData.message || "No se pudo obtener la URL de pago seguro de Flow.",
           );
         }
       } catch (err) {
