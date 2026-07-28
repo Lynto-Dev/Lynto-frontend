@@ -93,10 +93,17 @@ a:hover {
 }
 
 /* Layout */
+.main-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .container {
   max-width: 1040px;
   margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
+  padding: 0 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Header Flotante con Logo Oficial */
@@ -267,17 +274,23 @@ a:hover {
   transform: translateX(4px);
 }
 
-/* Secciones y Tarjetas */
+/* Secciones Full Width de Borde a Borde */
 .section {
-  margin-bottom: 3.5rem;
+  width: 100%;
+  padding: 4.5rem 0;
+  background-color: var(--bg-main);
+  border-bottom: 1px solid var(--border-color);
+  box-sizing: border-box;
 }
 
-.card-section {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  padding: 2.75rem 2.25rem;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
+.section-alt {
+  background-color: #ffffff;
+}
+
+.section-highlight {
+  background-color: var(--brand-yellow);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .section-header {
@@ -310,13 +323,30 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* Hero Section */
+/* Hero Section Full-Viewport Responsive */
 .hero-section {
+  width: 100%;
+  min-height: calc(100vh - 65px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 3.5rem 1rem 4rem;
-  max-width: 840px;
-  margin: 0 auto 2.5rem;
+  padding: 3rem 0;
+  background: linear-gradient(180deg, rgba(254, 252, 225, 0.6) 0%, var(--bg-main) 100%);
+  border-bottom: 1px solid var(--border-color);
   position: relative;
+  box-sizing: border-box;
+}
+
+.hero-container {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-badge {
@@ -380,29 +410,19 @@ a:hover {
   border-radius: 50px;
 }
 
-/* Exclusivity Banner */
-.exclusivity-banner {
-  margin-top: 2rem;
-  background-color: var(--brand-purple-soft);
-  border: 1px solid var(--brand-purple);
-  padding: 1rem 1.5rem;
-  border-radius: var(--radius-md);
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-}
-
-.exclusivity-banner p {
-  font-size: 0.95rem;
-  color: var(--text-main);
-  line-height: 1.5;
-}
-
-/* Features Grid */
+/* Features Grid - 4 en fila Desktop, 2x2 en Celulares */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
   margin-top: 2rem;
+}
+
+@media (max-width: 899px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
 }
 
 .feature-card {
@@ -436,12 +456,78 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* Tabla Nutricional */
+/* Tabla Nutricional Desplegable con Animación Smooth */
 .table-wrapper {
-  overflow-x: auto;
+  overflow: hidden;
   margin-top: 1.75rem;
   border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  background: #ffffff;
+}
+
+.table-header-bar {
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(135deg, var(--brand-purple-light) 0%, var(--brand-purple-soft) 100%);
+  padding: 1rem 1.25rem;
+  border-bottom: 2px solid var(--border-color);
+  transition: background 0.2s ease;
+}
+
+.table-header-bar:hover {
+  background: var(--brand-purple-light);
+}
+
+.table-toggle-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.table-toggle-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand-purple-deep);
+}
+
+.table-toggle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--brand-purple-deep);
+  background: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
   border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.table-toggle-icon {
+  font-size: 0.8rem;
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.table-toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.table-collapsible-body {
+  max-height: 800px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.35s ease-in-out;
+}
+
+.table-collapsible-body.collapsed {
+  max-height: 0 !important;
+  opacity: 0 !important;
 }
 
 .nutrition-table {
@@ -451,12 +537,12 @@ a:hover {
   font-size: 0.95rem;
 }
 
-.nutrition-table th {
-  background-color: var(--brand-purple-light);
+.table-subhead th {
+  background-color: var(--brand-yellow);
   color: var(--brand-purple-deep);
   font-family: var(--font-heading);
   font-weight: 700;
-  padding: 1rem 1.25rem;
+  padding: 0.85rem 1.25rem;
   border-bottom: 2px solid var(--border-color);
 }
 
@@ -496,13 +582,13 @@ a:hover {
   }
 }
 
-/* Checkout Section Layout */
+/* Checkout Section Layout Full-Width */
 .checkout-section {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  padding: 3rem 2.25rem;
-  border: 1.5px solid var(--border-color);
-  box-shadow: var(--shadow-lg);
+  width: 100%;
+  background-color: #ffffff;
+  padding: 4.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  box-sizing: border-box;
 }
 
 .text-center {

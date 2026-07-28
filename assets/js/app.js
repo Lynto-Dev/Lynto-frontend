@@ -701,6 +701,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // --- CONTROL PLEGABLE DE LA TABLA NUTRICIONAL CON ANIMACIÓN ---
+  const nutritionHead = document.getElementById("nutrition-table-head");
+  const tableCollapsibleBody = document.getElementById("table-collapsible-body");
+  const tableToggleIcon = document.getElementById("table-toggle-icon");
+  const tableToggleText = document.getElementById("table-toggle-text");
+
+  if (nutritionHead && tableCollapsibleBody) {
+    nutritionHead.addEventListener("click", () => {
+      const isCollapsed = tableCollapsibleBody.classList.toggle("collapsed");
+      if (tableToggleIcon) {
+        tableToggleIcon.classList.toggle("rotated", isCollapsed);
+      }
+      if (tableToggleText) {
+        tableToggleText.innerText = isCollapsed ? "Haz clic para desplegar" : "Haz clic para contraer";
+      }
+    });
+  }
+
   // --- CARGA DINÁMICA DESDE GOOGLE SHEETS (get_config) ---
   const cargarConfiguracion = async () => {
     try {
