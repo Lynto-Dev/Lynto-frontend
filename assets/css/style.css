@@ -1079,70 +1079,197 @@ a:hover {
   font-size: 0.95rem;
 }
 
-/* Newsletter Section con Colores Oficiales Lynto */
-.newsletter-card {
-  background: linear-gradient(135deg, #7a1fb8 0%, #4d0d7b 100%);
-  color: #ffffff;
+/* Modal Pop-up Newsletter */
+.modal-newsletter-card {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 3.5rem 2rem;
-  text-align: center;
-  box-shadow: var(--shadow-lg);
-  border: 2px solid var(--brand-purple);
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 25px 60px -15px rgba(122, 31, 184, 0.35);
+  overflow: hidden;
+  position: relative;
+  animation: modal-slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-sizing: border-box;
 }
 
-.newsletter-content {
-  max-width: 580px;
-  margin: 0 auto;
+.modal-newsletter-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
 }
 
-.newsletter-icon {
-  font-size: 2.5rem;
-  display: block;
-  margin-bottom: 0.75rem;
+.modal-newsletter-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
 }
 
-.newsletter-card h2 {
-  color: #ffffff;
-  font-size: 2.25rem;
-  margin-bottom: 0.75rem;
-}
-
-.newsletter-card p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1.05rem;
-  margin-bottom: 2rem;
-}
-
-.newsletter-form {
-  display: flex;
-  gap: 0.75rem;
-  flex-direction: column;
-}
-
-@media (min-width: 540px) {
-  .newsletter-form {
-    flex-direction: row;
+@media (min-width: 680px) {
+  .modal-newsletter-grid {
+    grid-template-columns: 0.9fr 1.1fr;
   }
 }
 
-.newsletter-input {
-  border: none;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: var(--radius-md);
+.modal-newsletter-image-col {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  overflow: hidden;
+  background: var(--brand-purple-soft);
+  display: flex;
 }
 
-.newsletter-input:focus {
-  background: #ffffff;
-  box-shadow: 0 0 0 4px var(--brand-yellow);
+.modal-newsletter-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  flex: 1;
+}
+
+.modal-newsletter-badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(31, 8, 41, 0.8);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-newsletter-content-col {
+  padding: 2.25rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.modal-newsletter-content-col h2 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  color: var(--text-main);
+}
+
+.modal-newsletter-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.modal-newsletter-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.modal-newsletter-benefits li {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.modal-newsletter-form {
+  margin-top: 0.25rem;
+}
+
+.modal-newsletter-skip {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 0.82rem;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 0.85rem;
+  text-align: center;
+  width: 100%;
+  transition: color var(--transition-fast);
+}
+
+.modal-newsletter-skip:hover {
+  color: var(--brand-purple-deep);
 }
 
 .newsletter-message {
-  margin-top: 1rem;
-  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 600;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: var(--brand-purple-soft);
+  color: var(--brand-purple-deep);
+  border: 1px solid var(--border-color);
+  animation: alert-slide-down 0.3s ease;
+}
+
+/* Integrated Footer Newsletter */
+.footer-newsletter-box {
+  background: var(--brand-yellow);
+  border: 1.5px solid var(--brand-purple);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (min-width: 680px) {
+  .footer-newsletter-box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.footer-newsletter-text h4 {
+  font-size: 1.1rem;
+  color: var(--brand-purple-deep);
+  margin-bottom: 0.2rem;
+}
+
+.footer-newsletter-text p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.footer-newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 420px;
+}
+
+.footer-newsletter-input {
+  background: #ffffff !important;
+  font-size: 0.9rem !important;
+  padding: 0.65rem 0.9rem !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.footer-newsletter-btn {
+  padding: 0.65rem 1.25rem !important;
+  font-size: 0.9rem !important;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Footer */
@@ -1175,16 +1302,49 @@ a:hover {
   font-weight: 500;
 }
 
-/* Alertas & Loading Overlay */
+/* Alertas & Loading Overlay - Rediseño Biohack Premium */
 .alert {
-  padding: 1rem 1.25rem;
-  background-color: #fef2f2;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.05rem 1.35rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  font-size: 0.94rem;
+  font-weight: 500;
+  line-height: 1.5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  animation: alert-slide-down 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes alert-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.alert-error {
+  background-color: #fff5f5;
   color: #991b1b;
   border: 1px solid #fecaca;
-  border-radius: var(--radius-sm);
-  margin-bottom: 1.35rem;
-  font-size: 0.95rem;
-  font-weight: 500;
+  border-left: 4.5px solid #dc2626;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  border-left: 4.5px solid #16a34a;
 }
 
 .hidden {

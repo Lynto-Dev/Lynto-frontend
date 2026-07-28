@@ -1,7 +1,8 @@
 # 🚀 ROADMAP Y MATRIZ DE IMPLEMENTACIÓN DEFINITIVA
 ## Proyecto: Preventa E-Commerce Suplementos "Lynto"
 
-> **Estado General:** 🟡 **Fase de Integración y Maquetación Final (~68% Global)**  
+> **Estado General:** 🟢 **Fase de Pruebas Finales y Lanzamiento (~95% Global)**  
+> **Frontend (UI/UX & JS):** 🟢 **100% Completado** *(Maquetación visual, copys oficiales, modal de checkout, calculadoras, RUT, sanitización anti-XSS y get_config dinámico)*.  
 > **Backend & DevOps:** 🟢 **92% Completado** *(LockService, Cloudflare Edge Worker, Flow Sandbox, webhook /webhook y módulo de correos aprobados)*.  
 > **Actualización:** Julio 2026
 
@@ -24,7 +25,7 @@
 
 > 📂 **NOTA DRIVE PARA `[F]`:** Para esta sección, debes revisar la carpeta del Drive del cliente. Abre la imagen **`Códigos HEX.png`** para extraer los colores. Además, notarás que hay una gran variedad de logos en el Drive; descarga y utiliza **exclusivamente** los que tienen el sufijo **"sin fondo"** para mantener la limpieza del diseño. Usa la imagen **`Captura de pantalla 2026-07-20 132721.png`** como tu norte visual para la maquetación.
 
-* `[ ] [F] [⚡ HARDCODEADO]` **Configuración Tailwind CSS:** Inyectar la paleta de colores corporativa directamente en el `<head>` del `index.html`:
+* `[x] [F] [⚡ HARDCODEADO]` **Configuración Tailwind CSS:** Inyectar la paleta de colores corporativa directamente en el `<head>` del `index.html`:
   ```html
   <!-- Configuración de Marca en el HEAD de index.html -->
   <script>
@@ -42,12 +43,12 @@
     }
   </script>
   ```
-* `[ ] [F] [⚡ HARDCODEADO]` **Logotipia y Favicon (Imágenes Transparentes en `assets/img/`):**
+* `[x] [F] [⚡ HARDCODEADO]` **Logotipia y Favicon (Imágenes Transparentes en `assets/img/`):**
   * **Header / Nav:** Usar `Logo morado sin fondo.png` (sobre fondo claro).
   * **Footer:** Usar `Logo amarillo sin fondo.png` (sobre fondo oscuro/morado corporativo).
   * **Favicon:** Usar `Isotipo morado sin fondo.png` o `Isotipo amarillo sin fondo.png`.
   * *(Nota DevOps: Ignorar archivos con recuadro rígido como `Logo amarillo.png` o `Logo morado.png`)*.
-* `[ ] [F] [⚡ HARDCODEADO]` **Norte Visual (Mockup):** Maquetar paddings, jerarquía tipográfica y estructura general según la captura entregada (`Captura de pantalla 2026-07-20 132721.png`).
+* `[x] [F] [⚡ HARDCODEADO]` **Norte Visual (Mockup):** Maquetar paddings, jerarquía tipográfica y estructura general según la captura entregada (`Captura de pantalla 2026-07-20 132721.png`).
 
 ---
 
@@ -55,17 +56,17 @@
 
 > 📂 **NOTA DRIVE PARA `[F]`:** ¡No inventes textos ni uses Lorem Ipsum! Todos los textos persuasivos (H1, Bajada, FAQs, Sección "¿Por qué Iron Girl?") los debes copiar y pegar íntegramente del archivo **`Copys .docx`** que se encuentra en el Drive. Asimismo, toda la redacción legal (Términos, Privacidad y el Disclaimer del MINSAL) debe ser extraída textualmente del archivo **`Legal ecommerce.docx`**.
 
-* `[ ] [F] [⚡ HARDCODEADO]` **Hero Section (`Copys .docx`):**
+* `[x] [F] [⚡ HARDCODEADO]` **Hero Section (`Copys .docx`):**
   * **H1 (Título principal):** *"Domina el ritmo de lo real. Tu biología en su máximo potencial."*
   * **Subtítulo:** *"El desgaste moderno no se combate con fuerza de voluntad, se resuelve con ciencia. Descubre Iron Girl: la primera matriz biotecnológica de minerales esenciales en polvo, diseñada para recuperar tu vitalidad diaria sin pastillas ni molestias."*
   * **CTAs (Botones):** Botón 1: `"Quiero mi Iron Girl en Preventa ⚡"` (`bg-lynto-yellow text-lynto-purple`) | Botón 2: `"Conoce la ciencia detrás"`.
   * **Badges:** `LIBRE DE AZÚCAR` | `RÁPIDA ABSORCIÓN` | `FORMATO SACHET` | `RESPALDO FARMACÉUTICO`.
   * **Banner Urgencia:** *"Forma parte de la primera generación Lynto. Reservando tu Iron Girl hoy, aseguras precio preferencial de preventa y acceso directo a nuestra comunidad VIP de desarrollo."*
-* `[ ] [F] [⚡ HARDCODEADO]` **Sección "¿Por qué Iron Girl?" (Descripción):**
+* `[x] [F] [⚡ HARDCODEADO]` **Sección "¿Por qué Iron Girl?" (Descripción):**
   * Maquetar sección descriptiva sobre el déficit de hierro/magnesio basado en el documento de copys (*"Normalizamos vivir cansadas..."*).
-* `[ ] [F] [⚡ HARDCODEADO]` **Sección FAQ (Preguntas Frecuentes - `Copys .docx`):**
+* `[x] [F] [⚡ HARDCODEADO]` **Sección FAQ (Preguntas Frecuentes - `Copys .docx`):**
   * Maquetar acordeón interactivo con las 3 preguntas oficiales (1. Tiempo de efectos, 2. Proceso de Preventa, 3. Sabor metálico).
-* `[ ] [F] [⚡ HARDCODEADO]` **Footer Legal y Páginas Secundarias (`Legal ecommerce.docx`):**
+* `[x] [F] [⚡ HARDCODEADO]` **Footer Legal y Páginas Secundarias (`Legal ecommerce.docx`):**
   * Inyectar correo de soporte: `lynto.spa@gmail.com` (o alias `contacto@lynto.cl`).
   * Inyectar texto obligatorio MINSAL en Footer y Checkout:
     > *"SUPLEMENTO ALIMENTARIO: Su uso no es recomendable para consumo por menores de 8 años, embarazadas y nodrizas, salvo indicación profesional competente y no reemplaza a una alimentación balanceada."*
@@ -78,13 +79,13 @@
 > 📂 **NOTA DRIVE PARA `[B]`:** Revisar el Drive para configurar las hojas de cálculo maestras. Debes sacar los precios, límites y stock base abriendo el archivo **`Catálogo de productos.xlsx`**. Para la tabla nutricional, transcribe exactamente los componentes que aparecen en el PDF **`Ficha Técnica LYNTO - Laboratorio Nextfar.pdf`**.
 
 * `[x] [B] [📊 DINÁMICO EXCEL]` **Estructuración Defensiva:** 🟢 **COMPLETADO (100%)** (`asegurarEncabezados` y `init_db`).
-* `[ ] [B] [📊 DINÁMICO EXCEL]` **Producto (`Catálogo.xlsx`):** ID/Código: `Iron Girl` (Doypack 15 sachets - 54g).
-* `[ ] [B] [📊 DINÁMICO EXCEL]` **Inventario Inicial (`Catálogo.xlsx`):** Stock: `2000` unidades en preventa.
-* `[ ] [B] [📊 DINÁMICO EXCEL]` **Regla de Negocio (`Catálogo.xlsx`):** Límite máximo: `6` unidades por persona.
-* `[ ] [B] [📊 DINÁMICO EXCEL]` **Precios (Cálculo Zero-Trust en Servidor - `Catálogo.xlsx`):**
+* `[x] [B] [📊 DINÁMICO EXCEL]` **Producto (`Catálogo.xlsx`):** ID/Código: `Iron Girl` (Doypack 15 sachets - 54g).
+* `[x] [B] [📊 DINÁMICO EXCEL]` **Inventario Inicial (`Catálogo.xlsx`):** Stock: `2000` unidades en preventa.
+* `[x] [B] [📊 DINÁMICO EXCEL]` **Regla de Negocio (`Catálogo.xlsx`):** Límite máximo: `6` unidades por persona.
+* `[x] [B] [📊 DINÁMICO EXCEL]` **Precios (Cálculo Zero-Trust en Servidor - `Catálogo.xlsx`):**
   * **Valor Normal (Tachado en Front):** `$19.990 CLP`.
   * **Valor Preventa (Real a cobrar):** `$16.990 CLP`.
-* `[ ] [B] [📊 DINÁMICO EXCEL]` **Ficha Técnica y Tabla Nutricional (`Ficha Técnica...pdf`):**
+* `[x] [B] [📊 DINÁMICO EXCEL]` **Ficha Técnica y Tabla Nutricional (`Ficha Técnica...pdf`):**
   * **Sabor & Modo de Uso:** Frambuesa/Limón | Disolver 1 sachet (3,6g) en 250 mL de agua.
   * **Resolución Sanitaria:** Res. Seremi de Salud R.M N°2513672618 del 15/01/2026.
   * **Valores Nutricionales Críticos (Porción):**
@@ -98,9 +99,9 @@
 
 > 📂 **NOTA DRIVE PARA `[B]` y `[F]`:** El código y el porcentaje de descuento exacto están validados en el archivo **`Catálogo de productos.xlsx`** del Drive. Las zonas de envío deberán ingresarse a mano en la pestaña `TarifasEnvio` por las clientas, ya que descartamos plugins externos.
 
-* `[ ] [B] [📊 DINÁMICO EXCEL]` **Lógica de Cupones:** Programar en `obtenerDescuentoCupon` el cálculo para el cupón `PREVENTA` (aplica 15% de descuento sobre el subtotal, bajando el precio unitario a `$14.441 CLP` aprox).
-* `[ ] [F] [📊 DINÁMICO EXCEL]` **UI Cupones y Despacho:** Agregar campo HTML *"Ingresar código de descuento"* y desplegable de **Regiones** (RM `$3.500` / Regiones `$5.000`) en el formulario de Checkout.
-* `[ ] [F] [⚡ HARDCODEADO]` **Blindaje de Formulario (Anti-XSS):** Sanitizar los inputs (`nombre`, `rut`, `email`, `direccion`) y deshabilitar el botón de compra con spinner de carga durante el proceso `POST`.
+* `[x] [B] [📊 DINÁMICO EXCEL]` **Lógica de Cupones:** Programar en `obtenerDescuentoCupon` el cálculo para el cupón `PREVENTA` (aplica 15% de descuento sobre el subtotal, bajando el precio unitario a `$14.441 CLP` aprox).
+* `[x] [F] [📊 DINÁMICO EXCEL]` **UI Cupones y Despacho:** Agregar campo HTML *"Ingresar código de descuento"* y desplegable de **Regiones** (RM `$3.500` / Regiones `$5.000`) en el formulario de Checkout.
+* `[x] [F] [⚡ HARDCODEADO]` **Blindaje de Formulario (Anti-XSS):** Sanitizar los inputs (`nombre`, `rut`, `email`, `direccion`) y deshabilitar el botón de compra con spinner de carga durante el proceso `POST`.
 
 ---
 

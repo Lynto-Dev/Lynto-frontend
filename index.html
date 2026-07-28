@@ -254,7 +254,8 @@
           <div class="form-card">
             <form id="checkout-form">
               <!-- Alerta de Error -->
-              <div id="error-alert" class="alert hidden">
+              <div id="error-alert" class="alert alert-error hidden">
+                <span class="alert-icon">⚠️</span>
                 <span id="error-text">Ocurrió un error.</span>
               </div>
 
@@ -531,39 +532,77 @@
           </div>
         </div>
       </section>
+    </main>
 
-      <!-- Sección Newsletter (Boletín Oficial) -->
-      <section class="section newsletter-card" id="newsletter">
-        <div class="newsletter-content">
-          <span class="newsletter-icon">💌</span>
-          <h2>Suscríbete a Nuestro Boletín</h2>
-          <p>
-            Recibe novedades exclusivas sobre el lanzamiento de preventa, consejos de nutrición activa y promociones especiales.
-          </p>
-
-          <form id="newsletter-form" class="newsletter-form">
+    <!-- Footer con Newsletter Integrado -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-newsletter-box" id="footer-newsletter">
+          <div class="footer-newsletter-text">
+            <h4>✨ Únete al Club Lynto</h4>
+            <p>Recibe ofertas de preventa, lanzamientos y guías de salud en tu correo.</p>
+          </div>
+          <form id="newsletter-form" class="footer-newsletter-form">
             <input
               type="email"
               id="newsletter-email"
               required
               placeholder="Tu correo electrónico"
-              class="form-control newsletter-input"
+              class="form-control footer-newsletter-input"
             />
-            <button type="submit" id="btn-newsletter" class="btn btn-primary">
-              Suscribirme
+            <button type="submit" id="btn-newsletter" class="btn btn-primary footer-newsletter-btn">
+              <span>Suscribirme ⚡</span>
             </button>
           </form>
-          <div id="newsletter-msg" class="newsletter-message hidden"></div>
         </div>
-      </section>
-    </main>
+        <div id="newsletter-msg" class="newsletter-message hidden" style="margin-bottom: 1.25rem;"></div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-container">
         <p class="footer-copy">&copy; 2026 Lynto SpA. Todos los derechos reservados. | Soporte: <a href="mailto:contacto@lynto.cl">contacto@lynto.cl</a> | <a href="./terminos.html">Términos</a> | <a href="./privacidad.html">Privacidad</a></p>
       </div>
     </footer>
+
+    <!-- Modal Pop-up Newsletter al iniciar la página -->
+    <div id="modal-newsletter" class="modal-backdrop hidden">
+      <div class="modal-newsletter-card">
+        <button type="button" id="btn-cerrar-modal-newsletter" class="btn-close-modal modal-newsletter-close" aria-label="Cerrar ventana">✕</button>
+        <div class="modal-newsletter-grid">
+          <div class="modal-newsletter-image-col">
+            <img src="./assets/img/woman_drinking_supplement.jpg" alt="Mujer tomando suplemento Lynto" class="modal-newsletter-img" />
+            <div class="modal-newsletter-badge">🥤 Nutrición & Vitalidad</div>
+          </div>
+          <div class="modal-newsletter-content-col">
+            <span class="section-tag" style="margin-bottom: 0.6rem; align-self: flex-start;">Comunidad VIP Lynto</span>
+            <h2 style="margin-bottom: 0.6rem;">¡Recibe $3.000 CLP de Descuento!</h2>
+            <p class="modal-newsletter-desc">
+              Suscríbete para recibir los beneficios exclusivos de novedades, preventas especiales y consejos de biohacking.
+            </p>
+            <ul class="modal-newsletter-benefits">
+              <li>✨ Cupón de descuento exclusivo en tu primera compra</li>
+              <li>⚡ Acceso prioritario a lotes limitados de Iron Girl</li>
+              <li>🌱 Recomendaciones de expertas en nutrición celular</li>
+            </ul>
+            <form id="modal-newsletter-form" class="modal-newsletter-form">
+              <div class="form-group" style="margin-bottom: 0.85rem;">
+                <input
+                  type="email"
+                  id="modal-newsletter-email"
+                  required
+                  placeholder="Tu correo electrónico (ej. nombre@correo.com)"
+                  class="form-control"
+                />
+              </div>
+              <button type="submit" id="btn-modal-newsletter" class="btn btn-primary btn-block">
+                <span>Quiero mis Beneficios ⚡</span>
+              </button>
+              <div id="modal-newsletter-msg" class="newsletter-message hidden" style="margin-top: 0.75rem;"></div>
+            </form>
+            <button type="button" id="btn-skip-modal-newsletter" class="modal-newsletter-skip">
+              No gracias, prefiero navegar primero
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Pantalla de Carga (Overlay) -->
     <div id="loading-overlay" class="overlay hidden">
@@ -573,6 +612,6 @@
       </div>
     </div>
 
-    <script src="./assets/js/app.js?v=1.6"></script>
+    <script src="./assets/js/app.js?v=1.7"></script>
   </body>
 </html>

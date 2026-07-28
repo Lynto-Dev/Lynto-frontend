@@ -531,22 +531,71 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- SUBMIT DEL NEWSLETTER ---
-  if (newsletterForm) {
-    newsletterForm.addEventListener("submit", async (e) => {
+  // --- CONTROL DEL MODAL POP-UP DE NEWSLETTER AL INICIAR LA PÁGINA ---
+  const modalNewsletter = document.getElementById("modal-newsletter");
+  const btnCerrarModalNewsletter = document.getElementById("btn-cerrar-modal-newsletter");
+  const btnSkipModalNewsletter = document.getElementById("btn-skip-modal-newsletter");
+  const modalNewsletterForm = document.getElementById("modal-newsletter-form");
+  const modalNewsletterEmail = document.getElementById("modal-newsletter-email");
+  const modalNewsletterMsg = document.getElementById("modal-newsletter-msg");
+
+  const cerrarModalNewsletter = () => {
+    if (modalNewsletter) {
+      modalNewsletter.classList.add("hidden");
+      document.body.style.overflow = "auto";
+      sessionStorage.setItem("lynto_newsletter_dismissed", "true");
+    }
+  };
+
+  if (btnCerrarModalNewsletter) {
+    btnCerrarModalNewsletter.addEventListener("click", cerrarModalNewsletter);
+  }
+
+  if (btnSkipModalNewsletter) {
+    btnSkipModalNewsletter.addEventListener("click", cerrarModalNewsletter);
+  }
+
+  if (modalNewsletter) {
+    modalNewsletter.addEventListener("click", (e) => {
+      if (e.target === modalNewsletter) {
+        cerrarModalNewsletter();
+      }
+    });
+
+    // Desplegar modal al iniciar la página si no ha sido descartado en la sesión
+    if (!sessionStorage.getItem("lynto_newsletter_dismissed")) {
+      setTimeout(() => {
+        // Verificar que el modal de resumen de compra no esté abierto
+        const modalResumenEl = document.getElementById("modal-resumen");
+        const estaResumenAbierto = modalResumenEl && !modalResumenEl.classList.contains("hidden");
+
+        if (!estaResumenAbierto) {
+          modalNewsletter.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+        }
+      }, 700);
+    }
+  }
+
+  if (modalNewsletterForm) {
+    modalNewsletterForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = newsletterEmail.value.trim();
+      const email = modalNewsletterEmail ? modalNewsletterEmail.value.trim() : "";
 
       if (!validarEmail(email)) {
-        newsletterMsg.innerText = "Por favor, ingresa un correo válido.";
-        newsletterMsg.style.color = "#c62828";
-        newsletterMsg.classList.remove("hidden");
+        if (modalNewsletterMsg) {
+          modalNewsletterMsg.innerText = "Por favor, ingresa un correo válido.";
+          modalNewsletterMsg.style.color = "#c62828";
+          modalNewsletterMsg.classList.remove("hidden");
+        }
         return;
       }
 
-      newsletterMsg.innerText = "Enviando suscripción...";
-      newsletterMsg.style.color = "#555";
-      newsletterMsg.classList.remove("hidden");
+      if (modalNewsletterMsg) {
+        modalNewsletterMsg.innerText = "Enviando suscripción...";
+        modalNewsletterMsg.style.color = "#555";
+        modalNewsletterMsg.classList.remove("hidden");
+      }
 
       try {
         const response = await fetch(API_URL, {
@@ -557,26 +606,97 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify({
             action: "subscribe",
             email: email,
-            origen: "Landing Page",
+            origen: "Modal Popup Inicial",
           }),
         });
 
         const resData = await response.json();
 
         if (resData.success) {
-          newsletterMsg.innerText =
-            resData.message || "¡Gracias por suscribirte!";
-          newsletterMsg.style.color = "#2e7d32";
-          newsletterEmail.value = "";
+          if (modalNewsletterMsg) {
+            modalNewsletterMsg.innerText =
+              resData.message || "¡Gracias por suscribirte! Revisa tu correo para tu beneficio.";
+            modalNewsletterMsg.style.color = "#2e7d32";
+          }
+          if (modalNewsletterEmail) modalNewsletterEmail.value = "";
+          sessionStorage.setItem("lynto_newsletter_dismissed", "true");
+
+          setTimeout(() => {
+            cerrarModalNewsletter();
+          }, 1800);
         } else {
-          newsletterMsg.innerText =
-            resData.message || "No se pudo realizar la suscripción.";
-          newsletterMsg.style.color = "#c62828";
+          if (modalNewsletterMsg) {
+            modalNewsletterMsg.innerText =
+              resData.message || "No se pudo realizar la suscripción.";
+            modalNewsletterMsg.style.color = "#c62828";
+          }
         }
       } catch (err) {
         console.error(err);
-        newsletterMsg.innerText = "Error de conexión al suscribirse.";
-        newsletterMsg.style.color = "#c62828";
+        if (modalNewsletterMsg) {
+          modalNewsletterMsg.innerText = "Error de conexión al suscribirse.";
+          modalNewsletterMsg.style.color = "#c62828";
+        }
+      }
+    });
+  }
+
+  // --- SUBMIT DEL NEWSLETTER EN FOOTER ---
+  if (newsletterForm) {
+    newsletterForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = newsletterEmail ? newsletterEmail.value.trim() : "";
+
+      if (!validarEmail(email)) {
+        if (newsletterMsg) {
+          newsletterMsg.innerText = "Por favor, ingresa un correo válido.";
+          newsletterMsg.style.color = "#c62828";
+          newsletterMsg.classList.remove("hidden");
+        }
+        return;
+      }
+
+      if (newsletterMsg) {
+        newsletterMsg.innerText = "Enviando suscripción...";
+        newsletterMsg.style.color = "#555";
+        newsletterMsg.classList.remove("hidden");
+      }
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify({
+            action: "subscribe",
+            email: email,
+            origen: "Footer Integrado",
+          }),
+        });
+
+        const resData = await response.json();
+
+        if (resData.success) {
+          if (newsletterMsg) {
+            newsletterMsg.innerText =
+              resData.message || "¡Gracias por suscribirte al Club Lynto!";
+            newsletterMsg.style.color = "#2e7d32";
+          }
+          if (newsletterEmail) newsletterEmail.value = "";
+        } else {
+          if (newsletterMsg) {
+            newsletterMsg.innerText =
+              resData.message || "No se pudo realizar la suscripción.";
+            newsletterMsg.style.color = "#c62828";
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        if (newsletterMsg) {
+          newsletterMsg.innerText = "Error de conexión al suscribirse.";
+          newsletterMsg.style.color = "#c62828";
+        }
       }
     });
   }
