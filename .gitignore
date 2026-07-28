@@ -6,3 +6,4 @@ dist/
 .env.production
 *:Zone.Identifier
 docsteam/Identidad visual-*/
+Lynto-frontend/vite.config.js
