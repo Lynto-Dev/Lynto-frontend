@@ -58,6 +58,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 75px;
   font-size: 16px;
 }
 
@@ -106,22 +107,40 @@ a:hover {
   box-sizing: border-box;
 }
 
-/* Header Flotante con Logo Oficial */
+/* Header Flotante Inteligente con Logo Oficial */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
-  background: var(--glass-bg);
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-color);
-  transition: all var(--transition-normal);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.header.nav-hidden {
+  transform: translateY(-100%);
+}
+
+.header.nav-scrolled {
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 4px 20px rgba(122, 31, 184, 0.08);
+}
+
+.main-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+  margin-top: 65px;
 }
 
 .header-container {
   max-width: 1040px;
   margin: 0 auto;
-  padding: 0.85rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -188,7 +207,7 @@ a:hover {
   position: relative;
 }
 
-.nav-links a:not(.btn)::after {
+.nav-links a:not(.btn-nav-cta)::after {
   content: "";
   position: absolute;
   bottom: -4px;
@@ -200,13 +219,61 @@ a:hover {
   border-radius: 2px;
 }
 
-.nav-links a:not(.btn):hover::after {
+.nav-links a:not(.btn-nav-cta):hover::after {
   width: 100%;
 }
 
-.btn-nav {
-  padding: 0.5rem 1.25rem !important;
+/* Botón CTA Destacado del Navbar */
+.btn-nav-cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.35rem;
+  background: linear-gradient(135deg, #841fc9 0%, #520d85 100%);
+  color: #ffffff !important;
+  font-family: 'Plus Jakarta Sans', var(--font-heading), sans-serif !important;
   font-size: 0.9rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em;
+  border-radius: 50px;
+  border: 1.5px solid #fde778;
+  box-shadow: 0 4px 16px rgba(129, 28, 196, 0.35);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.btn-nav-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.btn-nav-cta:hover {
+  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(135deg, #9929e4 0%, #630fa0 100%);
+  box-shadow: 0 8px 24px rgba(132, 31, 201, 0.5), 0 0 16px rgba(253, 231, 120, 0.45);
+  border-color: #ffffff;
+  color: #ffffff !important;
+}
+
+.btn-nav-cta:hover::before {
+  left: 140%;
+}
+
+.btn-nav-cta:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(132, 31, 201, 0.3);
 }
 
 /* Botones Base Lynto */
