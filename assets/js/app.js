@@ -539,6 +539,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalNewsletterEmail = document.getElementById("modal-newsletter-email");
   const modalNewsletterMsg = document.getElementById("modal-newsletter-msg");
 
+  const abrirModalNewsletter = () => {
+    if (modalNewsletter) {
+      modalNewsletter.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+  };
+
   const cerrarModalNewsletter = () => {
     if (modalNewsletter) {
       modalNewsletter.classList.add("hidden");
@@ -570,7 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const estaResumenAbierto = modalResumenEl && !modalResumenEl.classList.contains("hidden");
 
         if (!estaResumenAbierto && modalNewsletter.classList.contains("hidden")) {
-          modalNewsletter.classList.remove("hidden");
+          abrirModalNewsletter();
         }
       }, 700);
     }
