@@ -1,78 +1,251 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lynto | Términos y Condiciones</title>
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Lynto | Términos, Condiciones y Políticas de Preventa</title>
+    <meta name="description" content="Términos, Condiciones de Uso y Políticas de Preventa oficiales de Lynto SpA." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://lynto.cl/terminos.html" />
+
+    <!-- Favicon Oficial -->
+    <link rel="icon" type="image/png" href="./assets/img/Isotipo morado sin fondo.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/css/style.css?v=1.6" />
+    <style>
+      body {
+        background-color: var(--bg-main, #faf7f2);
+        color: var(--text-main, #2d2638);
+      }
+
+      .legal-container {
+        max-width: 920px;
+        margin: 5.5rem auto 4rem;
+        padding: 0 1.25rem;
+      }
+
+      .legal-card {
+        background: #ffffff;
+        border: 1.5px solid var(--border-color, #e8dfd1);
+        border-radius: 16px;
+        padding: 2.5rem 2.25rem;
+        box-shadow: 0 10px 30px rgba(82, 13, 133, 0.05);
+      }
+
+      @media (max-width: 640px) {
+        .legal-card {
+          padding: 1.5rem 1.25rem;
+        }
+      }
+
+      .legal-title {
+        font-family: var(--font-heading), 'Outfit', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--brand-purple-deep, #520d85);
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.025em;
+        line-height: 1.2;
+      }
+
+      .legal-subtitle {
+        font-size: 0.95rem;
+        color: var(--text-muted, #6d627a);
+        margin-bottom: 2rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1.5px solid var(--border-color, #e8dfd1);
+      }
+
+      .legal-section {
+        margin-bottom: 2.5rem;
+      }
+
+      .legal-section-h2 {
+        font-family: var(--font-heading), 'Outfit', sans-serif;
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: var(--brand-purple-deep, #520d85);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .legal-section-h3 {
+        font-family: var(--font-heading), 'Outfit', sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #38085c;
+        margin-top: 1.5rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .legal-card p, .legal-card ul {
+        font-size: 0.96rem;
+        color: #3a3247;
+        margin-bottom: 1rem;
+        line-height: 1.65;
+      }
+
+      .legal-card ul {
+        padding-left: 1.35rem;
+      }
+
+      .legal-card li {
+        margin-bottom: 0.5rem;
+      }
+
+      .alert-box {
+        background: #fdf8e6;
+        border-left: 4px solid #f5b700;
+        border-radius: 8px;
+        padding: 1.1rem 1.25rem;
+        margin: 1.25rem 0;
+      }
+
+      .alert-box p {
+        margin: 0;
+        font-size: 0.92rem;
+        color: #47390a;
+        font-weight: 500;
+      }
+
+      .alert-box-purple {
+        background: #f6eefc;
+        border-left: 4px solid var(--brand-purple-deep, #520d85);
+        border-radius: 8px;
+        padding: 1.1rem 1.25rem;
+        margin: 1.25rem 0;
+      }
+
+      .alert-box-purple p {
+        margin: 0;
+        font-size: 0.92rem;
+        color: #38085c;
+        font-weight: 500;
+      }
+    </style>
   </head>
   <body>
-    <div
-      class="container"
-      style="
-        max-width: 760px;
-        background: white;
-        border: 1px solid #ddd;
-        padding: 2rem;
-        border-radius: 8px;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-      "
-    >
-      <div
-        class="flex justify-between items-center"
-        style="
-          border-b: 1px solid #eee;
-          padding-bottom: 1rem;
-          margin-bottom: 1.5rem;
-        "
-      >
-        <h1 style="margin: 0">Términos y Condiciones</h1>
-        <a
-          href="./index.html"
-          class="btn btn-secondary"
-          style="padding: 0.5rem 1rem; font-size: 0.85rem"
-          >Volver</a
-        >
+    <!-- Navegación Flotante Glassmorphic Identica al Index -->
+    <header class="header">
+      <div class="header-container">
+        <a href="./index.html" class="brand-logo" aria-label="Lynto Inicio">
+          <img src="./assets/img/Isotipo morado sin fondo.png" alt="Lynto Isotipo" class="brand-logo-icon" style="height: 44px; max-height: 44px; width: auto; object-fit: contain;" />
+          <span class="brand-logo-text">Lynto</span>
+        </a>
+        <nav class="nav-links">
+          <a href="./index.html#producto">¿Por qué Iron Girl?</a>
+          <a href="./index.html#nutricion">Tabla Nutricional</a>
+          <a href="./index.html#nosotras">Nosotras</a>
+          <a href="./index.html#comunidad">Early Adopters</a>
+          <a href="./index.html#faq">Preguntas</a>
+          <a href="./index.html#comprar" class="btn btn-nav-cta">
+            <span>Reservar Preventa ⚡</span>
+          </a>
+        </nav>
       </div>
+    </header>
 
-      <div style="font-size: 0.95rem; color: #555">
-        <section style="margin-bottom: 1.5rem">
-          <h2>1. Objeto y Generalidades</h2>
-          <p>[Escribir términos de la preventa del suplemento]</p>
-        </section>
+    <!-- Contenido Legal -->
+    <main class="legal-container">
+      <article class="legal-card">
+        <h1 class="legal-title">Documentación Legal e información de Preventa</h1>
+        <div class="legal-subtitle">
+          Última actualización: Julio 2026 | Lynto SpA (Chile)
+        </div>
 
-        <section style="margin-bottom: 1.5rem">
-          <h2>2. Naturaleza de la Preventa</h2>
-          <p>[Escribir condiciones de compra de preventa y plazos de stock]</p>
-        </section>
+        <!-- SECCIÓN 1 -->
+        <section class="legal-section">
+          <h2 class="legal-section-h2">1. Políticas de Devolución, Reembolso y Preventa</h2>
 
-        <section style="margin-bottom: 1.5rem">
-          <h2>3. Tiempos de Entrega</h2>
+          <h3 class="legal-section-h3">1.1. Condiciones Generales del Modelo de Preventa (Early Access)</h3>
           <p>
-            [Escribir fecha de inicio de despacho comprometida con el cliente]
+            Al realizar una compra en la modalidad de <strong>Preventa</strong> en el sitio web de Lynto, el usuario acepta que está adquiriendo un producto en etapa de producción final. Las fechas estimadas de despacho para las órdenes de preventa se informarán explícitamente en la pantalla de pago y mediante correo electrónico de confirmación.
+          </p>
+          <ul>
+            <li>Las unidades reservadas garantizan el precio preferencial de lanzamiento y el acceso al Kit VIP (según disponibilidad de cupos).</li>
+            <li>Lynto mantendrá informado al cliente sobre el estado de producción, envasado y logística mediante notificaciones periódicas por correo electrónico.</li>
+          </ul>
+
+          <h3 class="legal-section-h3">1.2. Derecho de Retracto y Cancelaciones</h3>
+          <p>
+            De conformidad con la <strong>Ley N° 19.496</strong> sobre Protección de los Derechos de los Consumidores en Chile, el cliente tiene derecho a retractarse de la compra efectuada durante la fase de preventa antes de que el producto sea despachado.
+          </p>
+          <div class="alert-box-purple">
+            <p>
+              📧 <strong>¿Cómo solicitar una cancelación?</strong> Para solicitar la cancelación de una orden de preventa antes de su envío, el cliente debe escribir a nuestro canal oficial de soporte (<strong>contacto@lynto.cl</strong>) indicando su número de pedido. El reembolso total del dinero se procesará en un plazo de 5 a 7 días hábiles a través de la misma pasarela de pago utilizada (Flow / Mercado Pago).
+            </p>
+          </div>
+
+          <h3 class="legal-section-h3">1.3. Devoluciones y Cambios Post-Entrega (Garantía Sanitaria)</h3>
+          <p>
+            Por tratarse de un suplemento alimentario de consumo humano, y en resguardo de la seguridad sanitaria y bioseguridad de nuestros usuarios:
+          </p>
+          <ul>
+            <li><strong>Productos Abiertos:</strong> No se aceptarán devoluciones ni cambios de cajas o doypacks cuyos sellos de seguridad hayan sido violados, abiertos o manipulados tras la entrega.</li>
+            <li><strong>Fallas de Origen o Envíos Erróneos:</strong> Si el producto llega con desperfectos en el sellado de origen, empaque dañado por la empresa de transportes, o un contenido distinto al solicitado, el cliente deberá notificarlo dentro de los primeros 5 días hábiles posteriores a la recepción con evidencia fotográfica. En estos casos, Lynto asumirá el costo total del retiro y envío de un nuevo producto en óptimas condiciones.</li>
+          </ul>
+        </section>
+
+        <!-- SECCIÓN 2 -->
+        <section class="legal-section">
+          <h2 class="legal-section-h2">2. Términos y Condiciones de Uso</h2>
+
+          <h3 class="legal-section-h3">2.1. Titularidad del Sitio Web</h3>
+          <p>
+            El presente sitio web es propiedad y está operado por <strong>Lynto SpA</strong> (en adelante, "Lynto"). Al navegar o comprar en este sitio, el usuario acepta los presentes Términos y Condiciones en su totalidad.
+          </p>
+
+          <h3 class="legal-section-h3">2.2. Propiedad Intelectual</h3>
+          <p>
+            Todos los contenidos, marcas comerciales, logotipos, formulaciones descritas, diseños gráficos, fotografías, código fuente y textos presentes en este sitio son propiedad exclusiva de Lynto SpA y están protegidos por las leyes de propiedad intelectual e industrial de Chile e internacionales. Queda prohibida su reproducción parcial o total sin autorización expresa por escrito.
+          </p>
+
+          <h3 class="legal-section-h3">2.3. Seguridad en los Pagos</h3>
+          <p>
+            Lynto no almacena ni procesa directamente los datos de tarjetas de crédito o débito de los usuarios. Las transacciones financieras se realizan de manera 100% segura mediante pasarelas de pago certificadas (Flow / Mercado Pago) bajo protocolos de encriptación SSL.
           </p>
         </section>
 
-        <section style="margin-bottom: 1.5rem">
-          <h2>4. Medios de Pago y Seguridad</h2>
+        <!-- SECCIÓN 3 -->
+        <section class="legal-section">
+          <h2 class="legal-section-h2">3. Disclaimer y Advertencia Legal Obligatoria (MINSAL)</h2>
+
+          <h3 class="legal-section-h3">3.1. Naturaleza del Producto</h3>
           <p>
-            [Escribir información sobre Flow.cl y seguridad en transacciones]
+            <strong>Lynto - Iron Girl</strong> es un suplemento alimentario formulado a base de minerales esenciales y vitaminas, diseñado para complementar la ingesta dietaria de personas sanas. No es un medicamento ni un fármaco.
+          </p>
+
+          <h3 class="legal-section-h3">3.2. Texto Legal Obligatorio (Reglamento Sanitario de los Alimentos - RSA)</h3>
+          <div class="alert-box">
+            <p>
+              ⚠️ <strong>SUPLEMENTO ALIMENTARIO:</strong> "Su uso no es recomendable para consumo por menores de 8 años, embarazadas y nodrizas, salvo indicación profesional competente y no reemplaza a una alimentación balanceada."
+            </p>
+          </div>
+
+          <h3 class="legal-section-h3">3.3. Alcance de la Información</h3>
+          <p>
+            La información, contenidos educativos sobre biohacking, nutrición y divulgación científica presentes en este sitio web tienen fines meramente informativos y no constituyen diagnóstico, tratamiento o recomendación médica. Ante cualquier condición médica preexistente, se recomienda consultar a un profesional de la salud.
           </p>
         </section>
+      </article>
+    </main>
 
-        <section style="margin-bottom: 1.5rem">
-          <h2>5. Limitaciones de Responsabilidad e Ingesta</h2>
-          <p>
-            [Escribir disclaimer legal obligatorio sobre suplemento alimenticio]
-          </p>
-        </section>
-
-        <section style="margin-bottom: 1.5rem">
-          <h2>6. Derecho a Retracto</h2>
-          <p>[Escribir políticas de reembolso y cancelación de la reserva]</p>
-        </section>
+    <!-- Footer Oficial -->
+    <footer class="footer">
+      <div class="footer-container">
+        <p class="footer-copy">&copy; 2026 Lynto SpA. Todos los derechos reservados. | Soporte: <a href="mailto:contacto@lynto.cl">contacto@lynto.cl</a> | <a href="./terminos.html">Términos</a> | <a href="./privacidad.html">Privacidad</a></p>
       </div>
-    </div>
+    </footer>
+
+    <script src="./assets/js/app.js?v=1.8"></script>
   </body>
 </html>
