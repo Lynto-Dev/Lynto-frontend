@@ -47,10 +47,14 @@
           <a href="#nosotras">Nosotras</a>
           <a href="#comunidad">Early Adopters</a>
           <a href="#faq">Preguntas</a>
-          <a href="#comprar" class="btn btn-nav btn-primary">Reservar Preventa ⚡</a>
+          <a href="#comprar" class="btn btn-nav-cta">
+            <span>Reservar Preventa ⚡</span>
+          </a>
         </nav>
       </div>
-       <main class="main-wrapper">
+    </header>
+
+    <main class="main-wrapper">
       <!-- Sección Hero Principal -->
       <section class="section hero-section" id="hero">
         <div class="container hero-container">
@@ -69,12 +73,12 @@
             <span class="trust-badge">🔬 RESPALDO FARMACÉUTICO</span>
           </div>
 
-          <div class="hero-actions" style="margin-top: 2rem;">
-            <a href="#comprar" class="btn btn-primary btn-large">
+          <div class="hero-actions" style="margin-top: 2.25rem;">
+            <a href="#comprar" class="btn-hero-primary">
               <span>Quiero mi Iron Girl en Preventa ⚡</span>
             </a>
-            <a href="#producto" class="btn btn-ghost">
-              <span>Conoce la ciencia detrás</span>
+            <a href="#producto" class="btn-hero-secondary">
+              <span>Conoce la ciencia detrás 🔬</span>
             </a>
           </div>
         </div>
@@ -132,17 +136,17 @@
           </p>
 
           <div class="table-wrapper" style="margin-top: 2rem;">
-            <div id="nutrition-table-head" class="table-header-bar" title="Haz clic para contraer o desplegar la tabla">
+            <div id="nutrition-table-head" class="table-header-bar" title="Haz clic para desplegar o contraer la tabla">
               <div class="table-toggle-content">
                 <span class="table-toggle-title">📋 Ficha de Composición Nutricional</span>
                 <span class="table-toggle-badge">
-                  <span id="table-toggle-text">Haz clic para contraer</span>
-                  <span id="table-toggle-icon" class="table-toggle-icon">▲</span>
+                  <span id="table-toggle-text">Haz clic para desplegar</span>
+                  <span id="table-toggle-icon" class="table-toggle-icon rotated">▲</span>
                 </span>
               </div>
             </div>
 
-            <div id="table-collapsible-body" class="table-collapsible-body">
+            <div id="table-collapsible-body" class="table-collapsible-body collapsed">
               <table class="nutrition-table">
                 <thead>
                   <tr class="table-subhead">
@@ -257,12 +261,12 @@
       <!-- Sección Checkout (Reserva Preventa) -->
       <section class="section checkout-section" id="comprar">
         <div class="container">
-          <div class="section-header text-center">
+          <div class="section-header text-center" style="margin-bottom: 1.25rem;">
             <h2>Reservar Iron Girl en Preventa</h2>
             <p class="section-subtext">Reserva tu lote de Iron Girl con precio preferencial y envío prioritario a todo Chile.</p>
           </div>
 
-          <div class="checkout-container-centered" style="max-width: 680px; margin: 0 auto;">
+          <div class="checkout-container-centered" style="max-width: 740px; margin: 0 auto;">
             <!-- Formulario de Compra -->
             <div class="form-card">
               <form id="checkout-form">
@@ -272,51 +276,51 @@
                   <span id="error-text">Ocurrió un error.</span>
                 </div>
 
-                <!-- Banner Premium de Despacho & Garantía -->
-                <div class="info-card-premium">
-                  <div class="info-premium-header">
-                    <span class="info-premium-badge">🚚 Despacho Certificado</span>
-                    <h4 class="info-premium-title">Envíos a todo Chile vía Blue Express</h4>
+                <!-- Banner Premium de Despacho & Garantía Flow -->
+                <div class="trust-banner-checkout">
+                  <div class="trust-pill">
+                    <div class="trust-icon-box">🚚</div>
+                    <div class="trust-text">
+                      <strong>Envíos a todo Chile</strong>
+                      <span>Vía Blue Express con seguimiento</span>
+                    </div>
                   </div>
-                  <div class="guarantees-grid">
-                    <div class="guarantee-pill">
-                      <span class="pill-icon">🔒</span>
-                      <span>Pago 100% Cifrado por Flow</span>
-                    </div>
-                    <div class="guarantee-pill">
-                      <span class="pill-icon">📦</span>
-                      <span>Despacho Prioritario de Preventa</span>
-                    </div>
-                    <div class="guarantee-pill">
-                      <span class="pill-icon">📬</span>
-                      <span>Seguimiento en Vivo por Email</span>
+                  <div class="trust-pill">
+                    <div class="trust-icon-box">🔒</div>
+                    <div class="trust-text">
+                      <strong>Pago 100% Cifrado</strong>
+                      <span>Transacción segura por Flow</span>
                     </div>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="nombre">Nombre Completo *</label>
-                  <input
-                    type="text"
-                    id="nombre"
-                    required
-                    placeholder="Nombre y Apellido"
-                    class="form-control"
-                  />
+                <!-- Fila 1: Nombre + RUT -->
+                <div class="grid-2-form">
+                  <div class="form-group">
+                    <label for="nombre">Nombre Completo *</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      required
+                      placeholder="Nombre y Apellido"
+                      class="form-control"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="rut">RUT *</label>
+                    <input
+                      type="text"
+                      id="rut"
+                      required
+                      placeholder="12.345.678-9"
+                      class="form-control"
+                    />
+                  </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="rut">RUT *</label>
-                  <input
-                    type="text"
-                    id="rut"
-                    required
-                    placeholder="12.345.678-9"
-                    class="form-control"
-                  />
-                </div>
-
-                <div class="grid-2-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <!-- Fila 2: Email + Teléfono -->
+                <div class="grid-2-form">
                   <div class="form-group">
                     <label for="email">Correo Electrónico *</label>
                     <input
@@ -340,7 +344,8 @@
                   </div>
                 </div>
 
-                <div class="grid-2-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <!-- Fila 3: Región + Comuna -->
+                <div class="grid-2-form">
                   <div class="form-group">
                     <label for="region">Región de Despacho *</label>
                     <select id="region" required class="form-control">
@@ -376,7 +381,8 @@
                   </div>
                 </div>
 
-                <div class="form-group">
+                <!-- Fila 4: Dirección Completa -->
+                <div class="form-group" style="margin-bottom: 1.25rem;">
                   <label for="direccion">Dirección Completa (Calle, Número, Dpto) *</label>
                   <input
                     type="text"
@@ -387,7 +393,7 @@
                   />
                 </div>
 
-                <button type="button" id="btn-abrir-resumen" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.75rem;">
+                <button type="button" id="btn-abrir-resumen" class="btn btn-primary btn-block btn-lg">
                   <span>Continuar al Resumen y Pago ➔</span>
                 </button>
               </form>
