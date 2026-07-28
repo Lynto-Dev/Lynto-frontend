@@ -767,6 +767,128 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // --- GALERÍA DE PRODUCTO INTERACTIVA Y LIGHTBOX (#producto) ---
+  const mainProductImg = document.getElementById("main-product-img");
+  const mainProductBadge = document.getElementById("main-product-badge");
+  const thumbBtns = document.querySelectorAll(".thumb-btn");
+  const openLightboxTrigger = document.getElementById("open-lightbox-trigger");
+  const modalLightbox = document.getElementById("modal-lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const btnCerrarLightbox = document.getElementById("btn-cerrar-lightbox");
+  const lightboxPrev = document.getElementById("lightbox-prev");
+  const lightboxNext = document.getElementById("lightbox-next");
+
+  const galleryItems = [
+    { src: "./assets/img/img_producto/img1.PNG", badge: "⚡ Matriz Biotecnológica Mineral" },
+    { src: "./assets/img/img_producto/img2.PNG", badge: "🥤 15 Sachets • Frambuesa Limón" },
+    { src: "./assets/img/img_producto/img3.PNG", badge: "✨ Comunidad VIP Lynto" },
+    { src: "./assets/img/img_producto/img4.PNG", badge: "🌿 Formato Sachet Portable" }
+  ];
+
+  let currentGalleryIndex = 0;
+
+  const actualizarLightboxIndex = (index) => {
+    currentGalleryIndex = (index + galleryItems.length) % galleryItems.length;
+    const item = galleryItems[currentGalleryIndex];
+
+    if (lightboxImg) {
+      lightboxImg.style.opacity = "0.3";
+      setTimeout(() => {
+        lightboxImg.src = item.src;
+        if (lightboxCaption) {
+          lightboxCaption.innerText = item.badge;
+        }
+        lightboxImg.style.opacity = "1";
+      }, 120);
+    }
+
+    if (mainProductImg) mainProductImg.src = item.src;
+    if (mainProductBadge) mainProductBadge.innerText = item.badge;
+    thumbBtns.forEach((b, idx) => {
+      b.classList.toggle("active", idx === currentGalleryIndex);
+    });
+  };
+
+  if (mainProductImg && thumbBtns.length > 0) {
+    thumbBtns.forEach((btn, index) => {
+      btn.addEventListener("click", () => {
+        actualizarLightboxIndex(index);
+      });
+    });
+  }
+
+  const abrirLightbox = () => {
+    if (modalLightbox && lightboxImg && mainProductImg) {
+      const currentSrc = mainProductImg.getAttribute("src");
+      const foundIdx = galleryItems.findIndex((item) => item.src === currentSrc);
+      currentGalleryIndex = foundIdx !== -1 ? foundIdx : 0;
+
+      lightboxImg.src = galleryItems[currentGalleryIndex].src;
+      if (lightboxCaption) {
+        lightboxCaption.innerText = galleryItems[currentGalleryIndex].badge;
+      }
+      modalLightbox.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const cerrarLightbox = () => {
+    if (modalLightbox) {
+      modalLightbox.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+  };
+
+  if (openLightboxTrigger) {
+    openLightboxTrigger.addEventListener("click", abrirLightbox);
+  }
+
+  const btnZoomIcon = document.getElementById("btn-zoom-icon");
+  if (btnZoomIcon) {
+    btnZoomIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      abrirLightbox();
+    });
+  }
+
+  if (btnCerrarLightbox) {
+    btnCerrarLightbox.addEventListener("click", cerrarLightbox);
+  }
+
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener("click", (e) => {
+      e.stopPropagation();
+      actualizarLightboxIndex(currentGalleryIndex - 1);
+    });
+  }
+
+  if (lightboxNext) {
+    lightboxNext.addEventListener("click", (e) => {
+      e.stopPropagation();
+      actualizarLightboxIndex(currentGalleryIndex + 1);
+    });
+  }
+
+  if (modalLightbox) {
+    modalLightbox.addEventListener("click", (e) => {
+      if (e.target === modalLightbox) {
+        cerrarLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!modalLightbox.classList.contains("hidden")) {
+        if (e.key === "Escape") {
+          cerrarLightbox();
+        } else if (e.key === "ArrowLeft") {
+          actualizarLightboxIndex(currentGalleryIndex - 1);
+        } else if (e.key === "ArrowRight") {
+          actualizarLightboxIndex(currentGalleryIndex + 1);
+        }
+      }
+    });
+  }
   // --- CARGA DINÁMICA DESDE GOOGLE SHEETS (get_config) ---
   const cargarConfiguracion = async () => {
     try {
