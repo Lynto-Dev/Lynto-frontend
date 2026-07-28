@@ -1,72 +1,201 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lynto | Política de Privacidad</title>
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Lynto | Política de Privacidad de Datos</title>
+    <meta name="description" content="Política de Privacidad y Protección de Datos Personales de Lynto SpA (Ley N° 19.628)." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://lynto.cl/privacidad.html" />
+
+    <!-- Favicon Oficial -->
+    <link rel="icon" type="image/png" href="./assets/img/Isotipo morado sin fondo.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/css/style.css?v=1.6" />
+    <style>
+      body {
+        background-color: var(--bg-main, #faf7f2);
+        color: var(--text-main, #2d2638);
+      }
+
+      .legal-container {
+        max-width: 920px;
+        margin: 5.5rem auto 4rem;
+        padding: 0 1.25rem;
+      }
+
+      .legal-card {
+        background: #ffffff;
+        border: 1.5px solid var(--border-color, #e8dfd1);
+        border-radius: 16px;
+        padding: 2.5rem 2.25rem;
+        box-shadow: 0 10px 30px rgba(82, 13, 133, 0.05);
+      }
+
+      @media (max-width: 640px) {
+        .legal-card {
+          padding: 1.5rem 1.25rem;
+        }
+      }
+
+      .legal-title {
+        font-family: var(--font-heading), 'Outfit', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--brand-purple-deep, #520d85);
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.025em;
+        line-height: 1.2;
+      }
+
+      .legal-subtitle {
+        font-size: 0.95rem;
+        color: var(--text-muted, #6d627a);
+        margin-bottom: 2rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1.5px solid var(--border-color, #e8dfd1);
+      }
+
+      .legal-section {
+        margin-bottom: 2.5rem;
+      }
+
+      .legal-section-h2 {
+        font-family: var(--font-heading), 'Outfit', sans-serif;
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: var(--brand-purple-deep, #520d85);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .legal-section-h3 {
+        font-family: var(--font-heading), 'Outfit', sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #38085c;
+        margin-top: 1.5rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .legal-card p, .legal-card ul {
+        font-size: 0.96rem;
+        color: #3a3247;
+        margin-bottom: 1rem;
+        line-height: 1.65;
+      }
+
+      .legal-card ul {
+        padding-left: 1.35rem;
+      }
+
+      .legal-card li {
+        margin-bottom: 0.5rem;
+      }
+
+      .alert-box-purple {
+        background: #f6eefc;
+        border-left: 4px solid var(--brand-purple-deep, #520d85);
+        border-radius: 8px;
+        padding: 1.1rem 1.25rem;
+        margin: 1.25rem 0;
+      }
+
+      .alert-box-purple p {
+        margin: 0;
+        font-size: 0.92rem;
+        color: #38085c;
+        font-weight: 500;
+      }
+    </style>
   </head>
   <body>
-    <div
-      class="container"
-      style="
-        max-width: 760px;
-        background: white;
-        border: 1px solid #ddd;
-        padding: 2rem;
-        border-radius: 8px;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-      "
-    >
-      <div
-        class="flex justify-between items-center"
-        style="
-          border-b: 1px solid #eee;
-          padding-bottom: 1rem;
-          margin-bottom: 1.5rem;
-        "
-      >
-        <h1 style="margin: 0">Política de Privacidad</h1>
-        <a
-          href="./index.html"
-          class="btn btn-secondary"
-          style="padding: 0.5rem 1rem; font-size: 0.85rem"
-          >Volver</a
-        >
+    <!-- Navegación Flotante Glassmorphic Identica al Index -->
+    <header class="header">
+      <div class="header-container">
+        <a href="./index.html" class="brand-logo" aria-label="Lynto Inicio">
+          <img src="./assets/img/Isotipo morado sin fondo.png" alt="Lynto Isotipo" class="brand-logo-icon" style="height: 44px; max-height: 44px; width: auto; object-fit: contain;" />
+          <span class="brand-logo-text">Lynto</span>
+        </a>
+        <nav class="nav-links">
+          <a href="./index.html#producto">¿Por qué Iron Girl?</a>
+          <a href="./index.html#nutricion">Tabla Nutricional</a>
+          <a href="./index.html#nosotras">Nosotras</a>
+          <a href="./index.html#comunidad">Early Adopters</a>
+          <a href="./index.html#faq">Preguntas</a>
+          <a href="./index.html#comprar" class="btn btn-nav-cta">
+            <span>Reservar Preventa ⚡</span>
+          </a>
+        </nav>
       </div>
+    </header>
 
-      <div style="font-size: 0.95rem; color: #555">
-        <section style="margin-bottom: 1.5rem">
-          <h2>1. Recolección de Información</h2>
-          <p>[Escribir qué datos personales se recolectan en el checkout]</p>
-        </section>
+    <!-- Contenido Legal -->
+    <main class="legal-container">
+      <article class="legal-card">
+        <h1 class="legal-title">Política de Protección de Datos Personales</h1>
+        <div class="legal-subtitle">
+          De conformidad con la Ley N° 19.628 sobre Protección de la Vida Privada | Lynto SpA
+        </div>
 
-        <section style="margin-bottom: 1.5rem">
-          <h2>2. Uso de los Datos</h2>
-          <p>[Escribir finalidad del almacenamiento de datos personales]</p>
-        </section>
-
-        <section style="margin-bottom: 1.5rem">
-          <h2>3. Almacenamiento Seguro</h2>
+        <section class="legal-section">
+          <h2 class="legal-section-h2">1. Compromiso de Confidencialidad y Privacidad</h2>
           <p>
-            [Escribir sobre la seguridad física/lógica y uso de Google Sheets]
+            De acuerdo con la <strong>Ley N° 19.628 sobre Protección de la Vida Privada en Chile</strong>, Lynto SpA (en adelante, "Lynto") se compromete a resguardar de forma estricta la confidencialidad, integridad y seguridad de los datos personales de todos sus usuarios y clientes.
+          </p>
+
+          <h3 class="legal-section-h3">1.1. Uso y Finalidad de la Información Recolectada</h3>
+          <p>
+            Los datos personales ingresados en el formulario de compra y checkout (nombre, RUT, dirección de despacho, comuna, región, correo electrónico y número telefónico) serán utilizados exclusivamente para los siguientes fines:
+          </p>
+          <ul>
+            <li>Procesar y gestionar el despacho de los productos adquiridos.</li>
+            <li>Emitir la boleta o factura electrónica correspondiente de acuerdo a la normativa del Servicio de Impuestos Internos (SII).</li>
+            <li>Enviar actualizaciones periódicas sobre el estado de la producción y logística de la preventa.</li>
+            <li>Brindar atención al cliente en caso de consultas o requerimientos post-venta.</li>
+          </ul>
+
+          <h3 class="legal-section-h3">1.2. No Traspaso a Terceros</h3>
+          <div class="alert-box-purple">
+            <p>
+              🔒 <strong>Garantía de Privacidad:</strong> Lynto no venderá, alquilará, comercializará ni compartirá los datos personales de sus clientes con terceras partes bajo ninguna circunstancia, salvo con los operadores logísticos y couriers (ej. Blue Express) estrictamente necesarios para concretar la entrega en tu domicilio.
+            </p>
+          </div>
+
+          <h3 class="legal-section-h3">1.3. Suscripción y Preferencias Comunicacionales</h3>
+          <p>
+            Al suscribirte a nuestro boletín de novedades o realizar una preventa, podrías recibir correos con contenido educacional sobre biohacking, nutrición y beneficios exclusivos de la comunidad VIP.
+          </p>
+          <p>
+            El cliente podrá optar por no recibir correos promocionales en cualquier momento haciendo clic en el enlace de cancelación de suscripción ubicado en el pie de página de nuestros emails o escribiendo a <strong>contacto@lynto.cl</strong>.
           </p>
         </section>
 
-        <section style="margin-bottom: 1.5rem">
-          <h2>4. Terceros</h2>
-          <p>[Escribir si se comparten datos con couriers de despacho]</p>
-        </section>
-
-        <section style="margin-bottom: 1.5rem">
-          <h2>5. Derechos ARCO</h2>
+        <section class="legal-section">
+          <h2 class="legal-section-h2">2. Seguridad en las Transacciones Financieras</h2>
           <p>
-            [Escribir cómo el usuario puede solicitar acceso, rectificación,
-            cancelación u oposición]
+            Lynto <strong>no almacena ni procesa directamente los datos de tarjetas de crédito o débito</strong> de los usuarios. Todas las operaciones financieras se canalizan a través de pasarelas de pago oficiales y certificadas en Chile (Flow / Mercado Pago), utilizando protocolos de encriptación y seguridad SSL.
           </p>
         </section>
+      </article>
+    </main>
+
+    <!-- Footer Oficial -->
+    <footer class="footer">
+      <div class="footer-container">
+        <p class="footer-copy">&copy; 2026 Lynto SpA. Todos los derechos reservados. | Soporte: <a href="mailto:contacto@lynto.cl">contacto@lynto.cl</a> | <a href="./terminos.html">Términos</a> | <a href="./privacidad.html">Privacidad</a></p>
       </div>
-    </div>
+    </footer>
+
+    <script src="./assets/js/app.js?v=1.8"></script>
   </body>
 </html>
