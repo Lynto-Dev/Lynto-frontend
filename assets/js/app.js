@@ -889,6 +889,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // --- ACORDEÓN INTERACTIVO DE PREGUNTAS FRECUENTES (FAQ) ---
+  const faqHeaders = document.querySelectorAll(".faq-accordion-header");
+  faqHeaders.forEach((header) => {
+    header.addEventListener("click", () => {
+      const accordionBody = header.nextElementSibling;
+      const isOpen = header.classList.contains("active");
+
+      // Cerrar otros acordeones si están abiertos para mantener pulcritud
+      faqHeaders.forEach((otherHeader) => {
+        if (otherHeader !== header) {
+          otherHeader.classList.remove("active");
+          otherHeader.setAttribute("aria-expanded", "false");
+          if (otherHeader.nextElementSibling) {
+            otherHeader.nextElementSibling.classList.add("collapsed");
+          }
+        }
+      });
+
+      if (isOpen) {
+        header.classList.remove("active");
+        header.setAttribute("aria-expanded", "false");
+        if (accordionBody) accordionBody.classList.add("collapsed");
+      } else {
+        header.classList.add("active");
+        header.setAttribute("aria-expanded", "true");
+        if (accordionBody) accordionBody.classList.remove("collapsed");
+      }
+    });
+  });
   // --- CARGA DINÁMICA DESDE GOOGLE SHEETS (get_config) ---
   const cargarConfiguracion = async () => {
     try {
