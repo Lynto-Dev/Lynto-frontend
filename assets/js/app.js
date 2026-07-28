@@ -88,10 +88,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Recalcular descuento del cupón proporcionalmente a la cantidad actual
     let descuentoTotal = 0;
     if (cuponAplicadoExitoso) {
-      if (porcentajeDescuentoCupon > 0) {
+      if (descuentoPorUnidadCupon > 0) {
+        descuentoTotal = descuentoPorUnidadCupon * cant;
+      } else if (porcentajeDescuentoCupon === 15) {
+        descuentoTotal = 3000 * cant;
+      } else if (porcentajeDescuentoCupon > 0) {
         descuentoTotal = Math.round((subtotal * porcentajeDescuentoCupon) / 100);
       } else {
-        descuentoTotal = (descuentoPorUnidadCupon || 3000) * cant;
+        descuentoTotal = 3000 * cant;
       }
       ultimoDescuentoCupon = descuentoTotal;
       if (rowDescuento) rowDescuento.classList.remove("hidden");
@@ -159,14 +163,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const resData = await response.json();
         if (resData.success && resData.data && resData.data.valido) {
           esValido = true;
-          porcentajeDescuentoCupon = Number(resData.data.porcentaje) || 0;
-          if (porcentajeDescuentoCupon === 15) {
-            descuentoPorUnidadCupon = 3000; // $19.990 - $3.000 = $16.990 exactos
+          const backendDescuentoMonto = Number(resData.data.descuentoMonto) || Number(resData.data.descuento) || 0;
+          porcentajeDescuentoCupon = Number(resData.data.porcentajeEquivalente || resData.data.porcentaje) || 0;
+
+          if (backendDescuentoMonto > 0) {
+            descuentoPorUnidadCupon = Math.round(backendDescuentoMonto / cant);
+          } else if (porcentajeDescuentoCupon === 15) {
+            descuentoPorUnidadCupon = 3000;
           } else if (porcentajeDescuentoCupon > 0) {
             descuentoPorUnidadCupon = Math.round((PRODUCT_PRICE * porcentajeDescuentoCupon) / 100);
           } else {
-            descuentoPorUnidadCupon = Number(resData.data.descuentoUnidad) || Math.round(Number(resData.data.descuento) / cant) || 3000;
+            descuentoPorUnidadCupon = 3000;
           }
+
           montoDescuento = descuentoPorUnidadCupon * cant;
           mensajeRespuesta = resData.data.mensaje || "¡Cupón válido y aplicado!";
         } else if (resData.data && resData.data.mensaje) {
