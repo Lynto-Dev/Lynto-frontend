@@ -239,12 +239,12 @@ a:hover {
   font-weight: 800 !important;
   letter-spacing: -0.01em;
   border-radius: 50px;
-  border: 1.5px solid #fde778;
-  box-shadow: 0 4px 16px rgba(129, 28, 196, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(129, 28, 196, 0.32);
   text-decoration: none;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-nav-cta::before {
@@ -262,8 +262,8 @@ a:hover {
 .btn-nav-cta:hover {
   transform: translateY(-2px) scale(1.04);
   background: linear-gradient(135deg, #9929e4 0%, #630fa0 100%);
-  box-shadow: 0 8px 24px rgba(132, 31, 201, 0.5), 0 0 16px rgba(253, 231, 120, 0.45);
-  border-color: #ffffff;
+  box-shadow: 0 8px 24px rgba(132, 31, 201, 0.45);
+  border-color: rgba(255, 255, 255, 0.8);
   color: #ffffff !important;
 }
 
@@ -448,12 +448,100 @@ a:hover {
   line-height: 1.6;
 }
 
+/* Botones CTA Destacados Hero */
 .hero-actions {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.25rem;
   flex-wrap: wrap;
+  margin-top: 2.25rem;
+}
+
+.btn-hero-primary {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 1.05rem 2.2rem;
+  background: linear-gradient(135deg, #8a1fd8 0%, #540ca0 100%);
+  color: #ffffff !important;
+  font-family: 'Plus Jakarta Sans', var(--font-heading), sans-serif !important;
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.015em;
+  border-radius: 50px;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(138, 31, 216, 0.38);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-hero-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
+}
+
+.btn-hero-primary:hover {
+  transform: translateY(-3px) scale(1.04);
+  background: linear-gradient(135deg, #9d2bf3 0%, #640ebf 100%);
+  box-shadow: 0 14px 34px rgba(138, 31, 216, 0.5);
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #ffffff !important;
+}
+
+.btn-hero-primary:hover::before {
+  left: 140%;
+}
+
+.btn-hero-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 4px 12px rgba(138, 31, 216, 0.3);
+}
+
+.btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.05rem 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--brand-purple-deep) !important;
+  font-family: 'Plus Jakarta Sans', var(--font-heading), sans-serif !important;
+  font-size: 1.02rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+  border-radius: 50px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 4px 14px rgba(122, 31, 184, 0.08);
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-hero-secondary:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: var(--brand-purple-light);
+  border-color: var(--brand-purple);
+  color: var(--brand-purple-deep) !important;
+  box-shadow: 0 8px 24px rgba(122, 31, 184, 0.18);
+}
+
+.btn-hero-secondary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 /* Micropuntos & Trust Badges Hero */
@@ -539,11 +627,15 @@ a:hover {
   background: linear-gradient(135deg, var(--brand-purple-light) 0%, var(--brand-purple-soft) 100%);
   padding: 1rem 1.25rem;
   border-bottom: 2px solid var(--border-color);
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-bottom 0.2s ease;
 }
 
 .table-header-bar:hover {
   background: var(--brand-purple-light);
+}
+
+.table-wrapper:has(.table-collapsible-body.collapsed) .table-header-bar {
+  border-bottom: none;
 }
 
 .table-toggle-content {
