@@ -542,7 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cerrarModalNewsletter = () => {
     if (modalNewsletter) {
       modalNewsletter.classList.add("hidden");
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
       sessionStorage.setItem("lynto_newsletter_dismissed", "true");
     }
   };
@@ -569,9 +569,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const modalResumenEl = document.getElementById("modal-resumen");
         const estaResumenAbierto = modalResumenEl && !modalResumenEl.classList.contains("hidden");
 
-        if (!estaResumenAbierto) {
+        if (!estaResumenAbierto && modalNewsletter.classList.contains("hidden")) {
           modalNewsletter.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
         }
       }, 700);
     }
@@ -701,7 +700,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- CONTROL PLEGABLE DE LA TABLA NUTRICIONAL CON ANIMACIÓN ---
+  // --- CONTROL DE LA TABLA NUTRICIONAL ---
   const nutritionHead = document.getElementById("nutrition-table-head");
   const tableCollapsibleBody = document.getElementById("table-collapsible-body");
   const tableToggleIcon = document.getElementById("table-toggle-icon");
@@ -716,6 +715,48 @@ document.addEventListener("DOMContentLoaded", () => {
       if (tableToggleText) {
         tableToggleText.innerText = isCollapsed ? "Haz clic para desplegar" : "Haz clic para contraer";
       }
+    });
+  }
+
+  // --- NAVBAR INTELIGENTE (Smart Sticky: Ocultar al bajar, Mostrar al subir) ---
+  const headerElement = document.querySelector(".header");
+  let lastScrollTop = 0;
+
+  if (headerElement) {
+    window.addEventListener(
+      "scroll",
+      () => {
+        const st = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Activar sombra y fondo refinado si hay scroll
+        if (st > 20) {
+          headerElement.classList.add("nav-scrolled");
+        } else {
+          headerElement.classList.remove("nav-scrolled");
+        }
+
+        // Lógica de mostrar/ocultar
+        if (st <= 70) {
+          headerElement.classList.remove("nav-hidden");
+        } else if (st > lastScrollTop && st > 100) {
+          // Scroll hacia abajo -> Ocultar navbar
+          headerElement.classList.add("nav-hidden");
+        } else if (st < lastScrollTop) {
+          // Scroll hacia arriba -> Mostrar navbar
+          headerElement.classList.remove("nav-hidden");
+        }
+
+        lastScrollTop = st <= 0 ? 0 : st;
+      },
+      { passive: true }
+    );
+
+    // Al hacer clic en enlaces de navegación, mantener la barra visible
+    const navAnchors = document.querySelectorAll(".nav-links a");
+    navAnchors.forEach((anchor) => {
+      anchor.addEventListener("click", () => {
+        headerElement.classList.remove("nav-hidden");
+      });
     });
   }
 
