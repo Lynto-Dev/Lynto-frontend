@@ -311,6 +311,17 @@ a:hover {
   transform: translateY(0);
 }
 
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  background: #a497b3 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-color: transparent !important;
+}
+
 .btn-ghost {
   background-color: var(--brand-white);
   color: var(--brand-purple-deep);

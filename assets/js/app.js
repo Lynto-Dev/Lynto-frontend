@@ -76,6 +76,150 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAplicarCupon = document.getElementById("btn-aplicar-cupon");
   const cuponStatusMsg = document.getElementById("cupon-status-msg");
 
+  const aceptoTerminosCheckbox = document.getElementById("acepto-terminos");
+  const btnConfirmarPagoFlow = document.getElementById("btn-confirmar-pago-flow");
+
+  // --- MAPA DE COMUNAS POR REGIÓN EN CHILE ---
+  const COMUNAS_POR_REGION = {
+    "Región Metropolitana": [
+      "Alhué", "Buin", "Calera de Tango", "Cerrillos", "Cerro Navia", "Colina", "Conchalí", "Curacaví",
+      "El Bosque", "El Monte", "Estación Central", "Huechuraba", "Independencia", "Isla de Maipo",
+      "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Lampa", "Las Condes",
+      "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "María Pinto", "Melipilla", "Ñuñoa",
+      "Padre Hurtado", "Paine", "Pedro Aguirre Cerda", "Peñaflor", "Peñalolén", "Pirque", "Providencia",
+      "Pudahuel", "Puente Alto", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Bernardo",
+      "San Joaquín", "San José de Maipo", "San Miguel", "San Pedro", "San Ramón", "Santiago", "Talagante",
+      "Tiltil", "Vitacura"
+    ],
+    "Región de Valparaíso": [
+      "Algarrobo", "Cabildo", "Calera", "Calle Larga", "Cartagena", "Casablanca", "Catemu", "Concón",
+      "El Quisco", "El Tabo", "Hijuelas", "Isla de Pascua", "Juan Fernández", "La Cruz", "La Ligua",
+      "Limache", "Llaillay", "Los Andes", "Nogales", "Olmué", "Panquehue", "Papudo", "Petorca",
+      "Puchuncaví", "Putaendo", "Quillota", "Quilpué", "Quintero", "Rinconada", "San Antonio",
+      "San Esteban", "San Felipe", "Santa María", "Santo Domingo", "Valparaíso", "Villa Alemana",
+      "Viña del Mar", "Zapallar"
+    ],
+    "Región del Biobío": [
+      "Alto Biobío", "Antuco", "Arauco", "Cabrero", "Cañete", "Chiguayante", "Concepción", "Contulmo",
+      "Coronel", "Curanilahue", "Florida", "Hualpén", "Hualqui", "Laja", "Lebu", "Los Álamos",
+      "Los Ángeles", "Mulchén", "Nacimiento", "Negrete", "Penco", "Quilaco", "Quilleco", "San Pedro de la Paz",
+      "San Rosendo", "Santa Bárbara", "Santa Juana", "Talcahuano", "Tirúa", "Tomé", "Tucapel", "Yumbel"
+    ],
+    "Región de La Araucanía": [
+      "Angol", "Carahue", "Cholchol", "Collipulli", "Cunco", "Curacautín", "Curarrehue", "Ercilla",
+      "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Lonquimay", "Los Sauces", "Lumaco",
+      "Melipeuco", "Nueva Imperial", "Padre Las Casas", "Perquenco", "Pitrufquén", "Pucón", "Purén",
+      "Renaico", "Saavedra", "Temuco", "Teodoro Schmidt", "Toltén", "Traiguén", "Victoria", "Vilcún", "Villarrica"
+    ],
+    "Región de Antofagasta": [
+      "Antofagasta", "Calama", "María Elena", "Mejillones", "Ollagüe", "San Pedro de Atacama",
+      "Sierra Gorda", "Taltal", "Tocopilla"
+    ],
+    "Región de Coquimbo": [
+      "Andacollo", "Canela", "Combarbalá", "Coquimbo", "Illapel", "La Higuera", "La Serena", "Los Vilos",
+      "Monte Patria", "Ovalle", "Paiguano", "Punitaqui", "Río Hurtado", "Salamanca", "Vicuña"
+    ],
+    "Región del Maule": [
+      "Cauquenes", "Chanco", "Colbún", "Constitución", "Curepto", "Empedrado", "Hualañé", "Licantén",
+      "Linares", "Longaví", "Maule", "Molina", "Parral", "Pelarco", "Pelluhue", "Pencahue", "Rauco",
+      "Retiro", "Río Claro", "Romeral", "Sagrada Familia", "San Clemente", "San Javier", "San Rafael",
+      "Talca", "Teno", "Vichuquén", "Villa Alegre", "Yerbas Buenas"
+    ],
+    "Región de O'Higgins": [
+      "Chépica", "Chimbarongo", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "La Estrella",
+      "Las Cabras", "Litueche", "Machalí", "Malloa", "Marchihue", "Mostazal", "Nancagua", "Navidad",
+      "Olivar", "Palmilla", "Paredones", "Peralillo", "Peumo", "Pichidegua", "Pichilemu", "Placilla",
+      "Pumanque", "Quinta de Tilcoco", "Rancagua", "Rengo", "Requínoa", "San Fernando", "San Francisco de Mostazal",
+      "San Vicente", "Santa Cruz"
+    ],
+    "Región de Los Lagos": [
+      "Ancud", "Calbuco", "Castro", "Chaitén", "Chonchi", "Cochamó", "Curaco de Vélez", "Dalcahue",
+      "Fresia", "Frutillar", "Futaleufú", "Hualaihué", "Llanquihue", "Los Muermos", "Maullín",
+      "Osorno", "Palena", "Puerto Montt", "Puerto Octay", "Puerto Varas", "Puqueldón", "Purranque",
+      "Puyehue", "Queilén", "Quellón", "Quemchi", "Quinchao", "Río Negro", "San Juan de la Costa", "San Pablo"
+    ],
+    "Región de Tarapacá": [
+      "Alto Hospicio", "Camiña", "Colchane", "Huara", "Iquique", "Pica", "Pozo Almonte"
+    ],
+    "Región de Atacama": [
+      "Alto del Carmen", "Caldera", "Chañaral", "Copiapó", "Diego de Almagro", "Freirina", "Huasco",
+      "Tierra Amarilla", "Vallenar"
+    ],
+    "Región de Ñuble": [
+      "Bulnes", "Chillán", "Chillán Viejo", "Cobquecura", "Coelemu", "Coihueco", "El Carmen", "Ninhue",
+      "Ñiquén", "Pemuco", "Pinto", "Portezuelo", "Quillón", "Quirihue", "Ranquil", "San Carlos",
+      "San Fabián", "San Ignacio", "San Nicolás", "Treguaco", "Yungay"
+    ],
+    "Región de Los Ríos": [
+      "Corral", "Futrono", "La Unión", "Lago Ranco", "Lanco", "Los Lagos", "Máfil", "Mariquina",
+      "Paillaco", "Panguipulli", "Río Bueno", "Valdivia"
+    ],
+    "Región de Arica y Parinacota": [
+      "Arica", "Camarones", "General Lagos", "Putre"
+    ],
+    "Región de Aysén": [
+      "Aysén", "Chile Chico", "Cisnes", "Cochrane", "Coyhaique", "Guaitecas", "Lago Verde",
+      "O'Higgins", "Río Ibáñez", "Tortel"
+    ],
+    "Región de Magallanes": [
+      "Antártica", "Cabo de Hornos", "Laguna Blanca", "Natales", "Porvenir", "Primavera",
+      "Punta Arenas", "Río Verde", "San Gregorio", "Timaukel", "Torres del Paine"
+    ]
+  };
+
+  const actualizarComunas = () => {
+    if (!regionSelect || !comunaInput) return;
+    const regionSeleccionada = regionSelect.value;
+    const comunas = COMUNAS_POR_REGION[regionSeleccionada] || [];
+
+    comunaInput.innerHTML = "";
+
+    if (comunas.length > 0) {
+      comunaInput.disabled = false;
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "";
+      defaultOpt.disabled = true;
+      defaultOpt.selected = true;
+      defaultOpt.textContent = "Selecciona tu comuna...";
+      comunaInput.appendChild(defaultOpt);
+
+      comunas.forEach((comuna) => {
+        const opt = document.createElement("option");
+        opt.value = comuna;
+        opt.textContent = comuna;
+        comunaInput.appendChild(opt);
+      });
+    } else {
+      comunaInput.disabled = true;
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "";
+      defaultOpt.disabled = true;
+      defaultOpt.selected = true;
+      defaultOpt.textContent = "Selecciona primero una región...";
+      comunaInput.appendChild(defaultOpt);
+    }
+  };
+
+  if (regionSelect) {
+    regionSelect.addEventListener("change", () => {
+      actualizarComunas();
+    });
+  }
+
+  // Inicializar comunas al cargar
+  actualizarComunas();
+
+  // Control habilitación botón de pago según casilla de términos
+  const actualizarEstadoBotonPago = () => {
+    if (btnConfirmarPagoFlow) {
+      btnConfirmarPagoFlow.disabled = !(aceptoTerminosCheckbox && aceptoTerminosCheckbox.checked);
+    }
+  };
+
+  if (aceptoTerminosCheckbox) {
+    aceptoTerminosCheckbox.addEventListener("change", actualizarEstadoBotonPago);
+  }
+
   const actualizarVisualizacionPrecio = () => {
     const cant = parseInt(cantidadInput.value, 10) || 1;
     if (displayCantidad) displayCantidad.innerText = cant;
@@ -256,27 +400,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const abrirModalResumen = () => {
     ocultarError();
 
+    const nombre = nombreInput ? nombreInput.value.trim() : "";
+    const rut = rutInput ? rutInput.value.trim() : "";
+    const email = emailInput ? emailInput.value.trim() : "";
+    const telefonoEl = document.getElementById("telefono");
+    const telefono = telefonoEl ? telefonoEl.value.trim() : "";
+    const region = regionSelect ? regionSelect.value : "";
+    const comuna = comunaInput ? comunaInput.value : "";
+    const direccion = direccionInput ? direccionInput.value.trim() : "";
+
+    if (!nombre) return mostrarError("Por favor, ingresa tu nombre completo.");
+    if (!rut) return mostrarError("Por favor, ingresa tu RUT.");
+    if (!validarRut(rut)) return mostrarError("El RUT ingresado no es válido. Formato esperado: 12.345.678-9");
+    if (!email) return mostrarError("Por favor, ingresa tu correo electrónico.");
+    if (!validarEmail(email)) return mostrarError("Por favor, ingresa un correo electrónico válido.");
+    if (!telefono) return mostrarError("Por favor, ingresa tu teléfono celular.");
+    if (!region) return mostrarError("Por favor, selecciona tu región de despacho.");
+    if (!comuna) return mostrarError("Por favor, selecciona tu comuna.");
+    if (!direccion) return mostrarError("Por favor, ingresa tu dirección completa de despacho.");
+
     if (!form.checkValidity()) {
       form.reportValidity();
       mostrarError("Por favor completa todos los campos obligatorios (*) antes de continuar.");
       return;
     }
 
-    const rut = rutInput ? rutInput.value.trim() : "";
-    if (!validarRut(rut)) {
-      mostrarError("El RUT ingresado no es válido. Formato esperado: 12.345.678-9");
-      return;
-    }
+    if (modalUserName) modalUserName.innerText = sanitizeInput(nombre);
+    if (modalUserAddress) modalUserAddress.innerText = `${sanitizeInput(direccion)}, ${sanitizeInput(comuna)}`;
+    if (modalUserRegion) modalUserRegion.innerText = sanitizeInput(region);
 
-    const email = emailInput ? emailInput.value.trim() : "";
-    if (!validarEmail(email)) {
-      mostrarError("Por favor, ingresa un correo electrónico válido.");
-      return;
-    }
-
-    if (modalUserName) modalUserName.innerText = sanitizeInput(nombreInput.value.trim());
-    if (modalUserAddress) modalUserAddress.innerText = `${sanitizeInput(direccionInput.value.trim())}, ${sanitizeInput(comunaInput.value.trim())}`;
-    if (modalUserRegion) modalUserRegion.innerText = sanitizeInput(regionSelect.value);
+    // Reiniciar estado de casilla de términos al abrir el modal
+    if (aceptoTerminosCheckbox) aceptoTerminosCheckbox.checked = false;
+    actualizarEstadoBotonPago();
 
     actualizarVisualizacionPrecio();
 
@@ -458,7 +613,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (!comuna) {
-        return mostrarError("Por favor, ingresa tu comuna.");
+        return mostrarError("Por favor, selecciona tu comuna.");
       }
 
       if (!direccion)
@@ -466,6 +621,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isNaN(cantidad) || cantidad <= 0) {
         return mostrarError("Cantidad inválida.");
+      }
+
+      if (!aceptoTerminosCheckbox || !aceptoTerminosCheckbox.checked) {
+        return mostrarError("Debes aceptar los términos y condiciones de preventa para poder realizar el pago.");
       }
 
       // 1. Cerrar el modal de resumen para mostrar limpiamente la tarjeta de carga
