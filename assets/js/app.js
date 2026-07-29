@@ -1436,7 +1436,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // 3. Inyección dinámica de textos configurables
+      // Control de Ventas Pausadas / Tienda Cerrada
+      const pausarVentasVal = configMap["pausarventas"] || configMap["cerrartienda"] || configMap["tiendacerrada"];
+      if (pausarVentasVal) {
+        const strPausar = String(pausarVentasVal).trim().toLowerCase();
+        if (strPausar === "true" || strPausar === "verdadero" || strPausar === "1") {
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span>🔒 Ventas Pausadas Temporalmente</span>`;
+            submitBtn.style.opacity = "0.6";
+            submitBtn.style.cursor = "not-allowed";
+          }
+        }
+      }
+
+      // 3. Inyección dinámica de textos e imágenes configurables
       const heroTituloEl = document.getElementById("hero-titulo");
       const heroTituloVal = configMap["titulositio"] || configMap["herotitulo"] || configMap["titulo"];
       if (heroTituloEl && heroTituloVal) heroTituloEl.innerText = heroTituloVal;
@@ -1461,6 +1475,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const disclaimerVal = configMap["disclaimerlegal"] || configMap["disclaimer"];
       if (disclaimerEl && disclaimerVal) disclaimerEl.innerText = disclaimerVal;
 
+      const resolucionEl = document.getElementById("resolucion-sanitaria");
+      const resolucionVal = configMap["resolucionsanitaria"];
+      if (resolucionEl && resolucionVal) resolucionEl.innerText = resolucionVal;
+
+      const saborEl = document.getElementById("sabor-modo-uso");
+      const saborVal = configMap["sabormodouso"];
+      if (saborEl && saborVal) saborEl.innerText = saborVal;
+
+      const fotoHeroEl = document.getElementById("main-product-img");
+      const fotoHeroVal = configMap["fotoherourl"] || configMap["fotoproducto"];
+      if (fotoHeroEl && fotoHeroVal) fotoHeroEl.src = fotoHeroVal;
+
       // 4. Tabla Nutricional (#tabla-nutricion-body)
       const tablaBody = document.getElementById("tabla-nutricion-body");
       if (tablaBody && Array.isArray(nutricion) && nutricion.length > 0) {
@@ -1477,6 +1503,35 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${ddr}</td>
           `;
           tablaBody.appendChild(tr);
+        });
+      }
+
+      // 5. Preguntas Frecuentes Dinámicas desde Pestaña FAQ
+      const faqWrapper = document.querySelector(".faq-accordion-wrapper");
+      const faqList = dataPayload.faq || resData.faq || [];
+      if (faqWrapper && Array.isArray(faqList) && faqList.length > 0) {
+        faqWrapper.innerHTML = "";
+        faqList.forEach((faqItem, idx) => {
+          const preg = faqItem.pregunta || faqItem[0] || "";
+          const resp = faqItem.respuesta || faqItem[1] || "";
+          const isFirst = idx === 0 ? "open" : "";
+
+          if (preg && resp) {
+            const detailsEl = document.createElement("details");
+            detailsEl.className = "faq-accordion-item";
+            if (isFirst) detailsEl.setAttribute("open", "");
+
+            detailsEl.innerHTML = `
+              <summary class="faq-accordion-header">
+                <span>${preg}</span>
+                <span class="faq-accordion-icon">▼</span>
+              </summary>
+              <div class="faq-accordion-body">
+                <p>${resp}</p>
+              </div>
+            `;
+            faqWrapper.appendChild(detailsEl);
+          }
         });
       }
 
