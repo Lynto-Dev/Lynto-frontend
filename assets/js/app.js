@@ -366,22 +366,35 @@ document.addEventListener("DOMContentLoaded", () => {
     if (displayTotal) displayTotal.innerText = `$${totalFinal.toLocaleString("es-CL")} CLP`;
   };
 
+  const mostrarAlertaCupon = (mensaje, tipo) => {
+    const alertContainer = document.getElementById("alerta-cupon") || document.getElementById("cupon-status-msg");
+    if (!alertContainer) return;
+
+    if (!mensaje) {
+      alertContainer.style.display = "none";
+      alertContainer.innerText = "";
+      alertContainer.className = "alert";
+      return;
+    }
+
+    alertContainer.innerText = mensaje;
+    alertContainer.className = `alert alert-${tipo}`;
+    alertContainer.style.display = "block";
+  };
+
   const aplicarCupon = async () => {
     const codigoCupon = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
+    const rutCliente = rutInput ? rutInput.value.trim() : "";
     const cant = parseInt(cantidadInput.value, 10) || 1;
     const subtotal = PRODUCT_PRICE * cant;
-
-    let badgeCupon = document.getElementById("badge-cupon-aplicado");
 
     if (!codigoCupon) {
       cuponAplicadoExitoso = false;
       ultimoDescuentoCupon = 0;
+      descuentoPorUnidadCupon = 0;
+      porcentajeDescuentoCupon = 0;
       actualizarVisualizacionPrecio();
-      if (badgeCupon) badgeCupon.remove();
-      if (cuponStatusMsg) {
-        cuponStatusMsg.innerText = "";
-        cuponStatusMsg.classList.add("hidden");
-      }
+      mostrarAlertaCupon("Por favor ingresa un código de cupón.", "warning");
       return;
     }
 
@@ -395,78 +408,69 @@ document.addEventListener("DOMContentLoaded", () => {
       let montoDescuento = 0;
       let mensajeRespuesta = "";
 
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            action: "validar_cupon",
-            cupon: codigoCupon,
-            subtotal: subtotal,
-          }),
-        });
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "validar_cupon",
+          cupon: codigoCupon,
+          subtotal: subtotal,
+          rut: rutCliente,
+        }),
+      });
 
-        const resData = await response.json();
-        if (resData.success && resData.data && resData.data.valido) {
-          esValido = true;
-          const backendDescuentoMonto = Number(resData.data.descuentoMonto) || Number(resData.data.descuento) || 0;
-          porcentajeDescuentoCupon = Number(resData.data.porcentajeEquivalente || resData.data.porcentaje) || 0;
+      const resData = await response.json();
 
-          if (backendDescuentoMonto > 0) {
-            descuentoPorUnidadCupon = Math.round(backendDescuentoMonto / cant);
-          } else if (porcentajeDescuentoCupon === 15) {
-            descuentoPorUnidadCupon = 3000;
-          } else if (porcentajeDescuentoCupon > 0) {
-            descuentoPorUnidadCupon = Math.round((PRODUCT_PRICE * porcentajeDescuentoCupon) / 100);
-          } else {
-            descuentoPorUnidadCupon = 3000;
-          }
-
-          montoDescuento = descuentoPorUnidadCupon * cant;
-          mensajeRespuesta = resData.data.mensaje || "¡Cupón válido y aplicado!";
-        } else if (resData.data && resData.data.mensaje) {
-          mensajeRespuesta = resData.data.mensaje;
-        }
-      } catch (e) {
-        console.warn("Validando cupón por regla local (fallback):", e.message);
-      }
-
-      if (
-        !esValido &&
-        (codigoCupon === "PREVENTA" ||
-          codigoCupon === "PREVENTA15" ||
-          codigoCupon === "LYNTO15")
-      ) {
+      if (resData.success && resData.data && resData.data.valido) {
         esValido = true;
-        descuentoPorUnidadCupon = 3000;
-        porcentajeDescuentoCupon = 0;
-        montoDescuento = 3000 * cant;
-        mensajeRespuesta = "¡Cupón de Preventa aplicado con éxito!";
+        const backendDescuentoMonto = Number(resData.data.descuentoMonto) || Number(resData.data.descuento) || 0;
+        porcentajeDescuentoCupon = Number(resData.data.porcentajeEquivalente || resData.data.porcentaje) || 0;
+
+        if (backendDescuentoMonto > 0) {
+          descuentoPorUnidadCupon = Math.round(backendDescuentoMonto / cant);
+        } else if (porcentajeDescuentoCupon === 15) {
+          descuentoPorUnidadCupon = 3000;
+        } else if (porcentajeDescuentoCupon > 0) {
+          descuentoPorUnidadCupon = Math.round((PRODUCT_PRICE * porcentajeDescuentoCupon) / 100);
+        } else {
+          descuentoPorUnidadCupon = 3000;
+        }
+
+        montoDescuento = descuentoPorUnidadCupon * cant;
+        mensajeRespuesta = resData.data.mensaje || resData.message || "Cupón aplicado con éxito.";
+      } else {
+        mensajeRespuesta = resData.message || (resData.data && resData.data.mensaje) || `El cupón "${codigoCupon}" no se puede aplicar.`;
       }
 
       if (esValido) {
         cuponAplicadoExitoso = true;
         ultimoDescuentoCupon = montoDescuento;
         actualizarVisualizacionPrecio();
-
-        if (cuponStatusMsg) {
-          cuponStatusMsg.innerText = `✓ ${mensajeRespuesta}`;
-          cuponStatusMsg.style.color = "#2e7d32";
-          cuponStatusMsg.classList.remove("hidden");
-        }
+        mostrarAlertaCupon(mensajeRespuesta, "success");
       } else {
         cuponAplicadoExitoso = false;
         ultimoDescuentoCupon = 0;
         descuentoPorUnidadCupon = 0;
         porcentajeDescuentoCupon = 0;
         actualizarVisualizacionPrecio();
-
-        if (cuponStatusMsg) {
-          cuponStatusMsg.innerText =
-            mensajeRespuesta || `❌ Cupón "${codigoCupon}" no válido o inactivo.`;
-          cuponStatusMsg.style.color = "#c62828";
-          cuponStatusMsg.classList.remove("hidden");
-        }
+        mostrarAlertaCupon(mensajeRespuesta, "error");
+      }
+    } catch (err) {
+      console.error("Error al conectar con la API de cupones:", err);
+      if (codigoCupon === "PREVENTA" || codigoCupon === "PREVENTA15" || codigoCupon === "LYNTO15") {
+        cuponAplicadoExitoso = true;
+        descuentoPorUnidadCupon = 3000;
+        porcentajeDescuentoCupon = 0;
+        ultimoDescuentoCupon = 3000 * cant;
+        actualizarVisualizacionPrecio();
+        mostrarAlertaCupon("Cupón PREVENTA aplicado con éxito (Descuento especial).", "success");
+      } else {
+        cuponAplicadoExitoso = false;
+        ultimoDescuentoCupon = 0;
+        descuentoPorUnidadCupon = 0;
+        porcentajeDescuentoCupon = 0;
+        actualizarVisualizacionPrecio();
+        mostrarAlertaCupon("No se pudo verificar el cupón en este momento. Inténtalo de nuevo.", "error");
       }
     } finally {
       if (btnAplicarCupon) {
@@ -485,7 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cuponAplicadoExitoso = false;
       ultimoDescuentoCupon = 0;
       actualizarVisualizacionPrecio();
-      if (cuponStatusMsg) cuponStatusMsg.classList.add("hidden");
+      mostrarAlertaCupon("", "none");
     });
 
     // Al presionar Enter dentro del campo de cupón, ejecutar "Aplicar" en lugar de enviar la compra
