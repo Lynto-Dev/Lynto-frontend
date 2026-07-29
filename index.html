@@ -737,20 +737,18 @@
         <div class="footer-newsletter-box" id="footer-newsletter">
           <div class="footer-newsletter-text">
             <h4>✨ Únete al Club Lynto</h4>
-            <p>Recibe ofertas de preventa, lanzamientos y guías de salud en tu correo.</p>
+            <p>Recibe ofertas de preventa, lanzamientos exclusivos y $3.000 CLP de descuento en tu primera compra.</p>
           </div>
-          <form id="newsletter-form" class="footer-newsletter-form">
-            <input
-              type="email"
-              id="newsletter-email"
-              required
-              placeholder="Tu correo electrónico"
-              class="form-control footer-newsletter-input"
-            />
-            <button type="submit" id="btn-newsletter" class="btn btn-primary footer-newsletter-btn">
-              <span>Suscribirme ⚡</span>
-            </button>
-          </form>
+          <button type="button" id="btn-abrir-modal-vip" class="btn btn-primary footer-vip-cta-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 12v10H4V12"></path>
+              <path d="M22 7H2v5h20V7z"></path>
+              <path d="M12 22V7"></path>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+            </svg>
+            <span>Suscribirme al CLUB LynTo</span>
+          </button>
         </div>
         <div id="newsletter-msg" class="newsletter-message hidden" style="margin-bottom: 1.25rem;"></div>
 
@@ -791,11 +789,9 @@
               <button type="submit" id="btn-modal-newsletter" class="btn btn-primary btn-block">
                 <span>Quiero mis Beneficios ⚡</span>
               </button>
-              <div id="modal-newsletter-msg" class="newsletter-message hidden" style="margin-top: 0.75rem;"></div>
             </form>
-            <button type="button" id="btn-skip-modal-newsletter" class="modal-newsletter-skip">
-              No gracias, prefiero navegar primero
-            </button>
+            <!-- Espacio reservado con tamaño fijo para Alertas (Éxito o Error) -->
+            <div id="modal-newsletter-msg" class="modal-newsletter-alert-slot"></div>
           </div>
         </div>
       </div>

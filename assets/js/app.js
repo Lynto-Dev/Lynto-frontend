@@ -865,6 +865,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const btnAbrirModalVip = document.getElementById("btn-abrir-modal-vip");
+  if (btnAbrirModalVip) {
+    btnAbrirModalVip.addEventListener("click", () => {
+      if (modalNewsletterMsg) {
+        modalNewsletterMsg.className = "modal-newsletter-alert-slot";
+        modalNewsletterMsg.innerText = "";
+      }
+      abrirModalNewsletter();
+    });
+  }
+
   if (modalNewsletterForm) {
     modalNewsletterForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -872,17 +883,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!validarEmail(email)) {
         if (modalNewsletterMsg) {
+          modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-error";
           modalNewsletterMsg.innerText = "Por favor, ingresa un correo válido.";
-          modalNewsletterMsg.style.color = "#c62828";
-          modalNewsletterMsg.classList.remove("hidden");
         }
         return;
       }
 
       if (modalNewsletterMsg) {
+        modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-info";
         modalNewsletterMsg.innerText = "Enviando suscripción...";
-        modalNewsletterMsg.style.color = "#555";
-        modalNewsletterMsg.classList.remove("hidden");
       }
 
       try {
@@ -900,30 +909,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const resData = await response.json();
 
-        if (resData.success) {
+        const esYaSuscrito =
+          resData.alreadySubscribed === true ||
+          !resData.success ||
+          (resData.message &&
+            (resData.message.toLowerCase().includes("ya") ||
+              resData.message.toLowerCase().includes("registrado") ||
+              resData.message.toLowerCase().includes("suscrito") ||
+              resData.message.toLowerCase().includes("existe")));
+
+        if (resData.success && !esYaSuscrito) {
+          // ✅ Éxito verdadero (nuevo correo suscrito)
           if (modalNewsletterMsg) {
+            modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-success";
             modalNewsletterMsg.innerText =
               resData.message || "¡Gracias por suscribirte! Revisa tu correo para tu beneficio.";
-            modalNewsletterMsg.style.color = "#2e7d32";
           }
           if (modalNewsletterEmail) modalNewsletterEmail.value = "";
           sessionStorage.setItem("lynto_newsletter_dismissed", "true");
 
           setTimeout(() => {
             cerrarModalNewsletter();
-          }, 1800);
+            if (modalNewsletterMsg) {
+              modalNewsletterMsg.className = "modal-newsletter-alert-slot";
+              modalNewsletterMsg.innerText = "";
+            }
+          }, 2200);
         } else {
+          // ❌ Fallo / Correo ya registrado previamente: Alerta roja y NUNCA cerrar el modal
           if (modalNewsletterMsg) {
+            modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-error";
             modalNewsletterMsg.innerText =
-              resData.message || "No se pudo realizar la suscripción.";
-            modalNewsletterMsg.style.color = "#c62828";
+              resData.message || "Este correo electrónico ya se encuentra suscrito en nuestra comunidad.";
           }
         }
       } catch (err) {
         console.error(err);
         if (modalNewsletterMsg) {
+          modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-error";
           modalNewsletterMsg.innerText = "Error de conexión al suscribirse.";
-          modalNewsletterMsg.style.color = "#c62828";
         }
       }
     });
