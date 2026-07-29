@@ -2274,3 +2274,31 @@ a:hover {
     max-height: 40px !important;
   }
 }
+
+/* Soporte de Deslizamiento (Swipe & Drag Cursor) para Galería */
+.main-image-wrapper {
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.main-image-wrapper:active {
+  cursor: grabbing;
+}
+
+.lightbox-card {
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.lightbox-card:active {
+  cursor: grabbing;
+}
+
+.main-product-img,
+.lightbox-img {
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
