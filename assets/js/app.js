@@ -44,6 +44,90 @@ document.addEventListener("DOMContentLoaded", () => {
   const newsletterEmail = document.getElementById("newsletter-email");
   const newsletterMsg = document.getElementById("newsletter-msg");
 
+  // --- CARRUSEL BANNER ELÉCTRICO DEL HERO ---
+  const heroTrack = document.getElementById("hero-carousel-track");
+  const heroSlides = heroTrack ? heroTrack.querySelectorAll(".hero-carousel-slide") : [];
+  const heroDots = document.querySelectorAll("#hero-carousel-dots .dot");
+  const btnHeroPrev = document.getElementById("hero-carousel-prev");
+  const btnHeroNext = document.getElementById("hero-carousel-next");
+  let currentHeroSlide = 0;
+  let heroTimer = null;
+
+  const showHeroSlide = (index) => {
+    if (!heroSlides.length) return;
+    if (index < 0) currentHeroSlide = heroSlides.length - 1;
+    else if (index >= heroSlides.length) currentHeroSlide = 0;
+    else currentHeroSlide = index;
+
+    heroSlides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === currentHeroSlide);
+    });
+
+    heroDots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentHeroSlide);
+    });
+  };
+
+  const nextHeroSlide = () => showHeroSlide(currentHeroSlide + 1);
+  const prevHeroSlide = () => showHeroSlide(currentHeroSlide - 1);
+
+  const startHeroAutoplay = () => {
+    stopHeroAutoplay();
+    heroTimer = setInterval(nextHeroSlide, 5000);
+  };
+
+  const stopHeroAutoplay = () => {
+    if (heroTimer) clearInterval(heroTimer);
+  };
+
+  if (btnHeroNext) {
+    btnHeroNext.addEventListener("click", () => {
+      nextHeroSlide();
+      startHeroAutoplay();
+    });
+  }
+
+  if (btnHeroPrev) {
+    btnHeroPrev.addEventListener("click", () => {
+      prevHeroSlide();
+      startHeroAutoplay();
+    });
+  }
+
+  heroDots.forEach((dot) => {
+    dot.addEventListener("click", (e) => {
+      const idx = parseInt(e.target.getAttribute("data-index"), 10);
+      if (!isNaN(idx)) {
+        showHeroSlide(idx);
+        startHeroAutoplay();
+      }
+    });
+  });
+
+  // Touch Swipe en el Banner del Hero para Celulares
+  if (heroTrack) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    heroTrack.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    heroTrack.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 40) {
+        nextHeroSlide();
+        startHeroAutoplay();
+      } else if (touchEndX - touchStartX > 40) {
+        prevHeroSlide();
+        startHeroAutoplay();
+      }
+    }, { passive: true });
+
+    // Iniciar autoplay
+    startHeroAutoplay();
+  }
+
   // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
   // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
   let TARIFA_RM = 3500;

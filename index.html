@@ -55,31 +55,82 @@
     </header>
 
     <main class="main-wrapper">
-      <!-- Sección Hero Principal -->
-      <section class="section hero-section" id="hero">
-        <div class="container hero-container">
-          <h1 id="hero-titulo" class="hero-title">
-            Domina el ritmo de lo real. Tu biología en su máximo potencial.
-          </h1>
-          <p id="hero-subtitulo" class="hero-subtitle">
-            El desgaste moderno no se combate con fuerza de voluntad, se resuelve con ciencia. Descubre <strong>Iron Girl</strong>: la primera matriz biotecnológica de minerales esenciales en polvo, diseñada para recuperar tu vitalidad diaria sin pastillas ni molestias.
-          </p>
-
-          <!-- Micropuntos y Badges de Confianza -->
-          <div class="trust-badges">
-            <span class="trust-badge">🌿 LIBRE DE AZÚCAR</span>
-            <span class="trust-badge">⚡ RÁPIDA ABSORCIÓN</span>
-            <span class="trust-badge">🥤 FORMATO SACHET</span>
-            <span class="trust-badge">🔬 RESPALDO FARMACÉUTICO</span>
+      <!-- Sección Hero Principal con Carrusel Eléctrico Morado (Ajustado a Tamaño de Pantalla) -->
+      <section class="section-hero-electric" id="hero">
+        <div class="hero-carousel-container">
+          <!-- Carrusel de Banners Eléctricos de Fondo con Producto a la Derecha -->
+          <div class="hero-carousel-track" id="hero-carousel-track">
+            <div class="hero-carousel-slide active">
+              <img src="./assets/img/hero_slide_1.jpg" alt="Lynto Iron Girl Suplemento Biotecnológico Reserva Ahora" class="hero-banner-img" />
+              <div class="hero-banner-overlay"></div>
+            </div>
+            <div class="hero-carousel-slide">
+              <img src="./assets/img/hero_slide_2.jpg" alt="Iron Girl Biohacking Nutricional" class="hero-banner-img" />
+              <div class="hero-banner-overlay"></div>
+            </div>
+            <div class="hero-carousel-slide">
+              <img src="./assets/img/hero_slide_3.jpg" alt="Iron Girl Sachets Matriz Mineral" class="hero-banner-img" />
+              <div class="hero-banner-overlay"></div>
+            </div>
           </div>
 
-          <div class="hero-actions" style="margin-top: 2.25rem;">
-            <a href="#comprar" class="btn-hero-primary">
-              <span>Quiero mi Iron Girl en Preventa ⚡</span>
-            </a>
-            <a href="#producto" class="btn-hero-secondary">
-              <span>Conoce la ciencia detrás 🔬</span>
-            </a>
+          <!-- Flechas de Control del Carrusel -->
+          <button type="button" id="hero-carousel-prev" class="hero-carousel-arrow prev" aria-label="Banner anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" id="hero-carousel-next" class="hero-carousel-arrow next" aria-label="Siguiente banner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Indicadores (Puntos) del Carrusel -->
+          <div class="hero-carousel-dots" id="hero-carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+          </div>
+
+          <!-- Contenido del Hero (Distribución Split Responsiva) -->
+          <div class="container hero-content-wrapper">
+            <!-- Columna Izquierda: Tarjeta Eléctrica Morada con Título, Tags y Botón de Ciencia -->
+            <div class="hero-electric-card">
+              <!-- Tag Superior -->
+              <div class="hero-badge-electric">
+                <span class="hero-badge-glow-dot"></span>
+                <span>⚡ Preventa Oficial Iron Girl - Despacho a todo Chile</span>
+              </div>
+
+              <!-- Título Destacado Eléctrico -->
+              <h1 id="hero-titulo" class="hero-title-electric">
+                Domina el ritmo de lo real.<br />
+                <span class="hero-title-highlight">Tu biología en su máximo potencial.</span>
+              </h1>
+
+              <!-- Badges de Confianza / Tags -->
+              <div class="trust-badges-electric">
+                <span class="trust-badge-electric">🌿 LIBRE DE AZÚCAR</span>
+                <span class="trust-badge-electric">⚡ RÁPIDA ABSORCIÓN</span>
+                <span class="trust-badge-electric">🥤 FORMATO SACHET</span>
+                <span class="trust-badge-electric">🔬 RESPALDO FARMACÉUTICO</span>
+              </div>
+
+              <!-- Botones de Acción Estilo Eléctrico (En la misma línea) -->
+              <div class="hero-actions-electric">
+                <a href="#comprar" class="btn-hero-electric-primary">
+                  <span>Quiero mi Iron Girl en Preventa ⚡</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+                <a href="#producto" class="btn-hero-electric-secondary">
+                  <span>Conoce la ciencia detrás 🔬</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
