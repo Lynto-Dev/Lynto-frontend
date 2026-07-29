@@ -209,6 +209,108 @@ document.addEventListener("DOMContentLoaded", () => {
   // Inicializar comunas al cargar
   actualizarComunas();
 
+  // --- FORMATEADOR Y PREFIJO INTERNACIONAL DE TELÉFONO ---
+  const prefijoPaisSelect = document.getElementById("prefijo-pais");
+  const telefonoInput = document.getElementById("telefono");
+
+  const PHONE_FORMATS = {
+    "+56": { placeholder: "9 1234 5678", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 1) return digits;
+      if (digits.length <= 5) return `${digits.slice(0, 1)} ${digits.slice(1)}`;
+      return `${digits.slice(0, 1)} ${digits.slice(1, 5)} ${digits.slice(5, 9)}`;
+    }},
+    "+54": { placeholder: "9 11 1234 5678", maxDigits: 11, format: (digits) => {
+      if (digits.length <= 1) return digits;
+      if (digits.length <= 3) return `${digits.slice(0, 1)} ${digits.slice(1)}`;
+      if (digits.length <= 7) return `${digits.slice(0, 1)} ${digits.slice(1, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 1)} ${digits.slice(1, 3)} ${digits.slice(3, 7)} ${digits.slice(7, 11)}`;
+    }},
+    "+51": { placeholder: "912 345 678", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)}`;
+    }},
+    "+57": { placeholder: "300 123 4567", maxDigits: 10, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 10)}`;
+    }},
+    "+52": { placeholder: "55 1234 5678", maxDigits: 10, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 6)} ${digits.slice(6, 10)}`;
+    }},
+    "+1": { placeholder: "(555) 000-0000", maxDigits: 10, format: (digits) => {
+      if (digits.length <= 3) return digits.length > 0 ? `(${digits}` : "";
+      if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+    }},
+    "+34": { placeholder: "612 345 678", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)}`;
+    }},
+    "+55": { placeholder: "11 91234-5678", maxDigits: 11, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 7) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+    }},
+    "+598": { placeholder: "99 123 456", maxDigits: 8, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 5) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)}`;
+    }},
+    "+595": { placeholder: "981 123 456", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)}`;
+    }},
+    "+593": { placeholder: "99 123 4567", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 5) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 9)}`;
+    }},
+    "+591": { placeholder: "7123 4567", maxDigits: 8, format: (digits) => {
+      if (digits.length <= 4) return digits;
+      return `${digits.slice(0, 4)} ${digits.slice(4, 8)}`;
+    }}
+  };
+
+  const formatearTelefono = () => {
+    if (!telefonoInput) return;
+    const prefijo = prefijoPaisSelect ? prefijoPaisSelect.value : "+56";
+    const config = PHONE_FORMATS[prefijo] || PHONE_FORMATS["+56"];
+
+    let rawDigits = telefonoInput.value.replace(/\D/g, "");
+    if (rawDigits.length > config.maxDigits) {
+      rawDigits = rawDigits.slice(0, config.maxDigits);
+    }
+
+    telefonoInput.value = config.format(rawDigits);
+  };
+
+  const actualizarPlaceholderTelefono = () => {
+    if (!prefijoPaisSelect || !telefonoInput) return;
+    const prefijo = prefijoPaisSelect.value;
+    const config = PHONE_FORMATS[prefijo] || PHONE_FORMATS["+56"];
+    telefonoInput.placeholder = config.placeholder;
+    formatearTelefono();
+  };
+
+  if (prefijoPaisSelect) {
+    prefijoPaisSelect.addEventListener("change", actualizarPlaceholderTelefono);
+  }
+
+  if (telefonoInput) {
+    telefonoInput.addEventListener("input", formatearTelefono);
+  }
+
+  const obtenerTelefonoCompleto = () => {
+    const prefijo = prefijoPaisSelect ? prefijoPaisSelect.value : "+56";
+    const num = telefonoInput ? telefonoInput.value.trim() : "";
+    return num ? `${prefijo} ${num}` : "";
+  };
+
   // Control habilitación botón de pago según casilla de términos
   const actualizarEstadoBotonPago = () => {
     if (btnConfirmarPagoFlow) {
@@ -415,6 +517,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!email) return mostrarError("Por favor, ingresa tu correo electrónico.");
     if (!validarEmail(email)) return mostrarError("Por favor, ingresa un correo electrónico válido.");
     if (!telefono) return mostrarError("Por favor, ingresa tu teléfono celular.");
+
+    const prefijo = prefijoPaisSelect ? prefijoPaisSelect.value : "+56";
+    const config = PHONE_FORMATS[prefijo] || PHONE_FORMATS["+56"];
+    const rawDigits = telefono.replace(/\D/g, "");
+    if (rawDigits.length < Math.min(7, config.maxDigits - 1)) {
+      return mostrarError(`Por favor, ingresa un teléfono válido para ${prefijo} (Ej: ${config.placeholder}).`);
+    }
+
     if (!region) return mostrarError("Por favor, selecciona tu región de despacho.");
     if (!comuna) return mostrarError("Por favor, selecciona tu comuna.");
     if (!direccion) return mostrarError("Por favor, ingresa tu dirección completa de despacho.");
@@ -584,7 +694,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const comunaEl = document.getElementById("comuna");
       const cuponEl = document.getElementById("cupon");
 
-      const telefono = sanitizeInput(telefonoEl ? telefonoEl.value.trim() : "");
+      const telefono = sanitizeInput(obtenerTelefonoCompleto());
       const region = sanitizeInput(regionEl ? regionEl.value.trim() : "");
       const comuna = sanitizeInput(comunaEl ? comunaEl.value.trim() : "");
       const cupon = sanitizeInput(cuponEl ? cuponEl.value.trim().toUpperCase() : "");
