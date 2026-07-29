@@ -869,7 +869,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnAbrirModalVip) {
     btnAbrirModalVip.addEventListener("click", () => {
       if (modalNewsletterMsg) {
-        modalNewsletterMsg.classList.add("hidden");
+        modalNewsletterMsg.className = "modal-newsletter-alert-slot";
+        modalNewsletterMsg.innerText = "";
       }
       abrirModalNewsletter();
     });
@@ -882,21 +883,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!validarEmail(email)) {
         if (modalNewsletterMsg) {
+          modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-error";
           modalNewsletterMsg.innerText = "Por favor, ingresa un correo válido.";
-          modalNewsletterMsg.style.color = "#9f1239";
-          modalNewsletterMsg.style.backgroundColor = "#fff1f2";
-          modalNewsletterMsg.style.borderColor = "#fecdd3";
-          modalNewsletterMsg.classList.remove("hidden");
         }
         return;
       }
 
       if (modalNewsletterMsg) {
+        modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-info";
         modalNewsletterMsg.innerText = "Enviando suscripción...";
-        modalNewsletterMsg.style.color = "#475569";
-        modalNewsletterMsg.style.backgroundColor = "#f8fafc";
-        modalNewsletterMsg.style.borderColor = "#cbd5e1";
-        modalNewsletterMsg.classList.remove("hidden");
       }
 
       try {
@@ -926,38 +921,33 @@ document.addEventListener("DOMContentLoaded", () => {
         if (resData.success && !esYaSuscrito) {
           // ✅ Éxito verdadero (nuevo correo suscrito)
           if (modalNewsletterMsg) {
+            modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-success";
             modalNewsletterMsg.innerText =
               resData.message || "¡Gracias por suscribirte! Revisa tu correo para tu beneficio.";
-            modalNewsletterMsg.style.color = "#065f46";
-            modalNewsletterMsg.style.backgroundColor = "#ecfdf5";
-            modalNewsletterMsg.style.borderColor = "#a7f3d0";
-            modalNewsletterMsg.classList.remove("hidden");
           }
           if (modalNewsletterEmail) modalNewsletterEmail.value = "";
           sessionStorage.setItem("lynto_newsletter_dismissed", "true");
 
           setTimeout(() => {
             cerrarModalNewsletter();
+            if (modalNewsletterMsg) {
+              modalNewsletterMsg.className = "modal-newsletter-alert-slot";
+              modalNewsletterMsg.innerText = "";
+            }
           }, 2200);
         } else {
           // ❌ Fallo / Correo ya registrado previamente: Alerta roja y NUNCA cerrar el modal
           if (modalNewsletterMsg) {
+            modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-error";
             modalNewsletterMsg.innerText =
               resData.message || "Este correo electrónico ya se encuentra suscrito en nuestra comunidad.";
-            modalNewsletterMsg.style.color = "#9f1239";
-            modalNewsletterMsg.style.backgroundColor = "#fff1f2";
-            modalNewsletterMsg.style.borderColor = "#fecdd3";
-            modalNewsletterMsg.classList.remove("hidden");
           }
         }
       } catch (err) {
         console.error(err);
         if (modalNewsletterMsg) {
+          modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-error";
           modalNewsletterMsg.innerText = "Error de conexión al suscribirse.";
-          modalNewsletterMsg.style.color = "#9f1239";
-          modalNewsletterMsg.style.backgroundColor = "#fff1f2";
-          modalNewsletterMsg.style.borderColor = "#fecdd3";
-          modalNewsletterMsg.classList.remove("hidden");
         }
       }
     });
