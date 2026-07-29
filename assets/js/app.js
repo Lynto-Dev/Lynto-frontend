@@ -515,23 +515,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const comuna = comunaInput ? comunaInput.value : "";
     const direccion = direccionInput ? direccionInput.value.trim() : "";
 
-    if (!nombre) return mostrarError("Por favor, ingresa tu nombre completo.");
-    if (!rut) return mostrarError("Por favor, ingresa tu RUT.");
-    if (!validarRut(rut)) return mostrarError("El RUT ingresado no es válido. Formato esperado: 12.345.678-9");
-    if (!email) return mostrarError("Por favor, ingresa tu correo electrónico.");
-    if (!validarEmail(email)) return mostrarError("Por favor, ingresa un correo electrónico válido.");
-    if (!telefono) return mostrarError("Por favor, ingresa tu teléfono celular.");
+    if (!nombre) return mostrarError("Por favor, ingresa tu nombre completo.", nombreInput);
+    if (!rut) return mostrarError("Por favor, ingresa tu RUT.", rutInput);
+    if (!validarRut(rut)) return mostrarError("El RUT ingresado no es válido. Formato esperado: 12.345.678-9", rutInput);
+    if (!email) return mostrarError("Por favor, ingresa tu correo electrónico.", emailInput);
+    if (!validarEmail(email)) return mostrarError("Por favor, ingresa un correo electrónico válido.", emailInput);
+    if (!telefono) return mostrarError("Por favor, ingresa tu teléfono celular.", telefonoEl);
 
     const prefijo = prefijoPaisSelect ? prefijoPaisSelect.value : "+56";
     const config = PHONE_FORMATS[prefijo] || PHONE_FORMATS["+56"];
     const rawDigits = telefono.replace(/\D/g, "");
     if (rawDigits.length < Math.min(7, config.maxDigits - 1)) {
-      return mostrarError(`Por favor, ingresa un teléfono válido para ${prefijo} (Ej: ${config.placeholder}).`);
+      return mostrarError(`Por favor, ingresa un teléfono válido para ${prefijo} (Ej: ${config.placeholder}).`, telefonoEl);
     }
 
-    if (!region) return mostrarError("Por favor, selecciona tu región de despacho.");
-    if (!comuna) return mostrarError("Por favor, selecciona tu comuna.");
-    if (!direccion) return mostrarError("Por favor, ingresa tu dirección completa de despacho.");
+    if (!region) return mostrarError("Por favor, selecciona tu región de despacho.", regionSelect);
+    if (!comuna) return mostrarError("Por favor, selecciona tu comuna.", comunaInput);
+    if (!direccion) return mostrarError("Por favor, ingresa tu dirección completa de despacho.", direccionInput);
 
     if (!form.checkValidity()) {
       form.reportValidity();
@@ -658,16 +658,30 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- MENSAJES DE ERROR EN UI ---
-  const mostrarError = (msg) => {
+  const mostrarError = (msg, targetInput = null) => {
     if (errorText && errorAlert) {
       errorText.innerText = msg;
       errorAlert.classList.remove("hidden");
+      errorAlert.style.display = "flex";
       errorAlert.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      alert(msg);
+    }
+
+    if (targetInput) {
+      targetInput.classList.add("input-error");
+      targetInput.focus();
+      setTimeout(() => {
+        targetInput.classList.remove("input-error");
+      }, 4000);
     }
   };
 
   const ocultarError = () => {
-    if (errorAlert) errorAlert.classList.add("hidden");
+    if (errorAlert) {
+      errorAlert.classList.add("hidden");
+      errorAlert.style.display = "none";
+    }
   };
 
   // --- SANITIZACIÓN ANTI-XSS ---
@@ -691,7 +705,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const submitBtn = form.querySelector('button[type="submit"]');
 
       const nombre = sanitizeInput(document.getElementById("nombre").value.trim());
-      const rut = sanitizeInput(rutInput.value.trim());
+      const rut = sanitizeInput(rutInput ? rutInput.value.trim() : "");
       const email = emailInput ? emailInput.value.trim().toLowerCase() : "";
       const telefonoEl = document.getElementById("telefono");
       const regionEl = document.getElementById("region");
@@ -703,42 +717,42 @@ document.addEventListener("DOMContentLoaded", () => {
       const comuna = sanitizeInput(comunaEl ? comunaEl.value.trim() : "");
       const cupon = sanitizeInput(cuponEl ? cuponEl.value.trim().toUpperCase() : "");
       const direccion = sanitizeInput(document.getElementById("direccion").value.trim());
-      const cantidad = parseInt(cantidadInput.value, 10);
+      const cantidad = parseInt(cantidadInput ? cantidadInput.value : "1", 10);
 
       if (!nombre)
-        return mostrarError("Por favor, ingresa tu nombre completo.");
+        return mostrarError("Por favor, ingresa tu nombre completo.", document.getElementById("nombre"));
 
       if (!validarRut(rut)) {
-        return mostrarError("El RUT ingresado no es válido. Ej: 12.345.678-9");
+        return mostrarError("El RUT ingresado no es válido. Ej: 12.345.678-9", rutInput);
       }
 
       if (!validarEmail(email)) {
         return mostrarError(
-          "El correo electrónico no tiene un formato válido.",
+          "El correo electrónico no tiene un formato válido.", emailInput
         );
       }
 
       if (!telefono) {
-        return mostrarError("Por favor, ingresa tu teléfono celular para el seguimiento del envío.");
+        return mostrarError("Por favor, ingresa tu teléfono celular para el seguimiento del envío.", telefonoEl);
       }
 
       if (!region) {
-        return mostrarError("Por favor, selecciona tu región de despacho.");
+        return mostrarError("Por favor, selecciona tu región de despacho.", regionEl);
       }
 
       if (!comuna) {
-        return mostrarError("Por favor, selecciona tu comuna.");
+        return mostrarError("Por favor, selecciona tu comuna.", comunaEl);
       }
 
       if (!direccion)
-        return mostrarError("Por favor, ingresa tu dirección completa de despacho.");
+        return mostrarError("Por favor, ingresa tu dirección completa de despacho.", document.getElementById("direccion"));
 
       if (isNaN(cantidad) || cantidad <= 0) {
-        return mostrarError("Cantidad inválida.");
+        return mostrarError("Cantidad inválida.", cantidadInput);
       }
 
       if (!aceptoTerminosCheckbox || !aceptoTerminosCheckbox.checked) {
-        return mostrarError("Debes aceptar los términos y condiciones de preventa para poder realizar el pago.");
+        return mostrarError("Debes aceptar los términos y condiciones de preventa para poder realizar el pago.", aceptoTerminosCheckbox);
       }
 
       // 1. Cerrar el modal de resumen para mostrar limpiamente la tarjeta de carga
