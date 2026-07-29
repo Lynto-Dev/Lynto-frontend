@@ -6,4 +6,4 @@ dist/
 .env.production
 *:Zone.Identifier
 docsteam/Identidad visual-*/
-}vite.config.js
+vite.config.js

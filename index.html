@@ -441,13 +441,9 @@
 
                   <div class="form-group">
                     <label for="comuna">Comuna *</label>
-                    <input
-                      type="text"
-                      id="comuna"
-                      required
-                      placeholder="Ej. Providencia, Las Condes"
-                      class="form-control"
-                    />
+                    <select id="comuna" required class="form-control" disabled>
+                      <option value="" disabled selected>Selecciona primero una región...</option>
+                    </select>
                   </div>
                 </div>
 
@@ -590,7 +586,20 @@
               </div>
             </div>
 
-            <button type="submit" form="checkout-form" id="btn-confirmar-pago-flow" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.5rem;">
+            <!-- Casilla Acepto Términos y Condiciones -->
+            <div class="terms-checkbox-group" style="margin-top: 1.25rem; display: flex; align-items: flex-start; gap: 0.65rem; background: rgba(122, 31, 184, 0.04); padding: 0.85rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <input
+                type="checkbox"
+                id="acepto-terminos"
+                name="acepto-terminos"
+                style="width: 1.2rem; height: 1.2rem; margin-top: 0.15rem; cursor: pointer; accent-color: var(--brand-purple-deep); flex-shrink: 0;"
+              />
+              <label for="acepto-terminos" style="font-size: 0.88rem; color: var(--text-main); cursor: pointer; line-height: 1.4; font-weight: 500;">
+                Acepto los <a href="./terminos.html" target="_blank" rel="noopener noreferrer" style="color: var(--brand-purple-deep); font-weight: 700; text-decoration: underline;">términos y condiciones</a> de la preventa *
+              </label>
+            </div>
+
+            <button type="submit" form="checkout-form" id="btn-confirmar-pago-flow" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.25rem;" disabled>
               <span>Pagar con Flow ⚡</span>
             </button>
 
