@@ -923,6 +923,21 @@ a:hover {
   box-shadow: 0 0 0 4px rgba(220, 161, 255, 0.3);
 }
 
+.phone-input-group {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .phone-input-group #prefijo-pais {
+    min-width: 95px !important;
+    padding-left: 0.45rem !important;
+    padding-right: 0.35rem !important;
+    font-size: 0.88rem !important;
+  }
+}
+
 /* Compact Info Banner in Form */
 .info-card-compact {
   background: var(--brand-purple-soft);
