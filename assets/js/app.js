@@ -865,6 +865,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const btnAbrirModalVip = document.getElementById("btn-abrir-modal-vip");
+  if (btnAbrirModalVip) {
+    btnAbrirModalVip.addEventListener("click", () => {
+      if (modalNewsletterMsg) {
+        modalNewsletterMsg.classList.add("hidden");
+      }
+      abrirModalNewsletter();
+    });
+  }
+
   if (modalNewsletterForm) {
     modalNewsletterForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -873,7 +883,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!validarEmail(email)) {
         if (modalNewsletterMsg) {
           modalNewsletterMsg.innerText = "Por favor, ingresa un correo válido.";
-          modalNewsletterMsg.style.color = "#c62828";
+          modalNewsletterMsg.style.color = "#9f1239";
+          modalNewsletterMsg.style.backgroundColor = "#fff1f2";
+          modalNewsletterMsg.style.borderColor = "#fecdd3";
           modalNewsletterMsg.classList.remove("hidden");
         }
         return;
@@ -881,7 +893,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (modalNewsletterMsg) {
         modalNewsletterMsg.innerText = "Enviando suscripción...";
-        modalNewsletterMsg.style.color = "#555";
+        modalNewsletterMsg.style.color = "#475569";
+        modalNewsletterMsg.style.backgroundColor = "#f8fafc";
+        modalNewsletterMsg.style.borderColor = "#cbd5e1";
         modalNewsletterMsg.classList.remove("hidden");
       }
 
@@ -900,30 +914,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const resData = await response.json();
 
-        if (resData.success) {
+        const esYaSuscrito =
+          resData.alreadySubscribed === true ||
+          !resData.success ||
+          (resData.message &&
+            (resData.message.toLowerCase().includes("ya") ||
+              resData.message.toLowerCase().includes("registrado") ||
+              resData.message.toLowerCase().includes("suscrito") ||
+              resData.message.toLowerCase().includes("existe")));
+
+        if (resData.success && !esYaSuscrito) {
+          // ✅ Éxito verdadero (nuevo correo suscrito)
           if (modalNewsletterMsg) {
             modalNewsletterMsg.innerText =
               resData.message || "¡Gracias por suscribirte! Revisa tu correo para tu beneficio.";
-            modalNewsletterMsg.style.color = "#2e7d32";
+            modalNewsletterMsg.style.color = "#065f46";
+            modalNewsletterMsg.style.backgroundColor = "#ecfdf5";
+            modalNewsletterMsg.style.borderColor = "#a7f3d0";
+            modalNewsletterMsg.classList.remove("hidden");
           }
           if (modalNewsletterEmail) modalNewsletterEmail.value = "";
           sessionStorage.setItem("lynto_newsletter_dismissed", "true");
 
           setTimeout(() => {
             cerrarModalNewsletter();
-          }, 1800);
+          }, 2200);
         } else {
+          // ❌ Fallo / Correo ya registrado previamente: Alerta roja y NUNCA cerrar el modal
           if (modalNewsletterMsg) {
             modalNewsletterMsg.innerText =
-              resData.message || "No se pudo realizar la suscripción.";
-            modalNewsletterMsg.style.color = "#c62828";
+              resData.message || "Este correo electrónico ya se encuentra suscrito en nuestra comunidad.";
+            modalNewsletterMsg.style.color = "#9f1239";
+            modalNewsletterMsg.style.backgroundColor = "#fff1f2";
+            modalNewsletterMsg.style.borderColor = "#fecdd3";
+            modalNewsletterMsg.classList.remove("hidden");
           }
         }
       } catch (err) {
         console.error(err);
         if (modalNewsletterMsg) {
           modalNewsletterMsg.innerText = "Error de conexión al suscribirse.";
-          modalNewsletterMsg.style.color = "#c62828";
+          modalNewsletterMsg.style.color = "#9f1239";
+          modalNewsletterMsg.style.backgroundColor = "#fff1f2";
+          modalNewsletterMsg.style.borderColor = "#fecdd3";
+          modalNewsletterMsg.classList.remove("hidden");
         }
       }
     });
