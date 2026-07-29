@@ -1483,10 +1483,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const saborVal = configMap["sabormodouso"];
       if (saborEl && saborVal) saborEl.innerText = saborVal;
 
-      const fotoHeroEl = document.getElementById("main-product-img");
-      const fotoHeroVal = configMap["fotoherourl"] || configMap["fotoproducto"];
-      if (fotoHeroEl && fotoHeroVal) fotoHeroEl.src = fotoHeroVal;
-
       // 4. Tabla Nutricional (#tabla-nutricion-body)
       const tablaBody = document.getElementById("tabla-nutricion-body");
       if (tablaBody && Array.isArray(nutricion) && nutricion.length > 0) {
