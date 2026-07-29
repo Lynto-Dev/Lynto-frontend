@@ -209,6 +209,108 @@ document.addEventListener("DOMContentLoaded", () => {
   // Inicializar comunas al cargar
   actualizarComunas();
 
+  // --- FORMATEADOR Y PREFIJO INTERNACIONAL DE TELÉFONO ---
+  const prefijoPaisSelect = document.getElementById("prefijo-pais");
+  const telefonoInput = document.getElementById("telefono");
+
+  const PHONE_FORMATS = {
+    "+56": { placeholder: "9 1234 5678", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 1) return digits;
+      if (digits.length <= 5) return `${digits.slice(0, 1)} ${digits.slice(1)}`;
+      return `${digits.slice(0, 1)} ${digits.slice(1, 5)} ${digits.slice(5, 9)}`;
+    }},
+    "+54": { placeholder: "9 11 1234 5678", maxDigits: 11, format: (digits) => {
+      if (digits.length <= 1) return digits;
+      if (digits.length <= 3) return `${digits.slice(0, 1)} ${digits.slice(1)}`;
+      if (digits.length <= 7) return `${digits.slice(0, 1)} ${digits.slice(1, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 1)} ${digits.slice(1, 3)} ${digits.slice(3, 7)} ${digits.slice(7, 11)}`;
+    }},
+    "+51": { placeholder: "912 345 678", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)}`;
+    }},
+    "+57": { placeholder: "300 123 4567", maxDigits: 10, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 10)}`;
+    }},
+    "+52": { placeholder: "55 1234 5678", maxDigits: 10, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 6)} ${digits.slice(6, 10)}`;
+    }},
+    "+1": { placeholder: "(555) 000-0000", maxDigits: 10, format: (digits) => {
+      if (digits.length <= 3) return digits.length > 0 ? `(${digits}` : "";
+      if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+    }},
+    "+34": { placeholder: "612 345 678", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)}`;
+    }},
+    "+55": { placeholder: "11 91234-5678", maxDigits: 11, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 7) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+    }},
+    "+598": { placeholder: "99 123 456", maxDigits: 8, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 5) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)}`;
+    }},
+    "+595": { placeholder: "981 123 456", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)}`;
+    }},
+    "+593": { placeholder: "99 123 4567", maxDigits: 9, format: (digits) => {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 5) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+      return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 9)}`;
+    }},
+    "+591": { placeholder: "7123 4567", maxDigits: 8, format: (digits) => {
+      if (digits.length <= 4) return digits;
+      return `${digits.slice(0, 4)} ${digits.slice(4, 8)}`;
+    }}
+  };
+
+  const formatearTelefono = () => {
+    if (!telefonoInput) return;
+    const prefijo = prefijoPaisSelect ? prefijoPaisSelect.value : "+56";
+    const config = PHONE_FORMATS[prefijo] || PHONE_FORMATS["+56"];
+
+    let rawDigits = telefonoInput.value.replace(/\D/g, "");
+    if (rawDigits.length > config.maxDigits) {
+      rawDigits = rawDigits.slice(0, config.maxDigits);
+    }
+
+    telefonoInput.value = config.format(rawDigits);
+  };
+
+  const actualizarPlaceholderTelefono = () => {
+    if (!prefijoPaisSelect || !telefonoInput) return;
+    const prefijo = prefijoPaisSelect.value;
+    const config = PHONE_FORMATS[prefijo] || PHONE_FORMATS["+56"];
+    telefonoInput.placeholder = config.placeholder;
+    formatearTelefono();
+  };
+
+  if (prefijoPaisSelect) {
+    prefijoPaisSelect.addEventListener("change", actualizarPlaceholderTelefono);
+  }
+
+  if (telefonoInput) {
+    telefonoInput.addEventListener("input", formatearTelefono);
+  }
+
+  const obtenerTelefonoCompleto = () => {
+    const prefijo = prefijoPaisSelect ? prefijoPaisSelect.value : "+56";
+    const num = telefonoInput ? telefonoInput.value.trim() : "";
+    return num ? `${prefijo} ${num}` : "";
+  };
+
   // Control habilitación botón de pago según casilla de términos
   const actualizarEstadoBotonPago = () => {
     if (btnConfirmarPagoFlow) {
@@ -415,6 +517,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!email) return mostrarError("Por favor, ingresa tu correo electrónico.");
     if (!validarEmail(email)) return mostrarError("Por favor, ingresa un correo electrónico válido.");
     if (!telefono) return mostrarError("Por favor, ingresa tu teléfono celular.");
+
+    const prefijo = prefijoPaisSelect ? prefijoPaisSelect.value : "+56";
+    const config = PHONE_FORMATS[prefijo] || PHONE_FORMATS["+56"];
+    const rawDigits = telefono.replace(/\D/g, "");
+    if (rawDigits.length < Math.min(7, config.maxDigits - 1)) {
+      return mostrarError(`Por favor, ingresa un teléfono válido para ${prefijo} (Ej: ${config.placeholder}).`);
+    }
+
     if (!region) return mostrarError("Por favor, selecciona tu región de despacho.");
     if (!comuna) return mostrarError("Por favor, selecciona tu comuna.");
     if (!direccion) return mostrarError("Por favor, ingresa tu dirección completa de despacho.");
@@ -584,7 +694,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const comunaEl = document.getElementById("comuna");
       const cuponEl = document.getElementById("cupon");
 
-      const telefono = sanitizeInput(telefonoEl ? telefonoEl.value.trim() : "");
+      const telefono = sanitizeInput(obtenerTelefonoCompleto());
       const region = sanitizeInput(regionEl ? regionEl.value.trim() : "");
       const comuna = sanitizeInput(comunaEl ? comunaEl.value.trim() : "");
       const cupon = sanitizeInput(cuponEl ? cuponEl.value.trim().toUpperCase() : "");
@@ -961,17 +1071,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = galleryItems[currentGalleryIndex];
 
     if (lightboxImg) {
-      lightboxImg.style.opacity = "0.3";
-      setTimeout(() => {
-        lightboxImg.src = item.src;
-        if (lightboxCaption) {
-          lightboxCaption.innerText = item.badge;
-        }
-        lightboxImg.style.opacity = "1";
-      }, 120);
+      lightboxImg.src = item.src;
+      if (lightboxCaption) {
+        lightboxCaption.innerText = item.badge;
+      }
     }
 
-    if (mainProductImg) mainProductImg.src = item.src;
+    if (mainProductImg) {
+      mainProductImg.src = item.src;
+    }
+
     if (mainProductBadge) mainProductBadge.innerText = item.badge;
     thumbBtns.forEach((b, idx) => {
       b.classList.toggle("active", idx === currentGalleryIndex);
@@ -1008,10 +1117,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  if (openLightboxTrigger) {
-    openLightboxTrigger.addEventListener("click", abrirLightbox);
-  }
-
   const btnZoomIcon = document.getElementById("btn-zoom-icon");
   if (btnZoomIcon) {
     btnZoomIcon.addEventListener("click", (e) => {
@@ -1036,6 +1141,154 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       actualizarLightboxIndex(currentGalleryIndex + 1);
     });
+  }
+
+  // --- FUNCIÓN GENÉRICA PARA SOPORTE DE SWIPE TÁCTIL Y ARRASTRE DE MOUSE ---
+  const habilitarDeslizamiento = (containerEl, onSwipeLeft, onSwipeRight, onClick) => {
+    if (!containerEl) return;
+
+    let startX = 0;
+    let startY = 0;
+    let deltaX = 0;
+    let deltaY = 0;
+    let isDragging = false;
+    let hasMoved = false;
+    const SWIPE_THRESHOLD = 35; // Píxeles mínimos recorridos para cambiar imagen
+
+    const images = containerEl.querySelectorAll("img");
+    images.forEach((img) => {
+      img.addEventListener("dragstart", (e) => e.preventDefault());
+    });
+
+    // Touch Events (Móvil / Celular / Tablets)
+    containerEl.addEventListener("touchstart", (e) => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      deltaX = 0;
+      deltaY = 0;
+      isDragging = true;
+      hasMoved = false;
+    }, { passive: true });
+
+    containerEl.addEventListener("touchmove", (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      deltaX = e.touches[0].clientX - startX;
+      deltaY = e.touches[0].clientY - startY;
+
+      if (Math.abs(deltaX) > 10) {
+        hasMoved = true;
+      }
+    }, { passive: true });
+
+    containerEl.addEventListener("touchend", () => {
+      if (!isDragging) return;
+      isDragging = false;
+
+      if (hasMoved && Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < -SWIPE_THRESHOLD) {
+          onSwipeLeft();
+        } else if (deltaX > SWIPE_THRESHOLD) {
+          onSwipeRight();
+        }
+      } else if (!hasMoved && typeof onClick === "function") {
+        onClick();
+      }
+    });
+
+    // Mouse Events (PC / Escritorio)
+    containerEl.addEventListener("mousedown", (e) => {
+      if (e.target.closest("button")) return;
+      startX = e.clientX;
+      startY = e.clientY;
+      deltaX = 0;
+      deltaY = 0;
+      isDragging = true;
+      hasMoved = false;
+      containerEl.style.cursor = "grabbing";
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      deltaX = e.clientX - startX;
+      deltaY = e.clientY - startY;
+
+      if (Math.abs(deltaX) > 8) {
+        hasMoved = true;
+      }
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (!isDragging) return;
+      isDragging = false;
+      containerEl.style.cursor = "";
+
+      if (hasMoved && Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < -SWIPE_THRESHOLD) {
+          onSwipeLeft();
+        } else if (deltaX > SWIPE_THRESHOLD) {
+          onSwipeRight();
+        }
+      } else if (!hasMoved && typeof onClick === "function") {
+        onClick();
+      }
+    });
+
+    // 3. Trackpad 2-Finger Horizontal Gestures (1 foto por deslizamiento continuo)
+    let accumulatedDeltaX = 0;
+    let gestureHandled = false;
+    let wheelPauseTimer = null;
+
+    containerEl.addEventListener("wheel", (e) => {
+      const absX = Math.abs(e.deltaX);
+      const absY = Math.abs(e.deltaY);
+
+      if (absX > absY && absX > 5) {
+        e.preventDefault();
+
+        // Al pausar o levantar los dedos (50ms sin eventos), quedar listo inmediatamente para el siguiente gesto
+        if (wheelPauseTimer) clearTimeout(wheelPauseTimer);
+        wheelPauseTimer = setTimeout(() => {
+          gestureHandled = false;
+          accumulatedDeltaX = 0;
+        }, 50);
+
+        // Si ya se cambió 1 foto en este mismo deslizamiento continuo, ignorar el resto del arrastre
+        if (gestureHandled) return;
+
+        accumulatedDeltaX += e.deltaX;
+
+        if (accumulatedDeltaX > 30) {
+          gestureHandled = true;
+          accumulatedDeltaX = 0;
+          onSwipeLeft(); // Cambiar 1 foto a la izquierda (siguiente)
+        } else if (accumulatedDeltaX < -30) {
+          gestureHandled = true;
+          accumulatedDeltaX = 0;
+          onSwipeRight(); // Cambiar 1 foto a la derecha (anterior)
+        }
+      }
+    }, { passive: false });
+  };
+
+  // 1. Habilitar deslizamiento en Vista Normal (Galería Principal)
+  if (openLightboxTrigger) {
+    habilitarDeslizamiento(
+      openLightboxTrigger,
+      () => actualizarLightboxIndex(currentGalleryIndex + 1), // Deslizar a la izquierda -> Siguiente
+      () => actualizarLightboxIndex(currentGalleryIndex - 1), // Deslizar a la derecha -> Anterior
+      abrirLightbox // Clic / Tap simple -> Abrir modal ampliado
+    );
+  }
+
+  // 2. Habilitar deslizamiento en Vista Ampliada (Lightbox Modal)
+  const lightboxCard = document.querySelector(".lightbox-card");
+  if (lightboxCard) {
+    habilitarDeslizamiento(
+      lightboxCard,
+      () => actualizarLightboxIndex(currentGalleryIndex + 1), // Deslizar a la izquierda -> Siguiente
+      () => actualizarLightboxIndex(currentGalleryIndex - 1)  // Deslizar a la derecha -> Anterior
+    );
   }
 
   if (modalLightbox) {

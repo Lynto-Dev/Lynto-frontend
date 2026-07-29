@@ -923,6 +923,21 @@ a:hover {
   box-shadow: 0 0 0 4px rgba(220, 161, 255, 0.3);
 }
 
+.phone-input-group {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .phone-input-group #prefijo-pais {
+    min-width: 95px !important;
+    padding-left: 0.45rem !important;
+    padding-right: 0.35rem !important;
+    font-size: 0.88rem !important;
+  }
+}
+
 /* Compact Info Banner in Form */
 .info-card-compact {
   background: var(--brand-purple-soft);
@@ -2258,4 +2273,32 @@ a:hover {
     height: 40px !important;
     max-height: 40px !important;
   }
+}
+
+/* Soporte de Deslizamiento (Swipe & Drag Cursor) para Galería */
+.main-image-wrapper {
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.main-image-wrapper:active {
+  cursor: grabbing;
+}
+
+.lightbox-card {
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.lightbox-card:active {
+  cursor: grabbing;
+}
+
+.main-product-img,
+.lightbox-img {
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
