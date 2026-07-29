@@ -664,9 +664,31 @@ document.addEventListener("DOMContentLoaded", () => {
       errorAlert.classList.remove("hidden");
       errorAlert.style.display = "flex";
       errorAlert.scrollIntoView({ behavior: "smooth", block: "center" });
-    } else {
-      alert(msg);
     }
+
+    // Alerta Flotante Gigante (Toast) en la parte superior para visibilidad 100% garantizada
+    let toast = document.getElementById("floating-toast-error");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "floating-toast-error";
+      toast.className = "floating-toast-alert";
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<span>⚠️ ${msg}</span><button type="button" class="toast-close-btn" aria-label="Cerrar">✕</button>`;
+    
+    const closeBtn = toast.querySelector(".toast-close-btn");
+    if (closeBtn) {
+      closeBtn.onclick = () => toast.classList.remove("active");
+    }
+
+    // Forzar reflow para animación fluida
+    void toast.offsetWidth;
+    toast.classList.add("active");
+
+    if (window.toastTimeout) clearTimeout(window.toastTimeout);
+    window.toastTimeout = setTimeout(() => {
+      if (toast) toast.classList.remove("active");
+    }, 5000);
 
     if (targetInput) {
       targetInput.classList.add("input-error");
@@ -682,6 +704,8 @@ document.addEventListener("DOMContentLoaded", () => {
       errorAlert.classList.add("hidden");
       errorAlert.style.display = "none";
     }
+    const toast = document.getElementById("floating-toast-error");
+    if (toast) toast.classList.remove("active");
   };
 
   // --- SANITIZACIÓN ANTI-XSS ---
