@@ -909,7 +909,7 @@ a:hover {
   box-sizing: border-box;
   padding: 0.7rem 0.95rem;
   font-family: var(--font-body);
-  font-size: 0.94rem;
+  font-size: 16px; /* Prevención de auto-zoom nativo en celulares al enfocar campos */
   color: var(--text-main);
   background-color: #ffffff;
   border: 1.5px solid var(--border-color);
@@ -1622,6 +1622,9 @@ a:hover {
   position: relative;
   animation: modal-slide-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-sizing: border-box;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* Botón de Cierre (✕) Rediseñado */
@@ -1784,7 +1787,9 @@ a:hover {
   background: var(--brand-purple-soft);
   color: var(--brand-purple-deep);
   border: 1px solid var(--border-color);
-  animation: alert-slide-down 0.3s ease;
+  box-sizing: border-box;
+  opacity: 1;
+  transition: opacity 0.25s ease;
 }
 
 /* Integrated Footer Newsletter */
@@ -2301,4 +2306,120 @@ a:hover {
   user-select: none;
   -webkit-user-drag: none;
   transition: opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Botón Flotante Sticky de WhatsApp */
+.wsp-sticky-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9990;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.wsp-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  animation: wsp-pulse 2.5s infinite ease-in-out;
+}
+
+.wsp-sticky-btn:hover .wsp-icon-wrapper {
+  transform: scale(1.12) rotate(6deg);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+}
+
+@keyframes wsp-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), 0 0 0 0 rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), 0 0 0 14px rgba(37, 211, 102, 0);
+  }
+}
+
+.wsp-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  background: #ffffff;
+  color: var(--text-main);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.5rem 0.85rem;
+  border-radius: 50px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none !important;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.25s ease;
+}
+
+.wsp-sticky-btn:hover .wsp-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+@media (max-width: 640px) {
+  .wsp-sticky-btn {
+    bottom: 18px;
+    right: 18px;
+    width: 50px;
+    height: 50px;
+  }
+  .wsp-icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+  .wsp-tooltip {
+    display: none !important;
+  }
+}
+
+/* Enlace Inline a Instagram en Footer */
+.footer-social-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--brand-purple-deep);
+  font-weight: 600;
+  vertical-align: middle;
+  line-height: 1;
+  margin: 0 0.15rem;
+  transition: all var(--transition-fast);
+}
+
+.footer-social-inline svg {
+  display: inline-block;
+  vertical-align: middle;
+  stroke: var(--brand-purple-deep);
+  transition: stroke var(--transition-fast), transform var(--transition-fast);
+  flex-shrink: 0;
+  margin-top: -1px;
+}
+
+.footer-social-inline:hover {
+  color: #e1306c;
+}
+
+.footer-social-inline:hover svg {
+  stroke: #e1306c;
+  transform: scale(1.15) rotate(-5deg);
 }
