@@ -39,7 +39,7 @@
       <div class="header-container">
         <a href="#" class="brand-logo" aria-label="Lynto Inicio">
           <img src="./assets/img/Isotipo morado sin fondo.png" alt="Lynto Isotipo" class="brand-logo-icon" style="height: 44px; max-height: 44px; width: auto; object-fit: contain;" />
-          <span class="brand-logo-text">Lynto</span>
+          <span class="brand-logo-text">LynTo</span>
         </a>
         <nav class="nav-links">
           <a href="#producto">¿Por qué Iron Girl?</a>
@@ -55,80 +55,88 @@
     </header>
 
     <main class="main-wrapper">
-      <!-- Sección Hero Principal con Carrusel Eléctrico Morado (Ajustado a Tamaño de Pantalla) -->
-      <section class="section-hero-electric" id="hero">
-        <div class="hero-carousel-container">
-          <!-- Carrusel de Banners Eléctricos de Fondo con Producto a la Derecha -->
-          <div class="hero-carousel-track" id="hero-carousel-track">
-            <div class="hero-carousel-slide active">
-              <img src="./assets/img/hero_slide_1.jpg" alt="Lynto Iron Girl Suplemento Biotecnológico Reserva Ahora" class="hero-banner-img" />
-              <div class="hero-banner-overlay"></div>
-            </div>
-            <div class="hero-carousel-slide">
-              <img src="./assets/img/hero_slide_2.jpg" alt="Iron Girl Biohacking Nutricional" class="hero-banner-img" />
-              <div class="hero-banner-overlay"></div>
-            </div>
-            <div class="hero-carousel-slide">
-              <img src="./assets/img/hero_slide_3.jpg" alt="Iron Girl Sachets Matriz Mineral" class="hero-banner-img" />
-              <div class="hero-banner-overlay"></div>
-            </div>
-          </div>
-
-          <!-- Flechas de Control del Carrusel -->
-          <button type="button" id="hero-carousel-prev" class="hero-carousel-arrow prev" aria-label="Banner anterior">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button type="button" id="hero-carousel-next" class="hero-carousel-arrow next" aria-label="Siguiente banner">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-
-          <!-- Indicadores (Puntos) del Carrusel -->
-          <div class="hero-carousel-dots" id="hero-carousel-dots">
-            <span class="dot active" data-index="0"></span>
-            <span class="dot" data-index="1"></span>
-            <span class="dot" data-index="2"></span>
-          </div>
-
-          <!-- Contenido del Hero (Distribución Split Responsiva) -->
-          <div class="container hero-content-wrapper">
-            <!-- Columna Izquierda: Tarjeta Eléctrica Morada con Título, Tags y Botón de Ciencia -->
-            <div class="hero-electric-card">
-              <!-- Tag Superior -->
-              <div class="hero-badge-electric">
-                <span class="hero-badge-glow-dot"></span>
-                <span>⚡ Preventa Oficial Iron Girl - Despacho a todo Chile</span>
+      <!-- Sección Hero Principal (Estilo Soft, Aesthetic & Minimalista con Carrusel a la Derecha) -->
+      <section class="hero-section-soft" id="hero">
+        <div class="hero-soft-ambient-glow"></div>
+        <div class="container hero-soft-container">
+          <div class="hero-soft-grid">
+            <!-- Columna Izquierda: Toda la información bien ordenada -->
+            <div class="hero-soft-content">
+              <div class="hero-badge-soft">
+                <span class="hero-badge-soft-dot"></span>
+                <span>✨ Preventa Oficial Iron Girl — Despacho a todo Chile</span>
               </div>
 
-              <!-- Título Destacado Eléctrico -->
-              <h1 id="hero-titulo" class="hero-title-electric">
+              <h1 id="hero-titulo" class="hero-title-soft">
                 Domina el ritmo de lo real.<br />
-                <span class="hero-title-highlight">Tu biología en su máximo potencial.</span>
+                <span class="hero-title-soft-highlight">Tu biología en su máximo potencial.</span>
               </h1>
 
-              <!-- Badges de Confianza / Tags -->
-              <div class="trust-badges-electric">
-                <span class="trust-badge-electric">🌿 LIBRE DE AZÚCAR</span>
-                <span class="trust-badge-electric">⚡ RÁPIDA ABSORCIÓN</span>
-                <span class="trust-badge-electric">🥤 FORMATO SACHET</span>
-                <span class="trust-badge-electric">🔬 RESPALDO FARMACÉUTICO</span>
+              <p class="hero-subtitle-soft">
+                La primera matriz biotecnológica de minerales esenciales (Bisglicinato de Hierro, Citrato de Magnesio y Vitamina D3) en formato sachet. Vitalidad limpia y absorción superior, sin molestias digestivas.
+              </p>
+
+              <div class="trust-badges-soft">
+                <span class="trust-badge-soft">🌿 LIBRE DE AZÚCAR</span>
+                <span class="trust-badge-soft">⚡ RÁPIDA ABSORCIÓN</span>
+                <span class="trust-badge-soft">🥤 FORMATO SACHET</span>
+                <span class="trust-badge-soft">🔬 RESPALDO FARMACÉUTICO</span>
               </div>
 
-              <!-- Botones de Acción Estilo Eléctrico (En la misma línea) -->
-              <div class="hero-actions-electric">
-                <a href="#comprar" class="btn-hero-electric-primary">
-                  <span>Quiero mi Iron Girl en Preventa ⚡</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Botones del Hero en una misma línea -->
+              <div class="hero-actions-soft-row">
+                <a href="#comprar" class="btn-hero-soft-primary">
+                  <span>Reservar Preventa ✨</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </a>
-                <a href="#producto" class="btn-hero-electric-secondary">
-                  <span>Conoce la ciencia detrás 🔬</span>
+                <a href="#producto" class="btn-hero-soft-secondary">
+                  <span>Conoce la ciencia 🔬</span>
                 </a>
+              </div>
+
+              <!-- Texto promocional debajo de los botones -->
+              <div class="hero-promo-notice">
+                <span class="promo-icon">🎁</span>
+                <span>¡Usa tu cupón y obtén <strong>$3.000 CLP de descuento</strong> en tu reserva!</span>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Carrusel Soft de Imágenes -->
+            <div class="hero-soft-visual-column">
+              <div class="hero-soft-carousel-wrapper">
+                <div class="hero-carousel-track" id="hero-carousel-track">
+                  <div class="hero-carousel-slide active">
+                    <img src="./assets/img/img_producto/img1.PNG" alt="Lynto Iron Girl Suplemento Biotecnológico - Vista 1" class="hero-soft-slide-img" />
+                  </div>
+                  <div class="hero-carousel-slide">
+                    <img src="./assets/img/img_producto/img2.PNG" alt="Lynto Iron Girl Sachets - Vista 2" class="hero-soft-slide-img" />
+                  </div>
+                  <div class="hero-carousel-slide">
+                    <img src="./assets/img/img_producto/img3.PNG" alt="Lynto Iron Girl Estilo de Vida Soft - Vista 3" class="hero-soft-slide-img" />
+                  </div>
+                </div>
+
+                <!-- Botones de navegación del carrusel -->
+                <button type="button" id="hero-carousel-prev" class="hero-soft-arrow prev" aria-label="Imagen anterior">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button type="button" id="hero-carousel-next" class="hero-soft-arrow next" aria-label="Siguiente imagen">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+
+                <!-- Indicadores (Puntos) -->
+                <div class="hero-soft-dots" id="hero-carousel-dots">
+                  <span class="dot active" data-index="0"></span>
+                  <span class="dot" data-index="1"></span>
+                  <span class="dot" data-index="2"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -897,6 +905,6 @@
       </div>
     </a>
 
-    <script src="./assets/js/app.js?v=2.0"></script>
+    <script src="./assets/js/app.js?v=2.1"></script>
   </body>
 </html>
