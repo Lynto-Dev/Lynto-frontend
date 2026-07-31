@@ -108,14 +108,16 @@ Se realizó un recorrido completo archivo por archivo sobre ambos repositorios (
 ## 🎯 4. Tareas Organizadas por Prioridad por Cada Desarrollador
 
 ### 🟢 PRIORIDAD 1: Tech Lead & DevOps
-1. `[ ]` **Prueba de Llaves API de Flow:** Probar credenciales reales de producción entregadas por las clientas.
-2. `[ ]` **Configuración de Correo Corporativo:** Habilitar el dominio en el servicio de correo para envíos transaccionales.
+1. `[ ]` **Credenciales de Producción y Chilexpress:** Configurar en Script Properties llaves de Flow (`FLOW_API_KEY`, `FLOW_SECRET_KEY`) y Chilexpress (`CHILEXPRESS_API_KEY`, `CHILEXPRESS_COVERAGE_CODE`, `CHILEXPRESS_RUT_EMPRESA`).
+2. `[ ]` **Prueba de Humo en Producción:** Transacción real de $350 CLP en Webpay para validar Webhook S2S, LockService, Chilexpress OT y MailApp.
+3. `[ ]` **Configuración DNS de Correo Corporativo:** Configurar registros SPF/DKIM/DMARC para `contacto@lynto.cl`.
 
-### 🟢 PRIORIDAD 1: Backend 2
-1. `[ ]` **Prueba de Newsletter:** Probar que la suscripción guarde el email correctamente en la pestaña `Suscriptores`.
-2. `[ ]` **Prueba de Calculadoras (Envío y Cupones):** Probar el comportamiento de `obtenerCostoEnvio` y `obtenerDescuentoCupon`.
-3. `[ ]` **Verificación de Mutaciones:** Comprobar que cambios manuales en celdas de Sheets se reflejen limpiamente en `get_config`.
+### 🟢 PRIORIDAD 1: Encargado de Backend (Esteban)
+1. `[ ]` **Programar Módulo Chilexpress (`src/chilexpress.js`):** Integrar `GeoReference`, `Rating` y `Transport-Orders` API (Generación de OT y seguimiento).
+2. `[ ]` **Conectar OT y Mail Post-Pago:** Registrar número de OT en la pestaña `Pedidos` de Sheets e inyectar el código de seguimiento en el correo al cliente (`src/mail.js`).
+3. `[ ]` **Prueba de Calculadoras (Envío y Cupones):** Probar el comportamiento de `obtenerCostoEnvio` y `obtenerDescuentoCupon`.
+4. `[ ]` **Prueba de Newsletter:** Validar que la suscripción guarde el email correctamente en la pestaña `Suscriptores`.
 
 ### 🟢 PRIORIDAD 1: Especialista Frontend
 * 🟢 **¡TODAS LAS TAREAS DE FRONTEND COMPLETADAS AL 100%!** 🎉  
-  *(Sin tareas pendientes de código. Listo para acompañamiento en pruebas finales en producción).*
+  *(Sin tareas pendientes de código. Sello Vía Chilexpress implementado en index.html. Listo para acompañamiento en pruebas finales en producción).*
