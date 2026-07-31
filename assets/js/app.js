@@ -415,17 +415,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (summarySubtotal) summarySubtotal.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
     if (modalProductSubtotalItem) modalProductSubtotalItem.innerText = `$${subtotal.toLocaleString("es-CL")} CLP`;
 
-    // 1. Recalcular descuento del cupón proporcionalmente a la cantidad actual
+    // 1. Recalcular descuento del cupón sobre el carrito total
     let descuentoTotal = 0;
     if (cuponAplicadoExitoso) {
-      if (descuentoPorUnidadCupon > 0) {
-        descuentoTotal = descuentoPorUnidadCupon * cant;
-      } else if (porcentajeDescuentoCupon === 15) {
-        descuentoTotal = 3000 * cant;
+      if (montoFijoDescuentoCupon > 0) {
+        descuentoTotal = montoFijoDescuentoCupon;
       } else if (porcentajeDescuentoCupon > 0) {
         descuentoTotal = Math.round((subtotal * porcentajeDescuentoCupon) / 100);
       } else {
-        descuentoTotal = 3000 * cant;
+        descuentoTotal = 3000;
       }
       ultimoDescuentoCupon = descuentoTotal;
       if (rowDescuento) rowDescuento.classList.remove("hidden");
@@ -466,6 +464,8 @@ document.addEventListener("DOMContentLoaded", () => {
     alertContainer.style.display = "block";
   };
 
+  let montoFijoDescuentoCupon = 0;
+
   const aplicarCupon = async () => {
     const codigoCupon = cuponInput ? cuponInput.value.trim().toUpperCase() : "";
     const rutCliente = rutInput ? rutInput.value.trim() : "";
@@ -475,7 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!codigoCupon) {
       cuponAplicadoExitoso = false;
       ultimoDescuentoCupon = 0;
-      descuentoPorUnidadCupon = 0;
+      montoFijoDescuentoCupon = 0;
       porcentajeDescuentoCupon = 0;
       actualizarVisualizacionPrecio();
       mostrarAlertaCupon("Por favor ingresa un código de cupón.", "warning");
@@ -510,17 +510,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const backendDescuentoMonto = Number(resData.data.descuentoMonto) || Number(resData.data.descuento) || 0;
         porcentajeDescuentoCupon = Number(resData.data.porcentajeEquivalente || resData.data.porcentaje) || 0;
 
-        if (backendDescuentoMonto > 0) {
-          descuentoPorUnidadCupon = Math.round(backendDescuentoMonto / cant);
-        } else if (porcentajeDescuentoCupon === 15) {
-          descuentoPorUnidadCupon = 3000;
-        } else if (porcentajeDescuentoCupon > 0) {
-          descuentoPorUnidadCupon = Math.round((PRODUCT_PRICE * porcentajeDescuentoCupon) / 100);
+        if (resData.data.tipo === "FIJO" || backendDescuentoMonto > 0) {
+          montoFijoDescuentoCupon = backendDescuentoMonto || 3000;
+          montoDescuento = montoFijoDescuentoCupon;
         } else {
-          descuentoPorUnidadCupon = 3000;
+          montoFijoDescuentoCupon = 0;
+          montoDescuento = Math.round((subtotal * porcentajeDescuentoCupon) / 100);
         }
 
-        montoDescuento = descuentoPorUnidadCupon * cant;
         mensajeRespuesta = resData.data.mensaje || resData.message || "Cupón aplicado con éxito.";
       } else {
         mensajeRespuesta = resData.message || (resData.data && resData.data.mensaje) || `El cupón "${codigoCupon}" no se puede aplicar.`;
@@ -534,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         cuponAplicadoExitoso = false;
         ultimoDescuentoCupon = 0;
-        descuentoPorUnidadCupon = 0;
+        montoFijoDescuentoCupon = 0;
         porcentajeDescuentoCupon = 0;
         actualizarVisualizacionPrecio();
         mostrarAlertaCupon(mensajeRespuesta, "error");
@@ -543,15 +540,15 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error al conectar con la API de cupones:", err);
       if (codigoCupon === "PREVENTA" || codigoCupon === "PREVENTA15" || codigoCupon === "LYNTO15") {
         cuponAplicadoExitoso = true;
-        descuentoPorUnidadCupon = 3000;
+        montoFijoDescuentoCupon = 3000;
         porcentajeDescuentoCupon = 0;
-        ultimoDescuentoCupon = 3000 * cant;
+        ultimoDescuentoCupon = 3000;
         actualizarVisualizacionPrecio();
         mostrarAlertaCupon("Cupón PREVENTA aplicado con éxito (Descuento especial).", "success");
       } else {
         cuponAplicadoExitoso = false;
         ultimoDescuentoCupon = 0;
-        descuentoPorUnidadCupon = 0;
+        montoFijoDescuentoCupon = 0;
         porcentajeDescuentoCupon = 0;
         actualizarVisualizacionPrecio();
         mostrarAlertaCupon("No se pudo verificar el cupón en este momento. Inténtalo de nuevo.", "error");
