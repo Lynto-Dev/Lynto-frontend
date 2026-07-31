@@ -82,7 +82,7 @@
 
 ## 🚚 5. Operaciones, Legales y Despachos `[T]`
 
-* `[x] [T] [⚡ HARDCODEADO]` **Alerta Arquitectura Blue Express (Serverless):** Confirmar con el cliente que los despachos se gestionan aplicando la tabla `TarifasEnvio` en Sheets y exportando un CSV desde `Pedidos` para carga manual en Blue Express.
+* `[x] [T] [⚡ HARDCODEADO]` **Arquitectura de Despachos Chilexpress:** Integración de APIs REST de Chilexpress (`REST Transport-Orders API`, `GeoReference REST API`, `REST Rating API`) para cotización, generación de Orden de Transporte (OT) y seguimiento automatizado post-pago, utilizando además la tabla `TarifasEnvio` en Sheets.
 * `[x] [T] [⚡ HARDCODEADO]` **Resguardo de Accesos:** Almacenar de forma segura las credenciales de `nic.cl` y Cloudflare.
 * `[x] [T] [⚡ HARDCODEADO]` **Enrutamiento de Correos (Cloudflare / Gmail):** Asegurar alias `contacto@lynto.cl` / `lynto.spa@gmail.com` y plantillas HTML en `src/mail.js`.
 * `[x] [T] [⚡ HARDCODEADO]` **Páginas Legales:** Maquetar y validar los textos del documento `Legal ecommerce.docx` en `terminos.html` y `privacidad.html`.
