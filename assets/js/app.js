@@ -163,92 +163,411 @@ document.addEventListener("DOMContentLoaded", () => {
   const aceptoTerminosCheckbox = document.getElementById("acepto-terminos");
   const btnConfirmarPagoFlow = document.getElementById("btn-confirmar-pago-flow");
 
-  // --- MAPA DE COMUNAS POR REGIÓN EN CHILE ---
+  // --- MAPA DE COMUNAS POR REGIÓN EN CHILE CON CÓDIGOS OFICIALES DE CHILEXPRESS (4 LETRAS) ---
   const COMUNAS_POR_REGION = {
     "Región Metropolitana": [
-      "Alhué", "Buin", "Calera de Tango", "Cerrillos", "Cerro Navia", "Colina", "Conchalí", "Curacaví",
-      "El Bosque", "El Monte", "Estación Central", "Huechuraba", "Independencia", "Isla de Maipo",
-      "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Lampa", "Las Condes",
-      "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "María Pinto", "Melipilla", "Ñuñoa",
-      "Padre Hurtado", "Paine", "Pedro Aguirre Cerda", "Peñaflor", "Peñalolén", "Pirque", "Providencia",
-      "Pudahuel", "Puente Alto", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Bernardo",
-      "San Joaquín", "San José de Maipo", "San Miguel", "San Pedro", "San Ramón", "Santiago", "Talagante",
-      "Tiltil", "Vitacura"
+      { code: "STGO", name: "Santiago Centro" },
+      { code: "LCIS", name: "La Cisterna" },
+      { code: "LAFL", name: "La Florida" },
+      { code: "LCON", name: "Las Condes" },
+      { code: "PROV", name: "Providencia" },
+      { code: "MAIP", name: "Maipú" },
+      { code: "PALO", name: "Puente Alto" },
+      { code: "SBER", name: "San Bernardo" },
+      { code: "NUNO", name: "Ñuñoa" },
+      { code: "VITA", name: "Vitacura" },
+      { code: "LBAR", name: "Lo Barnechea" },
+      { code: "PENA", name: "Peñalolén" },
+      { code: "MACU", name: "Macul" },
+      { code: "LREI", name: "La Reina" },
+      { code: "RECO", name: "Recoleta" },
+      { code: "INDE", name: "Independencia" },
+      { code: "HUEC", name: "Huechuraba" },
+      { code: "CONC", name: "Conchalí" },
+      { code: "QUIL", name: "Quilicura" },
+      { code: "RENC", name: "Renca" },
+      { code: "PUDA", name: "Pudahuel" },
+      { code: "CNAV", name: "Cerro Navia" },
+      { code: "LPRA", name: "Lo Prado" },
+      { code: "QNOR", name: "Quinta Normal" },
+      { code: "ECEN", name: "Estación Central" },
+      { code: "CERR", name: "Cerrillos" },
+      { code: "PACE", name: "Pedro Aguirre Cerda" },
+      { code: "SMIG", name: "San Miguel" },
+      { code: "SJOA", name: "San Joaquín" },
+      { code: "LGRA", name: "La Granja" },
+      { code: "SRAM", name: "San Ramón" },
+      { code: "LPIN", name: "La Pintana" },
+      { code: "LESP", name: "Lo Espejo" },
+      { code: "EBOS", name: "El Bosque" },
+      { code: "SJMA", name: "San José de Maipo" },
+      { code: "PIRQ", name: "Pirque" },
+      { code: "CTAN", name: "Calera de Tango" },
+      { code: "BUIN", name: "Buin" },
+      { code: "PAIN", name: "Paine" },
+      { code: "COLI", name: "Colina" },
+      { code: "LAMP", name: "Lampa" },
+      { code: "TILT", name: "Tiltil" },
+      { code: "TALA", name: "Talagante" },
+      { code: "PENF", name: "Peñaflor" },
+      { code: "ISMA", name: "Isla de Maipo" },
+      { code: "EMON", name: "El Monte" },
+      { code: "PHUR", name: "Padre Hurtado" },
+      { code: "MELI", name: "Melipilla" },
+      { code: "ALHU", name: "Alhué" },
+      { code: "CURA", name: "Curacaví" },
+      { code: "MPIN", name: "María Pinto" },
+      { code: "SPED", name: "San Pedro" }
     ],
     "Región de Valparaíso": [
-      "Algarrobo", "Cabildo", "Calera", "Calle Larga", "Cartagena", "Casablanca", "Catemu", "Concón",
-      "El Quisco", "El Tabo", "Hijuelas", "Isla de Pascua", "Juan Fernández", "La Cruz", "La Ligua",
-      "Limache", "Llaillay", "Los Andes", "Nogales", "Olmué", "Panquehue", "Papudo", "Petorca",
-      "Puchuncaví", "Putaendo", "Quillota", "Quilpué", "Quintero", "Rinconada", "San Antonio",
-      "San Esteban", "San Felipe", "Santa María", "Santo Domingo", "Valparaíso", "Villa Alemana",
-      "Viña del Mar", "Zapallar"
+      { code: "VALP", name: "Valparaíso" },
+      { code: "VINA", name: "Viña del Mar" },
+      { code: "CONC", name: "Concón" },
+      { code: "QUIL", name: "Quilpué" },
+      { code: "VALE", name: "Villa Alemana" },
+      { code: "LIMA", name: "Limache" },
+      { code: "OLMU", name: "Olmué" },
+      { code: "QUIL", name: "Quillota" },
+      { code: "LCRU", name: "La Cruz" },
+      { code: "CALE", name: "Calera" },
+      { code: "HIJU", name: "Hijuelas" },
+      { code: "NOGA", name: "Nogales" },
+      { code: "LAND", name: "Los Andes" },
+      { code: "CLAR", name: "Calle Larga" },
+      { code: "RINC", name: "Rinconada" },
+      { code: "SEST", name: "San Esteban" },
+      { code: "SFEL", name: "San Felipe" },
+      { code: "CATE", name: "Catemu" },
+      { code: "LLAI", name: "Llaillay" },
+      { code: "PANQ", name: "Panquehue" },
+      { code: "PUTA", name: "Putaendo" },
+      { code: "SMAR", name: "Santa María" },
+      { code: "SANT", name: "San Antonio" },
+      { code: "ALGA", name: "Algarrobo" },
+      { code: "CART", name: "Cartagena" },
+      { code: "EQUI", name: "El Quisco" },
+      { code: "ETAB", name: "El Tabo" },
+      { code: "SDOM", name: "Santo Domingo" },
+      { code: "CASA", name: "Casablanca" },
+      { code: "LLIG", name: "La Ligua" },
+      { code: "CABI", name: "Cabildo" },
+      { code: "PAPU", name: "Papudo" },
+      { code: "PETO", name: "Petorca" },
+      { code: "ZAPA", name: "Zapallar" },
+      { code: "PUCH", name: "Puchuncaví" },
+      { code: "QUIN", name: "Quintero" },
+      { code: "IPAS", name: "Isla de Pascua" },
+      { code: "JFER", name: "Juan Fernández" }
     ],
     "Región del Biobío": [
-      "Alto Biobío", "Antuco", "Arauco", "Cabrero", "Cañete", "Chiguayante", "Concepción", "Contulmo",
-      "Coronel", "Curanilahue", "Florida", "Hualpén", "Hualqui", "Laja", "Lebu", "Los Álamos",
-      "Los Ángeles", "Mulchén", "Nacimiento", "Negrete", "Penco", "Quilaco", "Quilleco", "San Pedro de la Paz",
-      "San Rosendo", "Santa Bárbara", "Santa Juana", "Talcahuano", "Tirúa", "Tomé", "Tucapel", "Yumbel"
+      { code: "CONC", name: "Concepción" },
+      { code: "TALC", name: "Talcahuano" },
+      { code: "SPAZ", name: "San Pedro de la Paz" },
+      { code: "CHIG", name: "Chiguayante" },
+      { code: "HUAL", name: "Hualpén" },
+      { code: "CORO", name: "Coronel" },
+      { code: "LOTA", name: "Lota" },
+      { code: "PENC", name: "Penco" },
+      { code: "TOME", name: "Tomé" },
+      { code: "HUAQ", name: "Hualqui" },
+      { code: "FLOR", name: "Florida" },
+      { code: "SJUA", name: "Santa Juana" },
+      { code: "LANG", name: "Los Ángeles" },
+      { code: "ANTU", name: "Antuco" },
+      { code: "CABR", name: "Cabrero" },
+      { code: "LAJA", name: "Laja" },
+      { code: "MULC", name: "Mulchén" },
+      { code: "NACI", name: "Nacimiento" },
+      { code: "NEGR", name: "Negrete" },
+      { code: "QLAC", name: "Quilaco" },
+      { code: "QLEC", name: "Quilleco" },
+      { code: "SROS", name: "San Rosendo" },
+      { code: "SBAR", name: "Santa Bárbara" },
+      { code: "TUCA", name: "Tucapel" },
+      { code: "YUMB", name: "Yumbel" },
+      { code: "ABIO", name: "Alto Biobío" },
+      { code: "LEBU", name: "Lebu" },
+      { code: "ARAU", name: "Arauco" },
+      { code: "CANE", name: "Cañete" },
+      { code: "CONT", name: "Contulmo" },
+      { code: "CURA", name: "Curanilahue" },
+      { code: "LALA", name: "Los Álamos" },
+      { code: "TIRU", name: "Tirúa" }
     ],
     "Región de La Araucanía": [
-      "Angol", "Carahue", "Cholchol", "Collipulli", "Cunco", "Curacautín", "Curarrehue", "Ercilla",
-      "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Lonquimay", "Los Sauces", "Lumaco",
-      "Melipeuco", "Nueva Imperial", "Padre Las Casas", "Perquenco", "Pitrufquén", "Pucón", "Purén",
-      "Renaico", "Saavedra", "Temuco", "Teodoro Schmidt", "Toltén", "Traiguén", "Victoria", "Vilcún", "Villarrica"
+      { code: "TEMU", name: "Temuco" },
+      { code: "PLCAS", name: "Padre Las Casas" },
+      { code: "CARA", name: "Carahue" },
+      { code: "CHOL", name: "Cholchol" },
+      { code: "CUNC", name: "Cunco" },
+      { code: "CURA", name: "Curarrehue" },
+      { code: "FREI", name: "Freire" },
+      { code: "GALV", name: "Galvarino" },
+      { code: "GORB", name: "Gorbea" },
+      { code: "LAUT", name: "Lautaro" },
+      { code: "LONC", name: "Loncoche" },
+      { code: "MELI", name: "Melipeuco" },
+      { code: "NIMP", name: "Nueva Imperial" },
+      { code: "PERQ", name: "Perquenco" },
+      { code: "PITR", name: "Pitrufquén" },
+      { code: "PUCO", name: "Pucón" },
+      { code: "SAAV", name: "Saavedra" },
+      { code: "TSCH", name: "Teodoro Schmidt" },
+      { code: "TOLT", name: "Toltén" },
+      { code: "VILC", name: "Vilcún" },
+      { code: "VILL", name: "Villarrica" },
+      { code: "ANGO", name: "Angol" },
+      { code: "COLL", name: "Collipulli" },
+      { code: "CURA", name: "Curacautín" },
+      { code: "ERCI", name: "Ercilla" },
+      { code: "LONQ", name: "Lonquimay" },
+      { code: "LSAU", name: "Los Sauces" },
+      { code: "LUMA", name: "Lumaco" },
+      { code: "PURE", name: "Purén" },
+      { code: "RENA", name: "Renaico" },
+      { code: "TRAI", name: "Traiguén" },
+      { code: "VICT", name: "Victoria" }
     ],
     "Región de Antofagasta": [
-      "Antofagasta", "Calama", "María Elena", "Mejillones", "Ollagüe", "San Pedro de Atacama",
-      "Sierra Gorda", "Taltal", "Tocopilla"
+      { code: "ANTOF", name: "Antofagasta" },
+      { code: "MEJI", name: "Mejillones" },
+      { code: "SGOR", name: "Sierra Gorda" },
+      { code: "TALT", name: "Taltal" },
+      { code: "CALA", name: "Calama" },
+      { code: "OLLA", name: "Ollagüe" },
+      { code: "SPAT", name: "San Pedro de Atacama" },
+      { code: "TOCO", name: "Tocopilla" },
+      { code: "MELE", name: "María Elena" }
     ],
     "Región de Coquimbo": [
-      "Andacollo", "Canela", "Combarbalá", "Coquimbo", "Illapel", "La Higuera", "La Serena", "Los Vilos",
-      "Monte Patria", "Ovalle", "Paiguano", "Punitaqui", "Río Hurtado", "Salamanca", "Vicuña"
+      { code: "LSER", name: "La Serena" },
+      { code: "COQU", name: "Coquimbo" },
+      { code: "ANDA", name: "Andacollo" },
+      { code: "LHIG", name: "La Higuera" },
+      { code: "PAIG", name: "Paiguano" },
+      { code: "VICU", name: "Vicuña" },
+      { code: "ILLA", name: "Illapel" },
+      { code: "CANE", name: "Canela" },
+      { code: "LVIL", name: "Los Vilos" },
+      { code: "SALA", name: "Salamanca" },
+      { code: "OVAL", name: "Ovalle" },
+      { code: "COMB", name: "Combarbalá" },
+      { code: "MPAT", name: "Monte Patria" },
+      { code: "PUNI", name: "Punitaqui" },
+      { code: "RHUR", name: "Río Hurtado" }
     ],
     "Región del Maule": [
-      "Cauquenes", "Chanco", "Colbún", "Constitución", "Curepto", "Empedrado", "Hualañé", "Licantén",
-      "Linares", "Longaví", "Maule", "Molina", "Parral", "Pelarco", "Pelluhue", "Pencahue", "Rauco",
-      "Retiro", "Río Claro", "Romeral", "Sagrada Familia", "San Clemente", "San Javier", "San Rafael",
-      "Talca", "Teno", "Vichuquén", "Villa Alegre", "Yerbas Buenas"
+      { code: "TALC", name: "Talca" },
+      { code: "CONS", name: "Constitución" },
+      { code: "CURE", name: "Curepto" },
+      { code: "EMPE", name: "Empedrado" },
+      { code: "MAUL", name: "Maule" },
+      { code: "PELA", name: "Pelarco" },
+      { code: "PENC", name: "Pencahue" },
+      { code: "RCLA", name: "Río Claro" },
+      { code: "SCLE", name: "San Clemente" },
+      { code: "SRAF", name: "San Rafael" },
+      { code: "CAUQ", name: "Cauquenes" },
+      { code: "CHAN", name: "Chanco" },
+      { code: "PELL", name: "Pelluhue" },
+      { code: "CURI", name: "Curicó" },
+      { code: "HUAL", name: "Hualañé" },
+      { code: "LICA", name: "Licantén" },
+      { code: "MOLI", name: "Molina" },
+      { code: "RAUC", name: "Rauco" },
+      { code: "ROME", name: "Romeral" },
+      { code: "SFAM", name: "Sagrada Familia" },
+      { code: "TENO", name: "Teno" },
+      { code: "VICH", name: "Vichuquén" },
+      { code: "LINA", name: "Linares" },
+      { code: "COLB", name: "Colbún" },
+      { code: "LONG", name: "Longaví" },
+      { code: "PARR", name: "Parral" },
+      { code: "RETI", name: "Retiro" },
+      { code: "SJAV", name: "San Javier" },
+      { code: "VALE", name: "Villa Alegre" },
+      { code: "YBUE", name: "Yerbas Buenas" }
     ],
     "Región de O'Higgins": [
-      "Chépica", "Chimbarongo", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "La Estrella",
-      "Las Cabras", "Litueche", "Machalí", "Malloa", "Marchihue", "Mostazal", "Nancagua", "Navidad",
-      "Olivar", "Palmilla", "Paredones", "Peralillo", "Peumo", "Pichidegua", "Pichilemu", "Placilla",
-      "Pumanque", "Quinta de Tilcoco", "Rancagua", "Rengo", "Requínoa", "San Fernando", "San Francisco de Mostazal",
-      "San Vicente", "Santa Cruz"
+      { code: "RANC", name: "Rancagua" },
+      { code: "CODE", name: "Codegua" },
+      { code: "COIN", name: "Coinco" },
+      { code: "COLT", name: "Coltauco" },
+      { code: "DONI", name: "Doñihue" },
+      { code: "GRAN", name: "Graneros" },
+      { code: "LCAB", name: "Las Cabras" },
+      { code: "MACH", name: "Machalí" },
+      { code: "MALL", name: "Malloa" },
+      { code: "MOST", name: "Mostazal" },
+      { code: "OLIV", name: "Olivar" },
+      { code: "PEUM", name: "Peumo" },
+      { code: "PICH", name: "Pichidegua" },
+      { code: "QTIL", name: "Quinta de Tilcoco" },
+      { code: "RENG", name: "Rengo" },
+      { code: "REQU", name: "Requínoa" },
+      { code: "SVIC", name: "San Vicente" },
+      { code: "PICH", name: "Pichilemu" },
+      { code: "LEST", name: "La Estrella" },
+      { code: "LITU", name: "Litueche" },
+      { code: "MARC", name: "Marchihue" },
+      { code: "NAVI", name: "Navidad" },
+      { code: "PARE", name: "Paredones" },
+      { code: "SFER", name: "San Fernando" },
+      { code: "CHEP", name: "Chépica" },
+      { code: "CHIM", name: "Chimbarongo" },
+      { code: "NANC", name: "Nancagua" },
+      { code: "PALM", name: "Palmilla" },
+      { code: "PERA", name: "Peralillo" },
+      { code: "PLAC", name: "Placilla" },
+      { code: "PUMA", name: "Pumanque" },
+      { code: "SCRU", name: "Santa Cruz" }
     ],
     "Región de Los Lagos": [
-      "Ancud", "Calbuco", "Castro", "Chaitén", "Chonchi", "Cochamó", "Curaco de Vélez", "Dalcahue",
-      "Fresia", "Frutillar", "Futaleufú", "Hualaihué", "Llanquihue", "Los Muermos", "Maullín",
-      "Osorno", "Palena", "Puerto Montt", "Puerto Octay", "Puerto Varas", "Puqueldón", "Purranque",
-      "Puyehue", "Queilén", "Quellón", "Quemchi", "Quinchao", "Río Negro", "San Juan de la Costa", "San Pablo"
+      { code: "PMON", name: "Puerto Montt" },
+      { code: "CALB", name: "Calbuco" },
+      { code: "COCH", name: "Cochamó" },
+      { code: "FRES", name: "Fresia" },
+      { code: "FRUT", name: "Frutillar" },
+      { code: "LMUE", name: "Los Muermos" },
+      { code: "MAUL", name: "Maullín" },
+      { code: "PVAR", name: "Puerto Varas" },
+      { code: "CAST", name: "Castro" },
+      { code: "ANCU", name: "Ancud" },
+      { code: "CHON", name: "Chonchi" },
+      { code: "CVEL", name: "Curaco de Vélez" },
+      { code: "DALC", name: "Dalcahue" },
+      { code: "PUQU", name: "Puqueldón" },
+      { code: "QUEI", name: "Queilén" },
+      { code: "QUEL", name: "Quellón" },
+      { code: "QUEM", name: "Quemchi" },
+      { code: "QUIN", name: "Quinchao" },
+      { code: "OSOR", name: "Osorno" },
+      { code: "POCT", name: "Puerto Octay" },
+      { code: "PURR", name: "Purranque" },
+      { code: "PUYE", name: "Puyehue" },
+      { code: "RNEG", name: "Río Negro" },
+      { code: "SJCO", name: "San Juan de la Costa" },
+      { code: "SPAB", name: "San Pablo" },
+      { code: "CHAI", name: "Chaitén" },
+      { code: "FUTA", name: "Futaleufú" },
+      { code: "HUAL", name: "Hualaihué" },
+      { code: "PALE", name: "Palena" }
     ],
     "Región de Tarapacá": [
-      "Alto Hospicio", "Camiña", "Colchane", "Huara", "Iquique", "Pica", "Pozo Almonte"
+      { code: "IQUI", name: "Iquique" },
+      { code: "AHOS", name: "Alto Hospicio" },
+      { code: "PALM", name: "Pozo Almonte" },
+      { code: "CAMI", name: "Camiña" },
+      { code: "COLC", name: "Colchane" },
+      { code: "HUAR", name: "Huara" },
+      { code: "PICA", name: "Pica" }
     ],
     "Región de Atacama": [
-      "Alto del Carmen", "Caldera", "Chañaral", "Copiapó", "Diego de Almagro", "Freirina", "Huasco",
-      "Tierra Amarilla", "Vallenar"
+      { code: "COPI", name: "Copiapó" },
+      { code: "CALD", name: "Caldera" },
+      { code: "TAMA", name: "Tierra Amarilla" },
+      { code: "CHAN", name: "Chañaral" },
+      { code: "DALM", name: "Diego de Almagro" },
+      { code: "VALL", name: "Vallenar" },
+      { code: "ACAR", name: "Alto del Carmen" },
+      { code: "FREI", name: "Freirina" },
+      { code: "HUAS", name: "Huasco" }
     ],
     "Región de Ñuble": [
-      "Bulnes", "Chillán", "Chillán Viejo", "Cobquecura", "Coelemu", "Coihueco", "El Carmen", "Ninhue",
-      "Ñiquén", "Pemuco", "Pinto", "Portezuelo", "Quillón", "Quirihue", "Ranquil", "San Carlos",
-      "San Fabián", "San Ignacio", "San Nicolás", "Treguaco", "Yungay"
+      { code: "CHIL", name: "Chillán" },
+      { code: "CVIE", name: "Chillán Viejo" },
+      { code: "BULN", name: "Bulnes" },
+      { code: "COBQ", name: "Cobquecura" },
+      { code: "COEL", name: "Coelemu" },
+      { code: "COIH", name: "Coihueco" },
+      { code: "ECAR", name: "El Carmen" },
+      { code: "NINH", name: "Ninhue" },
+      { code: "NIQU", name: "Ñiquén" },
+      { code: "PEMU", name: "Pemuco" },
+      { code: "PINT", name: "Pinto" },
+      { code: "PORT", name: "Portezuelo" },
+      { code: "QUIL", name: "Quillón" },
+      { code: "QUIR", name: "Quirihue" },
+      { code: "RANQ", name: "Ranquil" },
+      { code: "SCAR", name: "San Carlos" },
+      { code: "SFAB", name: "San Fabián" },
+      { code: "SIGN", name: "San Ignacio" },
+      { code: "SNIC", name: "San Nicolás" },
+      { code: "TREG", name: "Treguaco" },
+      { code: "YUNG", name: "Yungay" }
     ],
     "Región de Los Ríos": [
-      "Corral", "Futrono", "La Unión", "Lago Ranco", "Lanco", "Los Lagos", "Máfil", "Mariquina",
-      "Paillaco", "Panguipulli", "Río Bueno", "Valdivia"
+      { code: "VALD", name: "Valdivia" },
+      { code: "CORR", name: "Corral" },
+      { code: "LANC", name: "Lanco" },
+      { code: "LLAG", name: "Los Lagos" },
+      { code: "MAFI", name: "Máfil" },
+      { code: "MARI", name: "Mariquina" },
+      { code: "PAIL", name: "Paillaco" },
+      { code: "PANG", name: "Panguipulli" },
+      { code: "LUNI", name: "La Unión" },
+      { code: "FUTR", name: "Futrono" },
+      { code: "LRAN", name: "Lago Ranco" },
+      { code: "RBUE", name: "Río Bueno" }
     ],
     "Región de Arica y Parinacota": [
-      "Arica", "Camarones", "General Lagos", "Putre"
+      { code: "ARIC", name: "Arica" },
+      { code: "CAMA", name: "Camarones" },
+      { code: "PUTR", name: "Putre" },
+      { code: "GLAG", name: "General Lagos" }
     ],
     "Región de Aysén": [
-      "Aysén", "Chile Chico", "Cisnes", "Cochrane", "Coyhaique", "Guaitecas", "Lago Verde",
-      "O'Higgins", "Río Ibáñez", "Tortel"
+      { code: "COYH", name: "Coyhaique" },
+      { code: "LVER", name: "Lago Verde" },
+      { code: "AYSE", name: "Aysén" },
+      { code: "CISN", name: "Cisnes" },
+      { code: "GUAI", name: "Guaitecas" },
+      { code: "COCH", name: "Cochrane" },
+      { code: "OHIG", name: "O'Higgins" },
+      { code: "TORT", name: "Tortel" },
+      { code: "CCHI", name: "Chile Chico" },
+      { code: "RIBA", name: "Río Ibáñez" }
     ],
     "Región de Magallanes": [
-      "Antártica", "Cabo de Hornos", "Laguna Blanca", "Natales", "Porvenir", "Primavera",
-      "Punta Arenas", "Río Verde", "San Gregorio", "Timaukel", "Torres del Paine"
+      { code: "PARE", name: "Punta Arenas" },
+      { code: "LBLA", name: "Laguna Blanca" },
+      { code: "RVER", name: "Río Verde" },
+      { code: "SGRE", name: "San Gregorio" },
+      { code: "CHOR", name: "Cabo de Hornos" },
+      { code: "ANTA", name: "Antártica" },
+      { code: "PORV", name: "Porvenir" },
+      { code: "PRIM", name: "Primavera" },
+      { code: "TIMA", name: "Timaukel" },
+      { code: "NATA", name: "Natales" },
+      { code: "TPAI", name: "Torres del Paine" }
     ]
+  };
+
+  let tarifaDinamicaChilexpress = null;
+
+  // --- COTIZACIÓN EN VIVO CON CHILEXPRESS ---
+  const cotizarChilexpress = async (codigoComuna) => {
+    if (!codigoComuna) return;
+
+    if (summaryEnvio) {
+      summaryEnvio.innerText = "Cotizando...";
+    }
+
+    try {
+      const response = await fetch(`${API_URL}?action=cotizar_chilexpress&comuna=${encodeURIComponent(codigoComuna)}`);
+      const resData = await response.json();
+
+      if (resData && (resData.success || resData.costoEnvio || resData.valor || (resData.data && resData.data.costoEnvio))) {
+        const tarifaCalculada = Number(resData.costoEnvio || resData.valor || (resData.data && (resData.data.costoEnvio || resData.data.valor)));
+        if (!isNaN(tarifaCalculada) && tarifaCalculada > 0) {
+          tarifaDinamicaChilexpress = tarifaCalculada;
+        }
+      }
+    } catch (err) {
+      console.warn("No se pudo obtener la cotización en tiempo real de Chilexpress, se mantendrá la tarifa base regional:", err);
+    } finally {
+      actualizarVisualizacionPrecio();
+    }
   };
 
   const actualizarComunas = () => {
@@ -267,10 +586,12 @@ document.addEventListener("DOMContentLoaded", () => {
       defaultOpt.textContent = "Selecciona tu comuna...";
       comunaInput.appendChild(defaultOpt);
 
-      comunas.forEach((comuna) => {
+      comunas.forEach((item) => {
         const opt = document.createElement("option");
-        opt.value = comuna;
-        opt.textContent = comuna;
+        const code = typeof item === "object" ? item.code : item;
+        const name = typeof item === "object" ? item.name : item;
+        opt.value = code;
+        opt.textContent = name;
         comunaInput.appendChild(opt);
       });
     } else {
@@ -286,7 +607,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (regionSelect) {
     regionSelect.addEventListener("change", () => {
+      tarifaDinamicaChilexpress = null;
       actualizarComunas();
+      actualizarVisualizacionPrecio();
+    });
+  }
+
+  if (comunaInput) {
+    comunaInput.addEventListener("change", () => {
+      const codigoComuna = comunaInput.value;
+      if (codigoComuna) {
+        cotizarChilexpress(codigoComuna);
+      }
     });
   }
 
@@ -620,8 +952,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    const comunaTexto = comunaInput && comunaInput.selectedIndex >= 0 ? comunaInput.options[comunaInput.selectedIndex].text : comuna;
     if (modalUserName) modalUserName.innerText = sanitizeInput(nombre);
-    if (modalUserAddress) modalUserAddress.innerText = `${sanitizeInput(direccion)}, ${sanitizeInput(comuna)}`;
+    if (modalUserAddress) modalUserAddress.innerText = `${sanitizeInput(direccion)}, ${sanitizeInput(comunaTexto)}`;
     if (modalUserRegion) modalUserRegion.innerText = sanitizeInput(region);
 
     // Reiniciar estado de casilla de términos al abrir el modal
