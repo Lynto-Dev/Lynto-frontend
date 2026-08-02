@@ -1227,7 +1227,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         let userMsg = err.message || "";
-        if (userMsg.includes("1620") || userMsg.includes("not valid") || userMsg.includes("userEmail")) {
+        if (userMsg.includes("Failed to fetch") || userMsg.includes("NetworkError") || userMsg.includes("CORS")) {
+          userMsg = "No se pudo establecer conexión con el servidor de pagos de Google. Por favor verifica que la versión en script.google.com esté desplegada con acceso para 'Cualquiera' o intenta nuevamente.";
+        } else if (userMsg.includes("1620") || userMsg.includes("not valid") || userMsg.includes("userEmail")) {
           userMsg = "El correo electrónico ingresado no ha sido validado por el filtro de seguridad de la pasarela de pagos. Por favor intenta con un correo alternativo (ej. correo institucional o personal secundario).";
         } else {
           userMsg = `No se pudo procesar la compra: ${userMsg}.`;
