@@ -2,9 +2,9 @@
 ## Proyecto: Preventa E-Commerce Suplementos "Lynto"
 
 > **Estado General:** 🟢 **Fase Final de Transición a Producción (~98% Global)**  
-> **Backend & DevOps:** 🟢 **98% Completado** *(LockService, Cloudflare Edge Worker, Flow Sandbox, webhook /webhook, API get_config, módulo de correos y cupones/tarifas aprobados)*.  
-> **Frontend:** 🟢 **100% Completado** *(Diseño visual HSL/HEX, Tailwind CSS, Google Fonts, badges, copys oficiales del Drive, checkout con cupones, regiones, sanitización anti-XSS y overlay de carga)*.  
-> **Actualización:** 27 de Julio de 2026
+> **Backend & Chilexpress:** 🟢 **100% Completado** *(LockService, Cloudflare Edge Worker, Flow, API get_config, ChilexpressService src/chilexpress.js, generación de OT post-pago, columnas O/P en Sheets y mail con tracking de envío)*.  
+> **Frontend:** 🟢 **100% Completado** *(Diseño visual HSL/HEX, Tailwind CSS, Google Fonts, badges, copys oficiales del Drive, checkout con cupones, regiones, sello Chilexpress, sanitización anti-XSS y overlay de carga)*.  
+> **Actualización:** 31 de Julio de 2026
 
 ---
 
