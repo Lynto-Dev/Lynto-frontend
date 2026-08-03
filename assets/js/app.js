@@ -816,7 +816,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (btnAplicarCupon) {
       btnAplicarCupon.disabled = true;
-      btnAplicarCupon.innerText = "...";
+      btnAplicarCupon.classList.add("btn-loading");
+      btnAplicarCupon.innerHTML = `<span class="spinner-btn-inline" aria-hidden="true"></span> <span>Validando...</span>`;
     }
 
     try {
@@ -888,7 +889,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally {
       if (btnAplicarCupon) {
         btnAplicarCupon.disabled = false;
-        btnAplicarCupon.innerText = "Aplicar";
+        btnAplicarCupon.classList.remove("btn-loading");
+        btnAplicarCupon.innerHTML = `Aplicar`;
       }
     }
   };
