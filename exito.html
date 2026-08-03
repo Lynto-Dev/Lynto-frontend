@@ -110,6 +110,19 @@
 
           if (data && data.success && data.status === 'PAGADO') {
             // COMPRA EXITOSA REAL
+            if (typeof fbq === "function") {
+              try {
+                fbq("track", "Purchase", {
+                  content_name: "Iron Girl Preventa",
+                  value: Number(data.montoTotal || 19990),
+                  currency: "CLP",
+                  order_id: data.idPedido || token
+                });
+              } catch (fbErr) {
+                console.warn("Nota Meta Pixel Purchase:", fbErr.message);
+              }
+            }
+
             iconEl.innerText = '🎉';
             titleEl.innerText = '¡Compra Exitosa!';
             titleEl.style.color = 'var(--brand-purple-deep)';

@@ -944,7 +944,21 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarEstadoBotonPago();
 
     // Asegurar recálculo de precios antes de abrir
-    actualizarVisualizacionPrecio();
+    // Disparar evento de conversión InitiateCheckout para Meta Pixel
+    if (typeof fbq === "function") {
+      try {
+        const cant = parseInt(cantidadInput ? cantidadInput.value : "1", 10) || 1;
+        fbq("track", "InitiateCheckout", {
+          content_name: "Iron Girl Preventa",
+          content_category: "Suplementos",
+          value: PRODUCT_PRICE * cant,
+          currency: "CLP",
+          num_items: cant,
+        });
+      } catch (fbErr) {
+        console.warn("Nota Meta Pixel:", fbErr.message);
+      }
+    }
 
     if (modalResumen) {
       modalResumen.classList.remove("hidden");
@@ -1165,6 +1179,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!aceptoTerminosCheckbox || !aceptoTerminosCheckbox.checked) {
         return mostrarError("Debes aceptar los términos y condiciones de preventa para poder realizar el pago.", aceptoTerminosCheckbox);
+      }
+
+      // Disparar evento AddPaymentInfo para Meta Pixel al proceder con el pago
+      if (typeof fbq === "function") {
+        try {
+          fbq("track", "AddPaymentInfo", {
+            content_name: "Iron Girl Preventa",
+            value: PRODUCT_PRICE * cantidad,
+            currency: "CLP",
+          });
+        } catch (fbErr) {
+          console.warn("Nota Meta Pixel:", fbErr.message);
+        }
       }
 
       // 1. Cerrar el modal de resumen para mostrar limpiamente la tarjeta de carga
@@ -1418,6 +1445,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const resData = await response.json();
 
         if (resData.success) {
+          if (typeof fbq === "function") {
+            try {
+              fbq("track", "Lead", {
+                content_name: "Club Lynto VIP",
+              });
+            } catch (fbErr) {
+              console.warn("Nota Meta Pixel Lead:", fbErr.message);
+            }
+          }
           if (newsletterMsg) {
             newsletterMsg.innerText =
               resData.message || "¡Gracias por suscribirte al Club Lynto!";
