@@ -1515,8 +1515,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryItems = [
     { src: "./assets/img/img_producto/img1.PNG", badge: "⚡ Matriz Biotecnológica Mineral" },
     { src: "./assets/img/img_producto/img2.PNG", badge: "🥤 15 Sachets • Frambuesa Limón" },
-    { src: "./assets/img/img_producto/img3.PNG", badge: "✨ Comunidad VIP Lynto" },
-    { src: "./assets/img/img_producto/img4.PNG", badge: "🌿 Formato Sachet Portable" }
+    { src: "./assets/img/img_producto/img5.PNG", badge: "✨ Comunidad VIP Lynto" },
+    { src: "./assets/img/img_producto/img6.PNG", badge: "🌿 Formato Sachet Portable" }
   ];
 
   let currentGalleryIndex = 0;
