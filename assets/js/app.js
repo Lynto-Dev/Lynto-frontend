@@ -543,33 +543,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ]
   };
 
-  let tarifaDinamicaChilexpress = null;
-
-  // --- COTIZACIÓN EN VIVO CON CHILEXPRESS ---
-  const cotizarChilexpress = async (codigoComuna) => {
-    if (!codigoComuna) return;
-
-    if (summaryEnvio) {
-      summaryEnvio.innerText = "Cotizando...";
-    }
-
-    try {
-      const response = await fetch(`${API_URL}?action=cotizar_chilexpress&comuna=${encodeURIComponent(codigoComuna)}`);
-      const resData = await response.json();
-
-      if (resData && (resData.success || resData.costoEnvio || resData.valor || (resData.data && resData.data.costoEnvio))) {
-        const tarifaCalculada = Number(resData.costoEnvio || resData.valor || (resData.data && (resData.data.costoEnvio || resData.data.valor)));
-        if (!isNaN(tarifaCalculada) && tarifaCalculada > 0) {
-          tarifaDinamicaChilexpress = tarifaCalculada;
-        }
-      }
-    } catch (err) {
-      console.warn("No se pudo obtener la cotización en tiempo real de Chilexpress, se mantendrá la tarifa base regional:", err);
-    } finally {
-      actualizarVisualizacionPrecio();
-    }
-  };
-
   const actualizarComunas = () => {
     if (!regionSelect || !comunaInput) return;
     const regionSeleccionada = regionSelect.value;
@@ -607,7 +580,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (regionSelect) {
     regionSelect.addEventListener("change", () => {
-      tarifaDinamicaChilexpress = null;
       actualizarComunas();
       actualizarVisualizacionPrecio();
     });
@@ -615,10 +587,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (comunaInput) {
     comunaInput.addEventListener("change", () => {
-      const codigoComuna = comunaInput.value;
-      if (codigoComuna) {
-        cotizarChilexpress(codigoComuna);
-      }
+      actualizarVisualizacionPrecio();
     });
   }
 

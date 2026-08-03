@@ -96,19 +96,15 @@
             titleEl.innerText = '¡Compra Exitosa!';
             titleEl.style.color = 'var(--brand-purple-deep)';
             msgEl.innerText = `¡Muchas gracias ${data.nombre ? data.nombre : ''}! Tu pedido ${data.idPedido ? '#' + data.idPedido : ''} ha sido registrado y pagado con éxito.`;
-            const ot = data.ot || data.numeroOT || data.chilexpressOT || data.trackingNumber || data.transporteOT || (data.data && (data.data.ot || data.data.numeroOT || data.data.chilexpressOT));
+            const ot = data.ot || data.numeroOT || data.blueexpressOS || data.chilexpressOT || data.trackingNumber || data.transporteOT || (data.data && (data.data.ot || data.data.numeroOT || data.data.blueexpressOS || data.data.chilexpressOT));
             if (ot) {
-              const trackingUrl = `https://www.chilexpress.cl/seguimiento-envio?n=${encodeURIComponent(ot)}`;
               infoTextEl.innerHTML = `Recibirás un correo electrónico con el comprobante de compra.<br/><br/>` +
                 `<div style="background: #ffffff; border: 1px solid var(--border-color); padding: 1rem; border-radius: var(--radius-sm); margin-top: 0.5rem;">` +
-                `<strong style="color: var(--brand-purple-deep); font-size: 0.95rem;">📦 Número de OT (Chilexpress):</strong><br/>` +
-                `<span style="font-size: 1.25rem; font-weight: 800; color: var(--brand-purple-deep); letter-spacing: 0.5px;">${ot}</span><br/><br/>` +
-                `<a href="${trackingUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-block" style="display: block; text-align: center; text-decoration: none; font-size: 0.9rem; font-weight: 700;">` +
-                `Rastrear En envío en Chilexpress 🚚` +
-                `</a>` +
+                `<strong style="color: var(--brand-purple-deep); font-size: 0.95rem;">📦 Número de Orden de Servicio / Seguimiento:</strong><br/>` +
+                `<span style="font-size: 1.25rem; font-weight: 800; color: var(--brand-purple-deep); letter-spacing: 0.5px;">${ot}</span>` +
                 `</div>`;
             } else {
-              infoTextEl.innerText = 'Recibirás un correo electrónico con el comprobante de compra. Te notificaremos cuando tu pedido sea enviado por Chilexpress con el número de seguimiento.';
+              infoTextEl.innerText = 'Recibirás un correo electrónico con el comprobante de compra. Te notificaremos por correo electrónico con los detalles del envío una vez que tu pedido sea preparado y despachado.';
             }
             btnEl.innerText = 'Volver al Inicio';
             btnEl.href = './index.html';
