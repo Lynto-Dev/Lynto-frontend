@@ -1978,7 +1978,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const cargarConfiguracion = async () => {
-    // 1. Verificar si existe configuración guardada en sessionStorage (Carga Instantánea 0 ms)
+    // 1. Carga Instantánea a 0 ms desde sessionStorage (Stale-While-Revalidate)
     const cachedConfigRaw = sessionStorage.getItem("LYNTO_CONFIG");
     let hasCache = false;
     if (cachedConfigRaw) {
@@ -1987,7 +1987,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cachedData && cachedData.success) {
           aplicarConfiguracion(cachedData);
           hasCache = true;
-          console.log("⚡ Configuración cargada al instante desde sessionStorage (0 ms).");
+          console.log("⚡ Configuración cargada al instante desde sessionStorage (0 ms). Revalidando en segundo plano...");
           if (displayTotal) displayTotal.classList.remove("total-price-loading");
         }
       } catch (e) {
@@ -1995,8 +1995,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 2. Fetch con AbortController (Timeout Graceful a los 12 segundos para tolerar el arranque en frío de Apps Script)
-    const FETCH_TIMEOUT_MS = 12000;
+    // 2. Revalidación en segundo plano (background fetch no-bloqueante)
+    const FETCH_TIMEOUT_MS = 6000;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -2015,29 +2015,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const resData = await response.json();
-      if (!resData.success) {
-        console.warn("⚠️ La respuesta de get_config no indicó éxito:", resData);
-        return;
-      }
+      if (!resData.success) return;
 
-      // Guardar en sessionStorage para próximas recargas de la sesión
+      // Actualizar el caché de la sesión con los datos más recientes de Sheets
       try {
         sessionStorage.setItem("LYNTO_CONFIG", JSON.stringify(resData));
-      } catch (e) {
-        console.warn("⚠️ No se pudo guardar en sessionStorage:", e);
-      }
+      } catch (e) {}
 
-      // Aplicar actualización fresca de la API
+      // Aplicar actualización fresca de Sheets a la pantalla
       aplicarConfiguracion(resData);
-      console.log("✅ Configuración dinámica de Sheets cargada y actualizada con éxito.");
+      console.log("✅ Configuración dinámica revalidada y actualizada desde Sheets.");
     } catch (error) {
-      if (error.name === "AbortError") {
-        console.warn("⏱️ Tiempo de espera agotado al consultar la API (6s). Se mantendrán los valores locales/caché.");
-      } else {
-        console.warn(
-          "⚠️ No se pudo cargar la configuración dinámica desde Sheets (se mantendrán los valores por defecto):",
-          error.message
-        );
+      if (error.name !== "AbortError") {
+        console.log("Nota al revalidar configuración:", error.message);
       }
     } finally {
       clearTimeout(timeoutId);
