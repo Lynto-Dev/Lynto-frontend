@@ -937,12 +937,6 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.hero-soft-dots .dot.active {
-  width: 18px;
-  border-radius: 10px;
-  background: var(--brand-purple-deep);
-}
-
 .hero-soft-dots .dot {
   width: 8px;
   height: 8px;
@@ -957,6 +951,12 @@ a:hover {
   border-radius: 10px;
   background: var(--brand-purple-deep);
 }
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--text-main);
   line-height: 1.15;
 }
 
