@@ -1762,11 +1762,190 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   // --- CARGA DINÁMICA DESDE GOOGLE SHEETS (get_config) ---
+  const aplicarConfiguracion = (resData) => {
+    if (!resData || !resData.success) return;
+
+    // Estructura oficial enviada por el Backend: resData.config, resData.producto, resData.nutricion (soporta resData.data también)
+    const dataPayload = resData.data || resData;
+    const producto = dataPayload.producto || {};
+    const config = dataPayload.config || dataPayload.configuracion || {};
+    const nutricion = dataPayload.nutricion || [];
+
+    // 1. Datos del Producto (Inventario: precio y stock)
+    const precioVal = producto.precio !== undefined ? producto.precio : (config.PRECIO_PREVENTA || config.precio || config.precioproducto);
+    const stockVal = producto.stock !== undefined ? producto.stock : (config.STOCK_DISPONIBLE || config.stock || config.stockproducto);
+
+    if (precioVal !== undefined && !isNaN(Number(precioVal))) {
+      PRODUCT_PRICE = Number(precioVal);
+      actualizarVisualizacionPrecio();
+    }
+
+    // Control dinámico de botones según stock real disponible
+    const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+    if (stockVal !== undefined && !isNaN(Number(stockVal))) {
+      const numStock = Number(stockVal);
+      if (numStock <= 0) {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span>Agotado - Stock Agotado</span>`;
+          submitBtn.style.opacity = "0.6";
+          submitBtn.style.cursor = "not-allowed";
+        }
+      } else {
+        if (submitBtn && submitBtn.disabled) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>Quiero mi Iron Girl en Preventa ⚡</span>`;
+          submitBtn.style.opacity = "1";
+          submitBtn.style.cursor = "pointer";
+        }
+      }
+    }
+
+    // 2. Normalizar claves de configuración para reemplazo seguro
+    const configMap = {};
+    if (Array.isArray(config)) {
+      config.forEach((item) => {
+        if (item.Clave || item.clave) {
+          const k = String(item.Clave || item.clave).toLowerCase().replace(/[^a-z0-9]/g, "");
+          configMap[k] = item.Valor || item.valor || "";
+        }
+      });
+    } else if (typeof config === "object") {
+      Object.keys(config).forEach((key) => {
+        const k = key.toLowerCase().replace(/[^a-z0-9]/g, "");
+        configMap[k] = config[key];
+      });
+    }
+
+    // Control de Ventas Pausadas / Tienda Cerrada
+    const pausarVentasVal = configMap["pausarventas"] || configMap["cerrartienda"] || configMap["tiendacerrada"];
+    if (pausarVentasVal) {
+      const strPausar = String(pausarVentasVal).trim().toLowerCase();
+      if (strPausar === "true" || strPausar === "verdadero" || strPausar === "1") {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span>🔒 Ventas Pausadas Temporalmente</span>`;
+          submitBtn.style.opacity = "0.6";
+          submitBtn.style.cursor = "not-allowed";
+        }
+      }
+    }
+
+    // 3. Inyección dinámica de textos e imágenes configurables
+    const heroTituloEl = document.getElementById("hero-titulo");
+    const heroTituloVal = configMap["titulositio"] || configMap["herotitulo"] || configMap["titulo"];
+    if (heroTituloEl && heroTituloVal) heroTituloEl.innerText = heroTituloVal;
+
+    const heroSubtituloEl = document.getElementById("hero-subtitulo");
+    const heroSubtituloVal = configMap["subtitulo"] || configMap["herosubtitulo"];
+    if (heroSubtituloEl && heroSubtituloVal) heroSubtituloEl.innerText = heroSubtituloVal;
+
+    const productoDescEl = document.getElementById("producto-descripcion");
+    const productoDescVal = producto.descripcion || configMap["productodescripcion"] || configMap["descripcionproducto"];
+    if (productoDescEl && productoDescVal) productoDescEl.innerText = productoDescVal;
+
+    const nosotrasDescEl = document.getElementById("nosotras-descripcion");
+    const nosotrasVal = configMap["nosotrashistoria"] || configMap["nosotrasdescripcion"];
+    if (nosotrasDescEl && nosotrasVal) nosotrasDescEl.innerText = nosotrasVal;
+
+    const despachoInfoEl = document.getElementById("despacho-info");
+    const despachoVal = configMap["despachoinfo"] || configMap["envioinfo"];
+    if (despachoInfoEl && despachoVal) despachoInfoEl.innerText = despachoVal;
+
+    const disclaimerEl = document.getElementById("disclaimer-legal");
+    const disclaimerVal = configMap["disclaimerlegal"] || configMap["disclaimer"];
+    if (disclaimerEl && disclaimerVal) disclaimerEl.innerText = disclaimerVal;
+
+    const resolucionEl = document.getElementById("resolucion-sanitaria");
+    const resolucionVal = configMap["resolucionsanitaria"];
+    if (resolucionEl && resolucionVal) resolucionEl.innerText = resolucionVal;
+
+    const saborEl = document.getElementById("sabor-modo-uso");
+    const saborVal = configMap["sabormodouso"];
+    if (saborEl && saborVal) saborEl.innerText = saborVal;
+
+    // 4. Tabla Nutricional (#tabla-nutricion-body)
+    const tablaBody = document.getElementById("tabla-nutricion-body");
+    if (tablaBody && Array.isArray(nutricion) && nutricion.length > 0) {
+      tablaBody.innerHTML = "";
+      nutricion.forEach((row) => {
+        const comp = row.componente || row.Componente || row[0] || "";
+        const cant = row.cantidad || row.Cantidad || row[1] || "";
+        const ddr = row.ddr || row.DDR || row[2] || "";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${comp}</td>
+          <td>${cant}</td>
+          <td>${ddr}</td>
+        `;
+        tablaBody.appendChild(tr);
+      });
+    }
+
+    // 5. Preguntas Frecuentes Dinámicas desde Pestaña FAQ
+    const faqWrapper = document.querySelector(".faq-accordion-wrapper");
+    const faqList = dataPayload.faq || resData.faq || [];
+    if (faqWrapper && Array.isArray(faqList) && faqList.length > 0) {
+      faqWrapper.innerHTML = "";
+      faqList.forEach((faqItem, idx) => {
+        const preg = faqItem.pregunta || faqItem[0] || "";
+        const resp = faqItem.respuesta || faqItem[1] || "";
+        const isFirst = idx === 0 ? "open" : "";
+
+        if (preg && resp) {
+          const detailsEl = document.createElement("details");
+          detailsEl.className = "faq-accordion-item";
+          if (isFirst) detailsEl.setAttribute("open", "");
+
+          detailsEl.innerHTML = `
+            <summary class="faq-accordion-header">
+              <span>${preg}</span>
+              <span class="faq-accordion-icon">▼</span>
+            </summary>
+            <div class="faq-accordion-body">
+              <p>${resp}</p>
+            </div>
+          `;
+          faqWrapper.appendChild(detailsEl);
+        }
+      });
+    }
+  };
+
   const cargarConfiguracion = async () => {
+    // 1. Verificar si existe configuración guardada en sessionStorage (Carga Instantánea 0 ms)
+    const cachedConfigRaw = sessionStorage.getItem("LYNTO_CONFIG");
+    let hasCache = false;
+    if (cachedConfigRaw) {
+      try {
+        const cachedData = JSON.parse(cachedConfigRaw);
+        if (cachedData && cachedData.success) {
+          aplicarConfiguracion(cachedData);
+          hasCache = true;
+          console.log("⚡ Configuración cargada al instante desde sessionStorage (0 ms).");
+          if (displayTotal) displayTotal.classList.remove("total-price-loading");
+        }
+      } catch (e) {
+        console.warn("⚠️ No se pudo decodificar el caché de sessionStorage:", e);
+      }
+    }
+
+    // 2. Fetch con AbortController (Timeout Graceful a los 6 segundos)
+    const FETCH_TIMEOUT_MS = 6000;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
     try {
-      console.log("⏳ Solicitando configuración inicial desde Google Sheets...");
-      if (displayTotal) displayTotal.classList.add("total-price-loading");
-      const response = await fetch(`${API_URL}?action=get_config`);
+      if (!hasCache) {
+        console.log("⏳ Solicitando configuración inicial desde Google Sheets...");
+        if (displayTotal) displayTotal.classList.add("total-price-loading");
+      }
+
+      const response = await fetch(`${API_URL}?action=get_config`, {
+        signal: controller.signal,
+      });
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} al consultar la configuración.`);
       }
@@ -1777,157 +1956,27 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Estructura oficial enviada por el Backend: resData.config, resData.producto, resData.nutricion (soporta resData.data también)
-      const dataPayload = resData.data || resData;
-      const producto = dataPayload.producto || {};
-      const config = dataPayload.config || dataPayload.configuracion || {};
-      const nutricion = dataPayload.nutricion || [];
-
-      // 1. Datos del Producto (Inventario: precio y stock)
-      const precioVal = producto.precio !== undefined ? producto.precio : (config.PRECIO_PREVENTA || config.precio || config.precioproducto);
-      const stockVal = producto.stock !== undefined ? producto.stock : (config.STOCK_DISPONIBLE || config.stock || config.stockproducto);
-
-      if (precioVal !== undefined && !isNaN(Number(precioVal))) {
-        PRODUCT_PRICE = Number(precioVal);
-        actualizarVisualizacionPrecio();
+      // Guardar en sessionStorage para próximas recargas de la sesión
+      try {
+        sessionStorage.setItem("LYNTO_CONFIG", JSON.stringify(resData));
+      } catch (e) {
+        console.warn("⚠️ No se pudo guardar en sessionStorage:", e);
       }
 
-      // Control dinámico de botones según stock real disponible
-      const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
-      if (stockVal !== undefined && !isNaN(Number(stockVal))) {
-        const numStock = Number(stockVal);
-        if (numStock <= 0) {
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<span>Agotado - Stock Agotado</span>`;
-            submitBtn.style.opacity = "0.6";
-            submitBtn.style.cursor = "not-allowed";
-          }
-        } else {
-          if (submitBtn && submitBtn.disabled) {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `<span>Quiero mi Iron Girl en Preventa ⚡</span>`;
-            submitBtn.style.opacity = "1";
-            submitBtn.style.cursor = "pointer";
-          }
-        }
-      }
-
-      // 2. Normalizar claves de configuración para reemplazo seguro
-      const configMap = {};
-      if (Array.isArray(config)) {
-        config.forEach((item) => {
-          if (item.Clave || item.clave) {
-            const k = String(item.Clave || item.clave).toLowerCase().replace(/[^a-z0-9]/g, "");
-            configMap[k] = item.Valor || item.valor || "";
-          }
-        });
-      } else if (typeof config === "object") {
-        Object.keys(config).forEach((key) => {
-          const k = key.toLowerCase().replace(/[^a-z0-9]/g, "");
-          configMap[k] = config[key];
-        });
-      }
-
-      // Control de Ventas Pausadas / Tienda Cerrada
-      const pausarVentasVal = configMap["pausarventas"] || configMap["cerrartienda"] || configMap["tiendacerrada"];
-      if (pausarVentasVal) {
-        const strPausar = String(pausarVentasVal).trim().toLowerCase();
-        if (strPausar === "true" || strPausar === "verdadero" || strPausar === "1") {
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<span>🔒 Ventas Pausadas Temporalmente</span>`;
-            submitBtn.style.opacity = "0.6";
-            submitBtn.style.cursor = "not-allowed";
-          }
-        }
-      }
-
-      // 3. Inyección dinámica de textos e imágenes configurables
-      const heroTituloEl = document.getElementById("hero-titulo");
-      const heroTituloVal = configMap["titulositio"] || configMap["herotitulo"] || configMap["titulo"];
-      if (heroTituloEl && heroTituloVal) heroTituloEl.innerText = heroTituloVal;
-
-      const heroSubtituloEl = document.getElementById("hero-subtitulo");
-      const heroSubtituloVal = configMap["subtitulo"] || configMap["herosubtitulo"];
-      if (heroSubtituloEl && heroSubtituloVal) heroSubtituloEl.innerText = heroSubtituloVal;
-
-      const productoDescEl = document.getElementById("producto-descripcion");
-      const productoDescVal = producto.descripcion || configMap["productodescripcion"] || configMap["descripcionproducto"];
-      if (productoDescEl && productoDescVal) productoDescEl.innerText = productoDescVal;
-
-      const nosotrasDescEl = document.getElementById("nosotras-descripcion");
-      const nosotrasVal = configMap["nosotrashistoria"] || configMap["nosotrasdescripcion"];
-      if (nosotrasDescEl && nosotrasVal) nosotrasDescEl.innerText = nosotrasVal;
-
-      const despachoInfoEl = document.getElementById("despacho-info");
-      const despachoVal = configMap["despachoinfo"] || configMap["envioinfo"];
-      if (despachoInfoEl && despachoVal) despachoInfoEl.innerText = despachoVal;
-
-      const disclaimerEl = document.getElementById("disclaimer-legal");
-      const disclaimerVal = configMap["disclaimerlegal"] || configMap["disclaimer"];
-      if (disclaimerEl && disclaimerVal) disclaimerEl.innerText = disclaimerVal;
-
-      const resolucionEl = document.getElementById("resolucion-sanitaria");
-      const resolucionVal = configMap["resolucionsanitaria"];
-      if (resolucionEl && resolucionVal) resolucionEl.innerText = resolucionVal;
-
-      const saborEl = document.getElementById("sabor-modo-uso");
-      const saborVal = configMap["sabormodouso"];
-      if (saborEl && saborVal) saborEl.innerText = saborVal;
-
-      // 4. Tabla Nutricional (#tabla-nutricion-body)
-      const tablaBody = document.getElementById("tabla-nutricion-body");
-      if (tablaBody && Array.isArray(nutricion) && nutricion.length > 0) {
-        tablaBody.innerHTML = "";
-        nutricion.forEach((row) => {
-          const comp = row.componente || row.Componente || row[0] || "";
-          const cant = row.cantidad || row.Cantidad || row[1] || "";
-          const ddr = row.ddr || row.DDR || row[2] || "";
-
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${comp}</td>
-            <td>${cant}</td>
-            <td>${ddr}</td>
-          `;
-          tablaBody.appendChild(tr);
-        });
-      }
-
-      // 5. Preguntas Frecuentes Dinámicas desde Pestaña FAQ
-      const faqWrapper = document.querySelector(".faq-accordion-wrapper");
-      const faqList = dataPayload.faq || resData.faq || [];
-      if (faqWrapper && Array.isArray(faqList) && faqList.length > 0) {
-        faqWrapper.innerHTML = "";
-        faqList.forEach((faqItem, idx) => {
-          const preg = faqItem.pregunta || faqItem[0] || "";
-          const resp = faqItem.respuesta || faqItem[1] || "";
-          const isFirst = idx === 0 ? "open" : "";
-
-          if (preg && resp) {
-            const detailsEl = document.createElement("details");
-            detailsEl.className = "faq-accordion-item";
-            if (isFirst) detailsEl.setAttribute("open", "");
-
-            detailsEl.innerHTML = `
-              <summary class="faq-accordion-header">
-                <span>${preg}</span>
-                <span class="faq-accordion-icon">▼</span>
-              </summary>
-              <div class="faq-accordion-body">
-                <p>${resp}</p>
-              </div>
-            `;
-            faqWrapper.appendChild(detailsEl);
-          }
-        });
-      }
-
-      console.log("✅ Configuración dinámica de Sheets cargada con éxito.");
+      // Aplicar actualización fresca de la API
+      aplicarConfiguracion(resData);
+      console.log("✅ Configuración dinámica de Sheets cargada y actualizada con éxito.");
     } catch (error) {
-      console.warn("⚠️ No se pudo cargar la configuración dinámica desde Sheets (se mantendrán los valores por defecto):", error.message);
+      if (error.name === "AbortError") {
+        console.warn("⏱️ Tiempo de espera agotado al consultar la API (6s). Se mantendrán los valores locales/caché.");
+      } else {
+        console.warn(
+          "⚠️ No se pudo cargar la configuración dinámica desde Sheets (se mantendrán los valores por defecto):",
+          error.message
+        );
+      }
     } finally {
+      clearTimeout(timeoutId);
       if (displayTotal) displayTotal.classList.remove("total-price-loading");
     }
   };
