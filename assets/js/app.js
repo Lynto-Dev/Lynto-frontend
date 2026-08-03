@@ -1980,8 +1980,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 2. Fetch con AbortController (Timeout Graceful a los 6 segundos)
-    const FETCH_TIMEOUT_MS = 6000;
+    // 2. Fetch con AbortController (Timeout Graceful a los 12 segundos para tolerar el arranque en frío de Apps Script)
+    const FETCH_TIMEOUT_MS = 12000;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
