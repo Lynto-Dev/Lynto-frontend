@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const aceptoTerminosCheckbox = document.getElementById("acepto-terminos");
   const btnConfirmarPagoFlow = document.getElementById("btn-confirmar-pago-flow");
 
-  // --- MAPA DE COMUNAS POR REGIÓN EN CHILE CON CÓDIGOS OFICIALES DE CHILEXPRESS (4 LETRAS) ---
+  // --- MAPA DE COMUNAS POR REGIÓN EN CHILE CON NOMBRES OFICIALES COMPLETOS ---
   const COMUNAS_POR_REGION = {
     "Región Metropolitana": [
       { code: "STGO", name: "Santiago Centro" },
@@ -561,9 +561,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       comunas.forEach((item) => {
         const opt = document.createElement("option");
-        const code = typeof item === "object" ? item.code : item;
         const name = typeof item === "object" ? item.name : item;
-        opt.value = code;
+        opt.value = name;
         opt.textContent = name;
         comunaInput.appendChild(opt);
       });
