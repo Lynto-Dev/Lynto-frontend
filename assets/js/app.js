@@ -15,14 +15,7 @@ let PRODUCT_PRICE = 19990;
 const DESCUENTO_CUPON_UNIDAD = 3000; // Descuento con cupón: $19.990 -> $16.990
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🚀 Lynto Frontend inicializado.");
-  console.log(`🔌 Conectado a la API: ${API_URL}`);
-  if (!localStorage.getItem("LYNTO_API_URL")) {
-    console.info(
-      '💡 Tip: Puedes configurar tu propia API de pruebas ejecutando:\nlocalStorage.setItem("LYNTO_API_URL", "TU_WEB_APP_URL")',
-    );
-  }
-
+  
   // Elementos del DOM
   const form = document.getElementById("checkout-form");
   const rutInput = document.getElementById("rut");
