@@ -975,12 +975,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const mostrarAlertaModalResumen = (mensaje, tipo = "warning") => {
+    const alertaEl = document.getElementById("alerta-modal-resumen");
+    if (!alertaEl) return;
+    if (!mensaje) {
+      alertaEl.style.display = "none";
+      alertaEl.classList.add("hidden");
+      alertaEl.innerText = "";
+      return;
+    }
+    alertaEl.innerText = mensaje;
+    alertaEl.className = `alert alert-${tipo}`;
+    alertaEl.style.display = "flex";
+    alertaEl.classList.remove("hidden");
+  };
+
+  const ocultarAlertaModalResumen = () => {
+    mostrarAlertaModalResumen("");
+  };
+
   if (btnRestar && btnSumar) {
     btnRestar.addEventListener("click", () => {
       let current = parseInt(cantidadInput.value, 10) || 1;
       if (current > 1) {
         cantidadInput.value = current - 1;
         actualizarVisualizacionPrecio();
+        ocultarAlertaModalResumen();
       }
     });
 
@@ -989,9 +1009,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (current < 10) {
         cantidadInput.value = current + 1;
         actualizarVisualizacionPrecio();
+        ocultarAlertaModalResumen();
       } else {
-        mostrarError(
+        mostrarAlertaModalResumen(
           "Por motivos de seguridad, el límite máximo por compra de preventa es de 10 unidades.",
+          "warning"
         );
       }
     });
