@@ -1980,31 +1980,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const cargarConfiguracion = async () => {
     // 1. Verificar si existe configuración guardada en sessionStorage (Carga Instantánea 0 ms)
     const cachedConfigRaw = sessionStorage.getItem("LYNTO_CONFIG");
-    let hasCache = false;
     if (cachedConfigRaw) {
       try {
         const cachedData = JSON.parse(cachedConfigRaw);
         if (cachedData && cachedData.success) {
           aplicarConfiguracion(cachedData);
-          hasCache = true;
           console.log("⚡ Configuración cargada al instante desde sessionStorage (0 ms).");
           if (displayTotal) displayTotal.classList.remove("total-price-loading");
+          return; // 🚀 Si ya existe caché válido en la sesión, finaliza aquí a 0 ms sin re-consultar a la API.
         }
       } catch (e) {
         console.warn("⚠️ No se pudo decodificar el caché de sessionStorage:", e);
       }
     }
 
-    // 2. Fetch con AbortController (Timeout Graceful a los 12 segundos para tolerar el arranque en frío de Apps Script)
-    const FETCH_TIMEOUT_MS = 12000;
+    // 2. Fetch con AbortController para visitantes por primera vez (o sin caché)
+    const FETCH_TIMEOUT_MS = 6000;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
     try {
-      if (!hasCache) {
-        console.log("⏳ Solicitando configuración inicial desde Google Sheets...");
-        if (displayTotal) displayTotal.classList.add("total-price-loading");
-      }
+      console.log("⏳ Solicitando configuración inicial desde Google Sheets...");
+      if (displayTotal) displayTotal.classList.add("total-price-loading");
 
       const response = await fetch(`${API_URL}?action=get_config`, {
         signal: controller.signal,
@@ -2020,7 +2017,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Guardar en sessionStorage para próximas recargas de la sesión
+      // Guardar en sessionStorage para las siguientes recargas de la sesión
       try {
         sessionStorage.setItem("LYNTO_CONFIG", JSON.stringify(resData));
       } catch (e) {
@@ -2032,7 +2029,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("✅ Configuración dinámica de Sheets cargada y actualizada con éxito.");
     } catch (error) {
       if (error.name === "AbortError") {
-        console.warn("⏱️ Tiempo de espera agotado al consultar la API (6s). Se mantendrán los valores locales/caché.");
+        console.log("ℹ️ Tiempo de respuesta de API excedido. Se utilizarán los valores por defecto de la preventa.");
       } else {
         console.warn(
           "⚠️ No se pudo cargar la configuración dinámica desde Sheets (se mantendrán los valores por defecto):",
