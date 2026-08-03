@@ -2619,6 +2619,31 @@ a:hover {
   }
 }
 
+/* Indicator Spinner Inline para Botones (Mata Angustias) */
+.spinner-btn-inline {
+  width: 15px;
+  height: 15px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.65s linear infinite;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+button.btn-loading,
+button:disabled.btn-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  opacity: 0.85;
+  cursor: wait !important;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+}
+
 
 /* Botón Flotante Sticky de WhatsApp */
 .wsp-sticky-btn {
