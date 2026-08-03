@@ -3210,3 +3210,126 @@ button:disabled.btn-loading {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* --- MODAL RESUMEN DE COMPRA ULTRA-COMPACTO RESPONSIVE (SIN SCROLL) --- */
+#modal-resumen .modal-card {
+  max-width: 520px;
+  max-height: 94vh;
+  box-sizing: border-box;
+}
+
+#modal-resumen .modal-card-header {
+  padding: 0.75rem 1.25rem;
+}
+
+#modal-resumen .modal-card-header h3 {
+  font-size: 1.1rem;
+}
+
+#modal-resumen .modal-body {
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+#modal-resumen .modal-user-summary {
+  padding: 0.5rem 0.85rem;
+  gap: 0.2rem;
+}
+
+#modal-resumen .user-summary-row {
+  font-size: 0.82rem;
+}
+
+#modal-resumen .product-summary-item {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0.45rem 0.85rem;
+}
+
+#modal-resumen .product-summary-thumb {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+}
+
+#modal-resumen .product-summary-title {
+  font-size: 0.88rem;
+}
+
+#modal-resumen .product-summary-subtitle {
+  font-size: 0.76rem;
+}
+
+#modal-resumen .form-group {
+  margin-top: 0 !important;
+}
+
+#modal-resumen .summary-breakdown {
+  margin-top: 0 !important;
+}
+
+#modal-resumen .summary-row {
+  font-size: 0.84rem;
+  padding: 0.1rem 0;
+}
+
+#modal-resumen .total-price {
+  font-size: 1.35rem !important;
+}
+
+#modal-resumen .terms-checkbox-group {
+  margin-top: 0 !important;
+  padding: 0.5rem 0.85rem !important;
+  gap: 0.5rem !important;
+}
+
+#modal-resumen .terms-checkbox-group label {
+  font-size: 0.82rem !important;
+}
+
+#modal-resumen #btn-confirmar-pago-flow {
+  margin-top: 0 !important;
+  padding: 0.65rem 1rem !important;
+  font-size: 0.96rem !important;
+}
+
+#modal-resumen .payment-methods-box {
+  padding: 0.4rem 0.75rem;
+  margin-top: 0 !important;
+}
+
+#modal-resumen .payment-methods-title {
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+#modal-resumen .payment-badges-flex {
+  gap: 0.3rem;
+}
+
+#modal-resumen .payment-badge-tag {
+  padding: 0.15rem 0.45rem;
+  font-size: 0.72rem;
+}
+
+#modal-resumen .security-badges-summary {
+  margin-top: 0 !important;
+  font-size: 0.76rem !important;
+}
+
+/* Adaptación para pantallas de baja altura vertical (< 720px) o teléfonos celulares */
+@media (max-height: 720px) {
+  #modal-resumen .modal-card {
+    max-height: 98vh;
+  }
+  #modal-resumen .modal-body {
+    padding: 0.65rem 0.85rem;
+    gap: 0.4rem;
+  }
+  #modal-resumen .payment-methods-box,
+  #modal-resumen .security-badges-summary {
+    display: none;
+  }
+}
