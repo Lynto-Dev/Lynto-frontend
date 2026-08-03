@@ -129,9 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
-  // --- CONTROL DEL MODAL DE RESUMEN Y CÁLCULO DINÁMICO DE ENVÍO ---
   let TARIFA_RM = 3500;
   let TARIFA_REGIONES = 5000;
+  let MAPA_TARIFAS_ENVIO = {};
   let ultimoDescuentoCupon = 0;
   let descuentoPorUnidadCupon = 3000;
   let porcentajeDescuentoCupon = 0;
@@ -733,12 +733,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (rowDescuento) rowDescuento.classList.add("hidden");
     }
 
-    // 2. Calcular tarifa de envío por región
+    // 2. Calcular tarifa de envío por región dinámicamente desde Excel / Sheets
     const regionVal = regionSelect ? regionSelect.value : "";
     let costoEnvio = TARIFA_RM;
 
-    if (regionVal && regionVal !== "Región Metropolitana") {
-      costoEnvio = TARIFA_REGIONES;
+    if (regionVal) {
+      const cleanRegion = String(regionVal).trim().toLowerCase();
+      if (MAPA_TARIFAS_ENVIO[cleanRegion] !== undefined) {
+        costoEnvio = MAPA_TARIFAS_ENVIO[cleanRegion];
+      } else if (cleanRegion.includes("metropolitana") || cleanRegion.includes("santiago") || cleanRegion === "rm") {
+        costoEnvio = MAPA_TARIFAS_ENVIO["región metropolitana"] || MAPA_TARIFAS_ENVIO["region metropolitana"] || TARIFA_RM;
+      } else {
+        costoEnvio = MAPA_TARIFAS_ENVIO["regiones"] || MAPA_TARIFAS_ENVIO["otras regiones"] || TARIFA_REGIONES;
+      }
     }
 
     if (summaryEnvio) summaryEnvio.innerText = `$${costoEnvio.toLocaleString("es-CL")} CLP`;
@@ -886,6 +893,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const actualizarResumenModalEnVivo = () => {
+    const nombre = nombreInput ? nombreInput.value.trim() : "";
+    const region = regionSelect ? regionSelect.value : "";
+    const comuna = comunaInput ? comunaInput.value : "";
+    const direccion = direccionInput ? direccionInput.value.trim() : "";
+    const comunaTexto = comunaInput && comunaInput.selectedIndex >= 0 ? comunaInput.options[comunaInput.selectedIndex].text : comuna;
+
+    if (modalUserName && nombre) modalUserName.innerText = sanitizeInput(nombre);
+    if (modalUserAddress && (direccion || comunaTexto)) modalUserAddress.innerText = `${sanitizeInput(direccion)}, ${sanitizeInput(comunaTexto)}`;
+    if (modalUserRegion && region) modalUserRegion.innerText = sanitizeInput(region);
+  };
+
+  if (nombreInput) nombreInput.addEventListener("input", actualizarResumenModalEnVivo);
+  if (direccionInput) direccionInput.addEventListener("input", actualizarResumenModalEnVivo);
+
   const abrirModalResumen = () => {
     ocultarError();
 
@@ -922,15 +944,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const comunaTexto = comunaInput && comunaInput.selectedIndex >= 0 ? comunaInput.options[comunaInput.selectedIndex].text : comuna;
-    if (modalUserName) modalUserName.innerText = sanitizeInput(nombre);
-    if (modalUserAddress) modalUserAddress.innerText = `${sanitizeInput(direccion)}, ${sanitizeInput(comunaTexto)}`;
-    if (modalUserRegion) modalUserRegion.innerText = sanitizeInput(region);
+    actualizarResumenModalEnVivo();
 
     // Reiniciar estado de casilla de términos al abrir el modal
     if (aceptoTerminosCheckbox) aceptoTerminosCheckbox.checked = false;
     actualizarEstadoBotonPago();
 
+    // Asegurar recálculo de precios antes de abrir
     actualizarVisualizacionPrecio();
 
     if (modalResumen) {
@@ -1911,6 +1931,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
+
+    // 6. Carga de Tarifas de Envío Dinámicas por Región (desde Pestaña TarifasEnvio de Sheets)
+    const tarifasEnvio = dataPayload.tarifasEnvio || dataPayload.tarifas || resData.tarifasEnvio || resData.tarifas || [];
+    if (Array.isArray(tarifasEnvio) && tarifasEnvio.length > 0) {
+      tarifasEnvio.forEach((item) => {
+        const reg = item.Region || item.region || item.regionName || (Array.isArray(item) ? item[0] : "");
+        const cst = Number(item.Costo || item.costo || item.precio || (Array.isArray(item) ? item[1] : NaN));
+        if (reg && !isNaN(cst)) {
+          const key = String(reg).trim().toLowerCase();
+          MAPA_TARIFAS_ENVIO[key] = cst;
+          if (key.includes("metropolitana") || key === "rm") {
+            TARIFA_RM = cst;
+          } else if (key.includes("region") || key.includes("otras") || key.includes("resto")) {
+            TARIFA_REGIONES = cst;
+          }
+        }
+      });
+    }
+
+    if (configMap["tarifarm"] || configMap["tarifadespachorm"]) {
+      const valRm = Number(configMap["tarifarm"] || configMap["tarifadespachorm"]);
+      if (!isNaN(valRm)) TARIFA_RM = valRm;
+    }
+    if (configMap["tarifaregiones"] || configMap["tarifadespachoregiones"]) {
+      const valReg = Number(configMap["tarifaregiones"] || configMap["tarifadespachoregiones"]);
+      if (!isNaN(valReg)) TARIFA_REGIONES = valReg;
+    }
+
+    actualizarVisualizacionPrecio();
   };
 
   const cargarConfiguracion = async () => {
