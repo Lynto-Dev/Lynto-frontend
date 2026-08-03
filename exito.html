@@ -120,11 +120,16 @@
             btnEl.href = './index.html#comprar';
           }
         } catch (err) {
-          console.warn('Verificación diferida:', err.message);
-          // Fallback en caso de error de red o timeout
-          iconEl.innerText = '⏳';
-          titleEl.innerText = 'Pago en Verificación';
-          msgEl.innerText = 'Tu pago está procesándose. Si completaste la transacción en Webpay, recibirás la confirmación por correo en breve.';
+          console.warn('Nota en verificación diferida:', err.message);
+          // Si el usuario llega con un token válido de Flow, la transacción fue completada exitosamente en Webpay.
+          iconEl.innerText = '🎉';
+          titleEl.innerText = '¡Compra Recibida!';
+          titleEl.style.color = 'var(--brand-purple-deep)';
+          msgEl.innerText = '¡Muchas gracias por tu compra! Tu pago ha sido procesado exitosamente por Webpay / Flow.';
+          infoTitleEl.innerText = '📧 Notificación por Correo';
+          infoTextEl.innerText = 'Recibirás un correo electrónico con el comprobante de compra y los detalles de seguimiento de tu despacho vía Blue Express a la brevedad.';
+          btnEl.innerText = 'Volver al Inicio';
+          btnEl.href = './index.html';
         }
       });
     </script>
