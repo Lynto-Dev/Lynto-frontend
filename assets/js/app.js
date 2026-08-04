@@ -1378,7 +1378,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (modalNewsletterMsg) {
             modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-success";
             modalNewsletterMsg.innerText =
-              resData.message || "¡Gracias por suscribirte! Revisa tu correo para tu beneficio.";
+              resData.message || "¡Gracias por suscribirte! Te enviamos tu cupón por correo (recuerda revisar tu carpeta de SPAM).";
           }
           if (modalNewsletterEmail) modalNewsletterEmail.value = "";
           sessionStorage.setItem("lynto_newsletter_dismissed", "true");
@@ -1389,13 +1389,13 @@ document.addEventListener("DOMContentLoaded", () => {
               modalNewsletterMsg.className = "modal-newsletter-alert-slot";
               modalNewsletterMsg.innerText = "";
             }
-          }, 2200);
+          }, 3500);
         } else {
-          // ❌ Fallo / Correo ya registrado previamente: Alerta roja y NUNCA cerrar el modal
+          // ❌ Correo ya registrado previamente
           if (modalNewsletterMsg) {
             modalNewsletterMsg.className = "modal-newsletter-alert-slot active alert-error";
             modalNewsletterMsg.innerText =
-              resData.message || "Este correo electrónico ya se encuentra suscrito en nuestra comunidad.";
+              resData.message || "Este correo electrónico ya se encuentra suscrito. Si no ves tu cupón, por favor revisa tu carpeta de SPAM o Correos no deseados.";
           }
         }
       } catch (err) {
@@ -1456,15 +1456,15 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           if (newsletterMsg) {
             newsletterMsg.innerText =
-              resData.message || "¡Gracias por suscribirte al Club Lynto!";
+              resData.message || "¡Gracias por suscribirte! Te enviamos tu cupón por correo (revisa tu carpeta de SPAM).";
             newsletterMsg.style.color = "#2e7d32";
           }
           if (newsletterEmail) newsletterEmail.value = "";
         } else {
           if (newsletterMsg) {
             newsletterMsg.innerText =
-              resData.message || "No se pudo realizar la suscripción.";
-            newsletterMsg.style.color = "#c62828";
+              resData.message || "Este correo ya está suscrito. Revisa tu carpeta de SPAM o Correos no deseados para ver tu cupón.";
+            newsletterMsg.style.color = "#e65100";
           }
         }
       } catch (err) {
